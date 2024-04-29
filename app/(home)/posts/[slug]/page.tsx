@@ -4,11 +4,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-import Avatar from "../../avatar";
-import CoverImage from "../../cover-image";
-import DateComponent from "../../date";
-import MoreStories from "../../more-stories";
-import PortableText from "../../portable-text";
+import Avatar from "../../../../components/avatar";
+import CoverImage from "../../../../components/cover-image";
+import DateComponent from "../../../../components/date";
+import MoreStories from "../../../../components/more-stories";
+import PortableText from "../../../../components/portable-text";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
 import {
@@ -76,19 +76,16 @@ export default async function PostPage({ params }: Props) {
           {settings?.title || demo.title}
         </Link>
       </h2>
-      <article>
-        <h1 className="text-balance mb-12 text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
-          {post.title}
-        </h1>
-        <div className="hidden md:mb-12 md:block">
+      <article className="mx-auto max-w-4xl">
+        {/* <div className="hidden md:mb-12 md:block">
           {post.author && (
             <Avatar name={post.author.name} picture={post.author.picture} />
           )}
-        </div>
-        <div className="mb-8 sm:mx-0 md:mb-16">
+        </div> */}
+        {/* <div className="mb-8 sm:mx-0 md:mb-16">
           <CoverImage image={post.coverImage} priority />
-        </div>
-        <div className="mx-auto max-w-2xl">
+        </div> */}
+        <div className="max-w-4xl">
           <div className="mb-6 block md:hidden">
             {post.author && (
               <Avatar name={post.author.name} picture={post.author.picture} />
@@ -100,14 +97,17 @@ export default async function PostPage({ params }: Props) {
             </div>
           </div>
         </div>
+        <h5 className="mb-8 text-4xl font-bold leading-tight tracking-tighter md:text-6xl">
+          {post.title}
+        </h5>
         {post.content?.length && (
-          <PortableText className="mx-auto max-w-2xl" value={post.content} />
+          <PortableText className="mx-auto max-w-4xl" value={post.content} />
         )}
       </article>
       <aside>
         <hr className="border-accent-2 mb-24 mt-28" />
-        <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
-          Recent Stories
+        <h2 className="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
+          More Stories
         </h2>
         <Suspense>
           <MoreStories skip={post._id} limit={2} />
