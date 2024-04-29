@@ -1,0 +1,12 @@
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  transition: transform 0.2s ease-in-out;
+  z-index: 1000;
+  transform: translateY(0);
+}
+
+.header-hidden {
+  transform: translateY(-100%);
+}
