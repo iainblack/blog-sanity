@@ -1,4 +1,4 @@
-import "../globals.css";
+import "@/styles/globals.css";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata } from "next";
@@ -7,13 +7,15 @@ import { Inter } from "next/font/google";
 import { draftMode } from "next/headers";
 import { Suspense } from "react";
 
-import AlertBanner from "../../components/alert-banner";
-import PortableText from "../../components/portable-text";
+import AlertBanner from "../components/alert-banner";
+import PortableText from "../components/portable-text";
 
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { SettingsQueryResponse, settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
+import Link from "next/link";
+import Header from "@/components/Header";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await sanityFetch<SettingsQueryResponse>({
@@ -102,6 +104,7 @@ export default function RootLayout({
       <body>
         <section className="min-h-screen">
           {draftMode().isEnabled && <AlertBanner />}
+          <Header />
           <main>{children}</main>
           <Suspense>
             <Footer />
