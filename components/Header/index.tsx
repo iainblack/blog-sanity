@@ -78,7 +78,7 @@ export default function Header() {
 
     return (
         <header className={`header border-b bg-white ${headerVisible ? '' : 'header-hidden'}`}>
-            <div className="container mx-auto py-5 ">
+            <div className="container mx-auto p-5 xl:px-0">
                 <nav className="flex justify-between items-center py-3 px-8 xl:py-5 xl:px-0">
                     <a href="/" className="text-2xl font-bold">
                         {demo.title}

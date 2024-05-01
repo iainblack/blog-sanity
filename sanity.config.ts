@@ -15,6 +15,7 @@ import { assistWithPresets } from "@/sanity/plugins/assist";
 import author from "@/sanity/schemas/documents/author";
 import post from "@/sanity/schemas/documents/post";
 import settings from "@/sanity/schemas/singletons/settings";
+import titlePageContentPanel from "./sanity/schemas/documents/titlePageContentPanel";
 
 export default defineConfig({
   basePath: studioUrl,
@@ -27,6 +28,7 @@ export default defineConfig({
       // Documents
       post,
       author,
+      titlePageContentPanel,
     ],
   },
   plugins: [
