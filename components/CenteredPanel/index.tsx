@@ -1,23 +1,29 @@
 import React from 'react';
+import { cleanString } from '../utils';
 
 export default function CenteredPanel({
     children,
-    size
+    size,
+    singleContent
 }: {
     children: React.ReactNode;
     isFirst?: boolean;
+    singleContent?: boolean;
     size: 'normal' | 'large' | 'xl';
 }) {
-
-    const sizeClasses = {
+    const sizeClasses: { [key: string]: string } = {
         normal: 'min-h-[50vh]',
         large: 'min-h-[75vh]',
         xl: 'min-h-[100vh]',
     };
+
+    const cleanS = cleanString(size);
+    const sizeClass = sizeClasses[cleanS];
+
     return (
         <div
             id="content-panel-centered"
-            className={`centered-container ${sizeClasses[size]}`}
+            className={`centered-container ${sizeClass} ${singleContent ? 'single' : ''}`}
         >
             {children}
         </div >

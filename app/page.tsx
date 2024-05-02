@@ -19,7 +19,7 @@ function Panel({
   panel: TitlePageContentPanel;
 }) {
   return (
-    <CenteredPanel size={size}>
+    <CenteredPanel size={size} singleContent={!image}>
       {
         image && <div className="relative w-full sm:w-1/2 xl:w-1/3" style={{ aspectRatio: "1/1" }}>
           <Image
@@ -32,7 +32,7 @@ function Panel({
           />
         </div>
       }
-      <div className="mt-4 w-full lg:max-w-md lg:mt-0 xl:max-w-3xl">
+      <div className={`mt-4 w-full lg:max-w-md lg:mt-0 xl:max-w-3xl ${image ? 'text-left' : 'text-center'}`}>
         {title && <h1 className="text-6xl flex-wrap font-bold leading-tight tracking-tighter lg:text-6xl">
           {title}
         </h1>}
