@@ -9,7 +9,7 @@ export default defineType({
   fields: [
     defineField({
       name: "size",
-      title: "Size",
+      title: "Panel Size",
       type: "string",
       options: {
         list: ["normal", "large", "xl"],
@@ -46,13 +46,24 @@ export default defineType({
           description: "Important for SEO and accessiblity.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
-              if ((context.document?.coverImage as any)?.asset?._ref && !alt) {
+              if ((context.document?.image as any)?.asset?._ref && !alt) {
                 return "Required";
               }
               return true;
             });
           },
         },
+        {
+          name: "position",
+          type: "string",
+          title: "Position",
+          options: {
+            list: ["left", "right"],
+            layout: "radio",
+          },
+          hidden: ({document}) => !document?.image,
+          initialValue: "left",
+        }
       ],
     }),
   ],

@@ -69,7 +69,7 @@ export type PostQueryResponse =
 /// TITLE PAGE CONTENT PANELS
 export interface TitlePageContentPanel {
   _id: string;
-  image?: (Image & { alt?: string }) | null;
+  image?: (Image & { alt?: string, position: "left" | "right" }) | null;
   title?: string;
   content: PortableTextBlock[];
   size: "normal" | "large" | "xl";
