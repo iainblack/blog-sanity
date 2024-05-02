@@ -2,8 +2,8 @@ import { BlockContentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export default defineType({
-  name: "titlePageContentPanel",
-  title: "Title Page Content Panel",
+  name: "contentPanel",
+  title: "Content Panel",
   icon: BlockContentIcon,
   type: "document",
   fields: [
@@ -26,6 +26,7 @@ export default defineType({
       title: "Content",
       type: "array",
       of: [{ type: "block" }],
+      description: "Text should be kept short and to the point for this panel. One or two short paragraphs is best",
       validation: (rule) => rule.required(),
     }),
     defineField({

@@ -15,7 +15,7 @@ import { assistWithPresets } from "@/sanity/plugins/assist";
 import author from "@/sanity/schemas/documents/author";
 import post from "@/sanity/schemas/documents/post";
 import settings from "@/sanity/schemas/singletons/settings";
-import titlePageContentPanel from "./sanity/schemas/documents/titlePageContentPanel";
+import contentPanel from "./sanity/schemas/documents/contentPanel";
 
 export default defineConfig({
   basePath: studioUrl,
@@ -28,7 +28,7 @@ export default defineConfig({
       // Documents
       post,
       author,
-      titlePageContentPanel,
+      contentPanel,
     ],
   },
   plugins: [
@@ -43,7 +43,7 @@ export default defineConfig({
     unsplashImageAsset(),
     // Sets up AI Assist with preset prompts
     // https://www.sanity.io/docs/ai-assist
-    assistWithPresets(),
+    // assistWithPresets(),
     // Vision lets you query your content with GROQ in the studio
     // https://www.sanity.io/docs/the-vision-plugin
     process.env.NODE_ENV === "development" &&

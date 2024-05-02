@@ -66,16 +66,16 @@ export type PostQueryResponse =
   | null;
 
 
-/// TITLE PAGE CONTENT PANELS
-export interface TitlePageContentPanel {
+/// CONTENT PANEL
+export interface ContentPanel {
   _id: string;
-  image?: (Image & { alt?: string, position: "left" | "right" }) | null;
+  image?: (Image & { alt?: string, position?: "left" | "right" }) | null;
   title?: string;
   content: PortableTextBlock[];
   size: "normal" | "large" | "xl";
 }
 
-const titlePageContentPanelFields = groq`
+const contentPanelFields = groq`
   _id,
   image,
   title,
@@ -83,8 +83,8 @@ const titlePageContentPanelFields = groq`
   size,
 `;
 
-export const titlePageContentPanelsQuery = groq`*[_type == "titlePageContentPanel"] | order(_createdAt asc){
-  ${titlePageContentPanelFields}
+export const contentPanelsQuery = groq`*[_type == "contentPanel"] | order(_createdAt asc){
+  ${contentPanelFields}
 }`;
 
-export type TitlePageContentPanelsQueryResponse = TitlePageContentPanel[] | null;
+export type ContentPanelsQueryResponse = ContentPanel[] | null;
