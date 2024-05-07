@@ -6,7 +6,7 @@ export default function AdditionalTopicsLayout({
     children: React.ReactNode;
 }) {
     return (
-        <section>
+        <section className="min-h-[80vh]">
             {children}
         </section>
     )

@@ -4,11 +4,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-import Avatar from "@/components/avatar";
-import CoverImage from "@/components/CoverImage";
-import DateComponent from "@/components/date";
-import MoreStories from "@/components/more-stories";
-import PortableText from "@/components/portable-text";
+import Avatar from "../../../../components/avatar";
+import CoverImage from "../../../../components/CoverImage";
+import DateComponent from "../../../../components/date";
+import MoreStories from "../../../../components/more-stories";
+import PortableText from "../../../../components/portable-text";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
 import {
@@ -68,6 +68,7 @@ export default async function PostPage({ params }: Props) {
   // }
 
   return (
+    <></>
     // <div className="container mx-auto px-5">
     //   <h2 className="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
     //     <Link href="/" className="hover:underline">
@@ -75,14 +76,14 @@ export default async function PostPage({ params }: Props) {
     //     </Link>
     //   </h2>
     //   <article className="mx-auto max-w-4xl">
-    //     <div className="hidden md:mb-12 md:block">
+    //     {/* <div className="hidden md:mb-12 md:block">
     //       {post.author && (
     //         <Avatar name={post.author.name} picture={post.author.picture} />
     //       )}
-    //     </div>
-    //     <div className="mb-8 sm:mx-0 md:mb-16">
+    //     </div> */}
+    //     {/* <div className="mb-8 sm:mx-0 md:mb-16">
     //       <CoverImage image={post.coverImage} priority />
-    //     </div>
+    //     </div> */}
     //     <div className="max-w-4xl">
     //       <div className="mb-6 block md:hidden">
     //         {post.author && (
@@ -112,6 +113,5 @@ export default async function PostPage({ params }: Props) {
     //     </Suspense>
     //   </aside>
     // </div>
-    <></>
   );
 }

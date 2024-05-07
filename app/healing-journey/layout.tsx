@@ -6,7 +6,7 @@ export default function JourneyLayout({
     children: React.ReactNode;
 }) {
     return (
-        <section>
+        <section className="min-h-[80vh]">
             {children}
         </section>
     )

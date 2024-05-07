@@ -39,7 +39,7 @@ export default function Page() {
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
-      const response = await getPostsByPage("Additional Topics", order, page * limit, limit);
+      const response = await getPostsByPage("Lou's Healing Journey", order, page * limit, limit);
       setPostState({
         visiblePosts: response.posts,
         totalPosts: response.totalPosts,
@@ -51,7 +51,7 @@ export default function Page() {
 
   return (
     <div className="mx-auto px-5">
-      <Intro title={"Additional Topics"} />
+      <Intro title={"Lou's Healing Journey"} />
       <div className="flex flex-col items-center w-full px-4">
         <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} />
         {loading && <LoadingSpinner />}

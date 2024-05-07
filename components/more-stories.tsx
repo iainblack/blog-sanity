@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import Avatar from "./avatar";
-import CoverImage from "./cover-image";
+import CoverImage from "./CoverImage";
 import DateComponent from "./date";
 
 import { sanityFetch } from "@/sanity/lib/fetch";

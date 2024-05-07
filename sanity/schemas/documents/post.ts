@@ -3,18 +3,7 @@ import { format, parseISO } from "date-fns";
 import { defineField, defineType } from "sanity";
 
 import authorType from "./author";
-
-/**
- * This file is the schema definition for a post.
- *
- * Here you'll be able to edit the different fields that appear when you 
- * create or edit a post in the studio.
- * 
- * Here you can see the different schema types that are available:
-
-  https://www.sanity.io/docs/schema-types
-
- */
+import { pages } from "@/components/utils";
 
 export default defineType({
   name: "post",
@@ -22,6 +11,15 @@ export default defineType({
   icon: DocumentTextIcon,
   type: "document",
   fields: [
+    {
+      name: "pageId",
+      title: "Page",
+      type: "string",
+      description: "The page that this panel should be displayed on.",
+      options: {
+        list: pages.filter((page) => page.contentType === "post").map((page) => page.name),
+      }
+    },
     defineField({
       name: "title",
       title: "Title",
@@ -77,7 +75,6 @@ export default defineType({
           },
         },
       ],
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "date",

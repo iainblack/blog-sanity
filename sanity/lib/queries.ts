@@ -20,6 +20,7 @@ export interface Author {
 /// POSTS
 export interface Post {
   _id: string;
+  pageId: string;
   status: "draft" | "published";
   title: string;
   slug: string;
@@ -29,7 +30,7 @@ export interface Post {
   author?: Author | null;
 }
 
-const postFields = groq`
+export const postFields = groq`
   _id,
   "status": select(_originalId in path("drafts.**") => "draft", "published"),
   "title": coalesce(title, "Untitled"),
@@ -40,30 +41,10 @@ const postFields = groq`
   "author": author->{"name": coalesce(name, "Anonymous"), picture},
 `;
 
-export const heroQuery = groq`*[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {
-  content,
-  ${postFields}
-}`;
-export type HeroQueryResponse =
-  | (Post & {
-      content?: PortableTextBlock[] | null;
-    })
-  | null;
-
-export const moreStoriesQuery = groq`*[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
-  ${postFields}
-}`;
-export type MoreStoriesQueryResponse = Post[] | null;
-
-export const postQuery = groq`*[_type == "post" && slug.current == $slug] [0] {
-  content,
-  ${postFields}
-}`;
-export type PostQueryResponse =
-  | (Post & {
-      content?: PortableTextBlock[] | null;
-    })
-  | null;
+// export const moreStoriesQuery = groq`*[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
+//   ${postFields}
+// }`;
+// export type MoreStoriesQueryResponse = Post[] | null;
 
 
 /// CONTENT PANEL
@@ -75,21 +56,5 @@ export interface ContentPanel {
   size: "normal" | "large" | "xl";
   pageId: string;
 }
-
-const contentPanelFields = groq`
-  _id,
-  image,
-  title,
-  content,
-  size,
-`;
-export function contentPanelQuery(pageId: string) {
-  return groq`*[_type == "contentPanel" && pageId == $pageId] | order(_createdAt asc){
-    ${contentPanelFields}
-  }`;
-}
-export const contentPanelsQuery = groq`*[_type == "contentPanel"] | order(_createdAt asc){
-  ${contentPanelFields}
-}`;
 
 export type ContentPanelsQueryResponse = ContentPanel[] | null;

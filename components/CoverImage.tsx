@@ -9,9 +9,10 @@ interface CoverImageProps {
 
 export default function CoverImage(props: CoverImageProps) {
   const { image: source, priority } = props;
-  const image = source?.asset?._ref ? (
+
+  return (
     <Image
-      className="h-auto w-full"
+      className="h-full w-full"
       width={2000}
       height={1000}
       alt={source?.alt || ""}
@@ -19,13 +20,5 @@ export default function CoverImage(props: CoverImageProps) {
       sizes="100vw"
       priority={priority}
     />
-  ) : (
-    <div className="bg-slate-50" style={{ paddingTop: "50%" }} />
-  );
-
-  return (
-    <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
-      {image}
-    </div>
   );
 }

@@ -13,8 +13,8 @@ export default function CenteredPanel({
 }) {
     const sizeClasses: { [key: string]: string } = {
         normal: 'min-h-screen lg:min-h-[50vh]',
-        large: 'min-h-[120vh] lg:min-h-[75vh]',
-        xl: 'min-h-[150vh] lg:min-h-[100vh]',
+        large: 'min-h-screen lg:min-h-[75vh]',
+        xl: 'min-h-screen lg:min-h-[100vh]',
     };
 
     const sizeClass = sizeClasses[stegaClean(size)];
@@ -22,7 +22,7 @@ export default function CenteredPanel({
     return (
         <div
             id="content-panel-centered"
-            className={`centered-container ${sizeClass} ${singleContent ? 'single' : ''}`}
+            className={`centered-container ${sizeClass} ${singleContent ? '' : ''}`}
         >
             {children}
         </div >
