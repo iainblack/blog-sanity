@@ -73,6 +73,7 @@ export interface ContentPanel {
   title?: string;
   content: PortableTextBlock[];
   size: "normal" | "large" | "xl";
+  pageId: string;
 }
 
 const contentPanelFields = groq`
@@ -82,7 +83,11 @@ const contentPanelFields = groq`
   content,
   size,
 `;
-
+export function contentPanelQuery(pageId: string) {
+  return groq`*[_type == "contentPanel" && pageId == $pageId] | order(_createdAt asc){
+    ${contentPanelFields}
+  }`;
+}
 export const contentPanelsQuery = groq`*[_type == "contentPanel"] | order(_createdAt asc){
   ${contentPanelFields}
 }`;

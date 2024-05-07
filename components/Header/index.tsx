@@ -4,14 +4,7 @@ import * as demo from "@/sanity/lib/demo";
 import { useState, useEffect } from "react";
 import { MenuIcon, CloseIcon, ChevronRightIcon } from '@sanity/icons'
 import './header.css';
-
-const pages = [
-    { name: "My Healing Journey", slug: "my-healing-journey" },
-    { name: "Additional Topics", slug: "additional-topics" },
-    { name: "Messages for Humanity", slug: "messages-for-humanity" },
-    { name: "Recommended Resources", slug: "recommended-resources" },
-    { name: "Photos", slug: "photos" },
-];
+import { pages } from "../utils";
 
 export default function Header() {
     const [lastScrollY, setLastScrollY] = useState(0);
@@ -61,7 +54,7 @@ export default function Header() {
         return (
             <div className="fixed mx-auto left-0 bg-white w-full h-screen flex flex-col py-3 px-8">
                 <ul className="p-5 space-y-8 flex-grow flex flex-col pt-32">
-                    {pages.map((page) => (
+                    {pages.filter(page => page.name !== 'Home').map((page) => (
                         <li key={page.slug}>
                             <Link href={`/${page.slug}`} onClick={closeMenu} className="hover:underline">
                                 <div className="flex space-x-1 items-center">
@@ -86,7 +79,7 @@ export default function Header() {
                     {!isMenuOpen && (
                         <>
                             <ul className={`space-x-5 hidden lg:flex flex-wrap justify-center items-center align-baseline px-12 py-3`}>
-                                {pages.map((page) => (
+                                {pages.filter(page => page.name !== 'Home').map((page) => (
                                     <li key={page.slug}>
                                         <Link href={`/${page.slug}`} className="hover:underline">{page.name}</Link>
                                     </li>

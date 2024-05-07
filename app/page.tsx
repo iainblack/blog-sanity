@@ -1,4 +1,5 @@
 import PortableText from "@/components/portable-text";
+import { stegaClean } from '@sanity/client/stega'
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import {
@@ -12,7 +13,7 @@ import { Image } from "next-sanity/image";
 import { urlForImage } from "@/sanity/lib/utils";
 import CenteredPanel from "@/components/CenteredPanel";
 import { PortableTextBlock } from "next-sanity";
-import { cleanString } from "@/components/utils";
+import { getContentPanelsByPage } from "./actions";
 
 function Panel({
   panel: { title, content, image, size },
@@ -20,9 +21,9 @@ function Panel({
   panel: ContentPanel;
 }) {
 
-  const cleanImagePosition = image?.position ? cleanString(image.position) : "left";
-  const imagePosition = cleanImagePosition === "left" ? 'lg:order-1' : 'lg:order-2';
-  const textPosition = cleanImagePosition === "left" ? 'lg:order-2' : 'lg:order-1';
+  const cleanedPosition = stegaClean(image?.position);
+  const imagePosition = cleanedPosition === "left" ? 'lg:order-1' : 'lg:order-2';
+  const textPosition = cleanedPosition === "left" ? 'lg:order-2' : 'lg:order-1';
 
   return (
     <CenteredPanel size={size} singleContent={!image}>
@@ -52,12 +53,13 @@ function Panel({
 }
 
 export default async function Page() {
-  const [settings, contentPanel] = await Promise.all([
+  const [settings] = await Promise.all([
     sanityFetch<SettingsQueryResponse>({
       query: settingsQuery,
     }),
     sanityFetch<ContentPanelsQueryResponse>({ query: contentPanelsQuery }),
   ]);
+  const contentPanel = await getContentPanelsByPage('Home');
 
   return (
     contentPanel && contentPanel.length > 0 && <>

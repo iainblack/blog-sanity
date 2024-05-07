@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanString } from '../utils';
+import { stegaClean } from '@sanity/client/stega';
 
 export default function CenteredPanel({
     children,
@@ -17,8 +17,7 @@ export default function CenteredPanel({
         xl: 'min-h-[150vh] lg:min-h-[100vh]',
     };
 
-    const cleanS = cleanString(size);
-    const sizeClass = sizeClasses[cleanS];
+    const sizeClass = sizeClasses[stegaClean(size)];
 
     return (
         <div

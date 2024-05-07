@@ -1,3 +1,4 @@
+import { pages } from "@/components/utils";
 import { BlockContentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
@@ -7,6 +8,15 @@ export default defineType({
   icon: BlockContentIcon,
   type: "document",
   fields: [
+    {
+      name: "pageId",
+      title: "Page",
+      type: "string",
+      description: "The page that this panel should be displayed on.",
+      options: {
+        list: pages.map((page) => page.name),
+      }
+    },
     defineField({
       name: "size",
       title: "Panel Size",
