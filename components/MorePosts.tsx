@@ -31,30 +31,23 @@ export default function MorePosts({ previous, next, }: { previous?: Post, next?:
     return (
         <aside className="flex justify-center w-full my-20 p-3">
             <div className="flex justify-center w-full">
-                {previous ? (
-                    <button className="flex flex-col py-3 pr-3 border border-gray-200 rounded-l-xl shadow-lg hover:shadow-inner" onClick={goPrevious}>
+                <button disabled={!previous} className={`flex flex-col py-3 pr-3 border border-gray-200 rounded-l-xl shadow-xl ${previous ? 'hover:shadow-inner' : ''} `} onClick={goPrevious}>
+                    <div className="flex justify-between items-center space-x-2">
+                        <ChevronLeftIcon className={`h-12 w-12 ${previous ? '' : 'text-gray-400'}`} />
+                        <div className=' min-w-24'>
+                            <div className={`text-sm ${previous ? '' : 'text-gray-400'}`}>Previous Post</div>
+                        </div>
+                    </div>
+                </button>
+                {
+                    <button disabled={!next} className={`flex flex-col py-3 pl-3 border border-gray-200 rounded-r-xl shadow-xl ${next ? 'hover:shadow-inner' : ''}`} onClick={goNext}>
                         <div className="flex justify-between items-center space-x-2">
-                            <ChevronLeftIcon className="h-12 w-12 text-gray-500" />
-                            <div>
-                                <div className="text-sm text-gray-500">Next Post</div>
-                                <div className="text-lg font-bold">{previous.title}</div>
+                            <div className="min-w-24">
+                                <div className={`text-sm ${next ? '' : 'text-gray-400'}`}>Next Post</div>
                             </div>
+                            <ChevronRightIcon className={`h-12 w-12 ${next ? '' : 'text-gray-400'}`} />
                         </div>
                     </button>
-                ) : <div></div>
-                }
-                {
-                    next ? (
-                        <button className="flex flex-col py-3 pl-3 border border-gray-200 rounded-r-xl shadow-lg hover:shadow-inner" onClick={goNext}>
-                            <div className="flex justify-between items-center space-x-2">
-                                <div>
-                                    <div className="text-sm text-gray-500">Next Post</div>
-                                    <div className="text-lg font-bold">{next.title}</div>
-                                </div>
-                                <ChevronRightIcon className="h-12 w-12 text-gray-500" />
-                            </div>
-                        </button>
-                    ) : <div></div>
                 }
             </div >
         </aside >

@@ -28,7 +28,7 @@ export default function PostPreviewList({ posts }: PostPreviewListProps) {
             {posts?.map((post) => (
                 <div
                     key={post._id}
-                    className={`w-full sm:w-2/3 md:w-3/4 xl:w-1/2 border border-gray-400 bg-white px-3 py-3 my-2 shadow-md hover:shadow-lg rounded-xl transition-shadow cursor-pointer`}
+                    className={`w-full sm:w-2/3 md:w-3/4 xl:w-1/2 border border-gray-400 bg-white px-3 py-3 my-2 shadow-lg hover:shadow-inner hover:bg-gray-200 rounded-xl transition-shadow cursor-pointer`}
                 >
                     <Link href={`${path}/posts/${post.slug}`}>
                         <div className="flex flex-col justify-center md:flex-row md:justify-between items-center">

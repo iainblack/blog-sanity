@@ -62,7 +62,7 @@ export default async function PostPage({ params: { slug } }: Props) {
       <article className="mx-auto max-w-4xl">
         <PostHeader post={posts.currentPost} />
         {posts.currentPost.content?.length && (
-          <PortableText className="mx-auto max-w-4xl" value={posts.currentPost.content} />
+          <PortableText className="mx-auto max-w-4xl body-text" value={posts.currentPost.content} />
         )}
       </article>
       <MorePosts previous={posts.previousPost} next={posts.nextPost} />

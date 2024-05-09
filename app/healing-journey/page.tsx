@@ -10,13 +10,19 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import PostFilters from "@/components/Post/PostFilters";
 import PostPreviewList from "@/components/Post/PostPreviewList";
 
-function Intro(props: { title: string | null | undefined; }) {
+function Intro(props: { title?: string; subtitle?: string; }) {
   const title = props.title || demo.title;
   return (
-    <section className="my-10 flex justify-center items-center">
-      <h1 className="header-text text-center">
-        {title || demo.title}
-      </h1>
+    <section className="mt-10 mb-8 flex justify-center items-center">
+      <div className="flex flex-col items-center">
+        <h1 className="header-text text-center">
+          {title || demo.title}
+        </h1>
+        {props.subtitle &&
+          <h2 className="subheader-text text-center body-text mt-3">
+            {props.subtitle}
+          </h2>}
+      </div>
     </section>
   );
 }
@@ -54,7 +60,7 @@ export default function Page() {
       <Intro title={"Lou's Healing Journey"} />
       <div className="flex flex-col items-center w-full px-4">
         <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} />
-        {loading && <LoadingSpinner />}
+        {loading && <div className="w-full h-80"><LoadingSpinner /></div>}
         {!loading &&
           <>
             <PostPreviewList posts={postState.visiblePosts} />

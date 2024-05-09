@@ -69,10 +69,20 @@ export default function Header() {
         )
     }
 
+    const subscribeInput = () => {
+        return (
+            <div className="hidden lg:flex">
+
+                <input type="email" placeholder="Enter your email" className="border border-black p-2 w-56 text-sm rounded-l-lg focus:outline-0" />
+                <button className="border border-black p-2 transition-colors duration-200 bg-black text-white hover:bg-white hover:text-black text-sm rounded-r-lg">Subscribe</button>
+            </div>
+        )
+    }
+
     return (
         <header className={`header border-b bg-white ${headerVisible ? '' : 'header-hidden'}`}>
-            <div className="container mx-auto p-5 xl:px-0">
-                <nav className="flex justify-between items-center py-3 px-8 xl:py-5 xl:px-0">
+            <div className="container mx-auto p-5">
+                <nav className="flex justify-between items-center py-3 px-8 xl:py-5">
                     <a href="/" className="text-2xl font-bold">
                         {demo.title}
                     </a>
@@ -84,7 +94,8 @@ export default function Header() {
                                         <Link href={`/${page.slug}`} className="hover:underline">{page.name}</Link>
                                     </li>
                                 ))}
-                            </ul><button className="hidden lg:block border border-black py-3 px-12 transition-colors duration-200 hover:bg-black hover:text-white">
+                            </ul>
+                            <button className="hidden lg:block border border-black py-3 px-12 transition-colors duration-200 hover:bg-black hover:text-white">
                                 Subscribe
                             </button>
                         </>
