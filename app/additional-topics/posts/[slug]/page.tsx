@@ -7,7 +7,6 @@ import { Suspense } from "react";
 import Avatar from "@/components/avatar";
 import CoverImage from "@/components/CoverImage";
 import DateComponent from "@/components/date";
-import MoreStories from "@/components/more-stories";
 import PortableText from "@/components/portable-text";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
