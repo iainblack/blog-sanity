@@ -9,17 +9,7 @@ import Pagination from "@/components/Pagination";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import PostFilters from "@/components/Post/PostFilters";
 import PostPreviewList from "@/components/Post/PostPreviewList";
-
-function Intro(props: { title: string | null | undefined; }) {
-  const title = props.title || demo.title;
-  return (
-    <section className="my-10 flex justify-center items-center">
-      <h1 className="header-text text-center">
-        {title || demo.title}
-      </h1>
-    </section>
-  );
-}
+import { Intro } from "@/components/PageIntro";
 
 interface PostState {
   visiblePosts?: Post[];
@@ -54,7 +44,7 @@ export default function Page() {
       <Intro title={"Additional Topics"} />
       <div className="flex flex-col items-center w-full px-4">
         <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} />
-        {loading && <LoadingSpinner />}
+        {loading && <div className="w-full h-80"><LoadingSpinner /></div>}
         {!loading &&
           <>
             <PostPreviewList posts={postState.visiblePosts} />

@@ -1,5 +1,4 @@
 "use client";
-import * as demo from "@/sanity/lib/demo";
 import {
   Post,
 } from "@/sanity/lib/queries";
@@ -9,23 +8,7 @@ import Pagination from "@/components/Pagination";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import PostFilters from "@/components/Post/PostFilters";
 import PostPreviewList from "@/components/Post/PostPreviewList";
-
-function Intro(props: { title?: string; subtitle?: string; }) {
-  const title = props.title || demo.title;
-  return (
-    <section className="mt-10 mb-8 flex justify-center items-center">
-      <div className="flex flex-col items-center">
-        <h1 className="header-text text-center">
-          {title || demo.title}
-        </h1>
-        {props.subtitle &&
-          <h2 className="subheader-text text-center body-text mt-3">
-            {props.subtitle}
-          </h2>}
-      </div>
-    </section>
-  );
-}
+import { Intro } from "@/components/PageIntro";
 
 interface PostState {
   visiblePosts?: Post[];
