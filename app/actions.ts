@@ -41,3 +41,41 @@ export const getPostsByPage = async (pageId: string, order: string = 'desc', off
 
   return { posts, totalPosts: total };
 }
+
+interface PostNeighbors {
+  currentPost?: Post,
+  previousPost?: Post,
+  nextPost?: Post
+}
+
+export const getPostAndNeighbors = async (slug: string, pageId: string) => {
+  // Fetch current post first
+  const currentPostQuery = groq`*[_type == "post" && slug.current == $slug && pageId == $pageId][0] {
+    ${postFields}
+  }`;
+  const currentPost = await sanityFetch<Post>({
+    query: currentPostQuery,
+    params: { slug, pageId },
+  });
+
+  if (!currentPost) return { currentPost: null, previousPost: null, nextPost: null };
+
+  const previousPostQuery = groq`*[_type == "post" && pageId == $pageId && _createdAt < $currentDate] | order(_createdAt desc)[0] {
+    ${postFields}
+  }`;
+  const nextPostQuery = groq`*[_type == "post" && pageId == $pageId && _createdAt > $currentDate] | order(_createdAt asc)[0] {
+    ${postFields}
+  }`;
+
+  const [previousPost, nextPost] = await Promise.all([
+    sanityFetch<Post>({ query: previousPostQuery, params: { pageId, currentDate: currentPost._createdAt } }),
+    sanityFetch<Post>({ query: nextPostQuery, params: { pageId, currentDate: currentPost._createdAt } })
+  ]);
+
+  return {
+    currentPost,
+    previousPost,
+    nextPost,
+  };
+}
+

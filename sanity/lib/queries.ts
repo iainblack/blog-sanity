@@ -20,9 +20,11 @@ export interface Author {
 /// POSTS
 export interface Post {
   _id: string;
+  _createdAt: string;
   pageId: string;
   status: "draft" | "published";
   title: string;
+  content: PortableTextBlock[];
   slug: string;
   excerpt?: string | null;
   coverImage?: (Image & { alt?: string }) | null;
@@ -32,11 +34,13 @@ export interface Post {
 
 export const postFields = groq`
   _id,
+  _createdAt,
   "status": select(_originalId in path("drafts.**") => "draft", "published"),
   "title": coalesce(title, "Untitled"),
   "slug": slug.current,
   excerpt,
   coverImage,
+  content,
   "date": coalesce(date, _updatedAt),
   "author": author->{"name": coalesce(name, "Anonymous"), picture},
 `;
@@ -50,6 +54,7 @@ export const postFields = groq`
 /// CONTENT PANEL
 export interface ContentPanel {
   _id: string;
+  _createdAt: string;
   image?: (Image & { alt?: string, position?: "left" | "right" }) | null;
   title?: string;
   content: PortableTextBlock[];

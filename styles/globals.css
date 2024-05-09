@@ -28,5 +28,5 @@ body {
 }
 
 .header-text {
-    @apply text-6xl lg:text-5xl font-bold tracking-tighter leading-tight whitespace-pre-wrap;
+    @apply text-4xl lg:text-5xl font-bold tracking-tighter leading-tight whitespace-pre-wrap;
 }
