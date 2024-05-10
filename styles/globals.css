@@ -38,3 +38,7 @@ body {
 .two-tone-button {
     @apply border border-black py-3 px-12 transition-colors duration-200 hover:bg-contrast-bg;
 }
+
+.two-tone-button-inverse {
+    @apply border border-black py-3 px-12 transition-colors duration-200 hover:bg-dark-bg hover:text-white bg-contrast-bg text-black;
+}

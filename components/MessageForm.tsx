@@ -28,6 +28,7 @@ interface FormState {
 }
 
 export default function MessageForm() {
+    const [loading, setLoading] = useState(false);
     const [formState, setFormState] = useState<FormState>({
         firstName: {
             value: '',
@@ -79,6 +80,9 @@ export default function MessageForm() {
         if (!message.value) {
             errors.message.error = 'Message is required';
             isValid = false;
+        } else if (message.value.length < 10) {
+            errors.message.error = 'Message must be at least 10 characters';
+            isValid = false;
         }
 
         if (!isValid) setFormState(errors);
@@ -87,6 +91,7 @@ export default function MessageForm() {
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
+        setLoading(true);
         const { firstName, lastName, subject, message } = formState;
 
         e.preventDefault();
@@ -98,7 +103,7 @@ export default function MessageForm() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ senderEmail: email, firstName: firstName.value, lastName: lastName.value, subject: subject.value, message: message.value }),
+            body: JSON.stringify({ senderEmail: email.value, firstName: firstName.value, lastName: lastName.value, subject: subject.value, message: message.value }),
         });
 
         if (response.ok) {
@@ -120,6 +125,7 @@ export default function MessageForm() {
                 },
                 status: 'Message sent successfully',
             });
+            setLoading(false);
         } else {
             setFormState({
                 ...formState,
