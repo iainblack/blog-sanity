@@ -1,4 +1,5 @@
 "use client";
+import * as demo from "@/sanity/lib/demo";
 import {
   Post,
 } from "@/sanity/lib/queries";
@@ -28,7 +29,7 @@ export default function Page() {
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
-      const response = await getPostsByPage("Lou's Healing Journey", order, page * limit, limit);
+      const response = await getPostsByPage("Messages for Humanity", order, page * limit, limit);
       setPostState({
         visiblePosts: response.posts,
         totalPosts: response.totalPosts,
@@ -40,7 +41,7 @@ export default function Page() {
 
   return (
     <div className="mx-auto px-5">
-      <Intro title={"Lou's Healing Journey"} />
+      <Intro title={"Messages for Humanity"} />
       <div className="flex flex-col items-center w-full px-4">
         <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} />
         {loading && <div className="w-full h-28"><LoadingSpinner /></div>}

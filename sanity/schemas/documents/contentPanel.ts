@@ -14,7 +14,7 @@ export default defineType({
       type: "string",
       description: "The page that this panel should be displayed on.",
       options: {
-        list: pages.map((page) => page.name),
+        list: pages.filter((page) => page.contentType === "post").map((page) => page.name),
       }
     },
     defineField({

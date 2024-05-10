@@ -16,8 +16,8 @@ export default function PostHeader({ post: post }: { post: Post }) {
                     <DateComponent dateString={post.date} />
                     {post.author?.name && (
                         <div className="flex items-center">
-                            <UserIcon className="text-gray-500 mr-1 w-5 h-5" />
-                            <div className="text-gray-500 text-sm">
+                            <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
+                            <div className="text-gray-600 text-sm">
                                 {post.author.name}
                             </div>
                         </div>
@@ -28,8 +28,8 @@ export default function PostHeader({ post: post }: { post: Post }) {
                 <DateComponent dateString={post.date} />
                 {post.author && (
                     <div className="flex items-center">
-                        <UserIcon className="text-gray-500 mr-1 w-5 h-5" />
-                        <div className="text-gray-500 text-sm">
+                        <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
+                        <div className="text-gray-600 text-sm">
                             {post.author.name}
                         </div>
                     </div>

@@ -17,7 +17,7 @@ const BackButton: React.FC<BackButtonProps> = ({ route, title }) => {
 
     return (
         <button onClick={handleClick}>
-            <div className='flex items-center justify-center underline text-gray-500'>
+            <div className='flex items-center justify-center underline text-gray-600'>
                 <ChevronLeftIcon className='h-6 w-6' />
                 {title ?? 'Back'}
             </div>

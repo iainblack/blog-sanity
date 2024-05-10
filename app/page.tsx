@@ -36,7 +36,7 @@ function Panel({
           />
         </div>
       }
-      <div className={`mt-4 w-full text-left max-w-2xl ${image && image?.asset ? 'lg:max-w-3xl' : 'lg:max-w-5xl'} lg:mt-0 ${image && image?.asset ? 'md:text-left' : 'md:text-center'} ${textPosition}`}>
+      <div className={`mt-4 w-full text-left max-w-2xl ${image && image?.asset ? 'lg:max-w-lg' : 'lg:max-w-2xl'} lg:mt-0 ${image && image?.asset ? 'md:text-left' : 'md:text-center'} ${textPosition}`}>
         {title && <h1 className="flex-wrap header-text">
           {title}
         </h1>}
@@ -55,11 +55,11 @@ export default async function Page() {
       query: settingsQuery,
     }),
   ]);
-  const contentPanel = await getContentPanelsByPage('Home');
+  const contentPanels = await getContentPanelsByPage('Home');
 
   return (
-    contentPanel && contentPanel.length > 0 && <>
-      {contentPanel.map((panel) => (
+    contentPanels && contentPanels.length > 0 && <>
+      {contentPanels.map((panel) => (
         <Panel key={panel._id} panel={panel} />
       ))}
     </>)
