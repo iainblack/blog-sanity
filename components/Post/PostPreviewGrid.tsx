@@ -1,5 +1,5 @@
 import { Post } from "@/sanity/lib/queries";
-import PostPreview from "./PostPreview";
+import { PostPreview } from "./PostPreview";
 import Link from "next/link";
 
 
