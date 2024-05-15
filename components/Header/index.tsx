@@ -5,11 +5,13 @@ import { useState, useEffect } from "react";
 import { MenuIcon, CloseIcon, ChevronRightIcon } from '@sanity/icons'
 import './header.css';
 import { pages } from "../utils";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
     const [lastScrollY, setLastScrollY] = useState(0);
     const [headerVisible, setHeaderVisible] = useState(true);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const currentPath = usePathname();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -50,6 +52,8 @@ export default function Header() {
         setIsMenuOpen(false);
     }
 
+    const isActive = (path: string) => currentPath === `/${path}`;
+
     const Menu = () => {
         return (
             <div className="fixed mx-auto left-0 bg-white w-full h-screen flex flex-col py-3 px-8">
@@ -57,7 +61,7 @@ export default function Header() {
                     {pages.filter(page => page.name !== 'Home').map((page) => (
                         <li key={page.slug}>
                             <Link href={`/${page.slug}`} onClick={closeMenu} className="hover:underline">
-                                <div className="flex space-x-1 items-center">
+                                <div className={`flex space-x-1 items-center ${isActive(page.slug) ? 'text-contrast-bg' : ''}`}>
                                     <h1 className="text-2xl">{page.name}</h1>
                                     <ChevronRightIcon fontSize={24} />
                                 </div>
@@ -79,14 +83,14 @@ export default function Header() {
                     {!isMenuOpen && (
                         <>
                             <ul className={`space-x-5 hidden lg:flex flex-wrap justify-center items-center align-baseline px-12 py-3 max-w-[60vw] lg:max-w-[50vw]`}>
-                                {pages.filter(page => page.name !== 'Home').map((page) => (
+                                {pages.filter(page => page.name !== 'Home' && page.name !== 'Contact').map((page) => (
                                     <li key={page.slug}>
-                                        <Link href={`/${page.slug}`} className="hover:text-contrast-bg">{page.name}</Link>
+                                        <Link href={`/${page.slug}`} className={`hover:text-contrast-bg hover:underline ${isActive(page.slug) ? 'text-primary' : ''}`}>{page.name}</Link>
                                     </li>
                                 ))}
                             </ul>
                             <Link href='/contact' className="hidden lg:block two-tone-button">
-                                Get in touch
+                                Contact
                             </Link>
                         </>
                     )}

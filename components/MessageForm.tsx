@@ -2,6 +2,8 @@
 'use client';
 
 import { useState } from 'react';
+import LoadingSpinner from './LoadingSpinner';
+import Alert from './Alert';
 
 interface FormState {
     firstName: {
@@ -27,68 +29,30 @@ interface FormState {
     status: string;
 }
 
+const initialFormState: FormState = {
+    firstName: {
+        value: '',
+    },
+    lastName: {
+        value: '',
+    },
+    email: {
+        value: '',
+    },
+    subject: {
+        value: '',
+    },
+    message: {
+        value: '',
+    },
+    status: '',
+};
+
 export default function MessageForm() {
     const [loading, setLoading] = useState(false);
-    const [formState, setFormState] = useState<FormState>({
-        firstName: {
-            value: '',
-        },
-        lastName: {
-            value: '',
-        },
-        email: {
-            value: '',
-        },
-        subject: {
-            value: '',
-        },
-        message: {
-            value: '',
-        },
-        status: '',
-    });
+    const [formState, setFormState] = useState<FormState>(initialFormState);
+    const [showAlert, setShowAlert] = useState(false);
 
-    const isValidForm = () => {
-        const { firstName, lastName, email, subject, message } = formState;
-        let isValid = true;
-        let errors = { ...formState };
-
-        if (firstName.value === '') {
-            errors.firstName.error = 'First name is required';
-            console.log('First name is required')
-            isValid = false;
-        }
-
-        if (!lastName.value) {
-            errors.lastName.error = 'Last name is required';
-            isValid = false;
-        }
-
-        if (!email.value) {
-            errors.email.error = 'Email is required';
-            isValid = false;
-        } else if (!email.value.includes('@')) {
-            errors.email.error = 'Invalid email';
-            isValid = false;
-        }
-
-        if (!subject.value) {
-            errors.subject.error = 'Subject is required';
-            isValid = false;
-        }
-
-        if (!message.value) {
-            errors.message.error = 'Message is required';
-            isValid = false;
-        } else if (message.value.length < 10) {
-            errors.message.error = 'Message must be at least 10 characters';
-            isValid = false;
-        }
-
-        if (!isValid) setFormState(errors);
-
-        return isValid;
-    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         setLoading(true);
@@ -96,7 +60,9 @@ export default function MessageForm() {
 
         e.preventDefault();
 
-        if (!isValidForm()) return;
+        if (!isValidForm({ formState, setFormState, setLoading })) {
+            return;
+        }
 
         const response = await fetch('/api/sendEmail', {
             method: 'POST',
@@ -106,38 +72,25 @@ export default function MessageForm() {
             body: JSON.stringify({ senderEmail: email.value, firstName: firstName.value, lastName: lastName.value, subject: subject.value, message: message.value }),
         });
 
+
         if (response.ok) {
-            setFormState({
-                firstName: {
-                    value: '',
-                },
-                lastName: {
-                    value: '',
-                },
-                email: {
-                    value: '',
-                },
-                subject: {
-                    value: '',
-                },
-                message: {
-                    value: '',
-                },
-                status: 'Message sent successfully',
-            });
-            setLoading(false);
+            setFormState({ ...formState, status: 'Message sent successfully' });
+            setShowAlert(true);
         } else {
             setFormState({
                 ...formState,
                 status: 'Message failed to send',
             });
+            setShowAlert(true);
         }
+
+        setLoading(false);
     };
 
     const { firstName, lastName, email, subject, message } = formState;
 
     return (
-        <div className='w-full p-5 max-w-xl'>
+        <div className='w-full p-5 md:max-w-xl'>
             <form className="w-full">
                 <div className="flex flex-wrap -mx-3 mb-2">
                     <div className="w-full md:w-1/2 px-3 mb-2 md:mb-0">
@@ -193,12 +146,66 @@ export default function MessageForm() {
                         {message.error && <p className="text-red-500 text-xs italic">{message.error}</p>}
                     </div>
                 </div>
-                <div className="flex justify-start">
-                    <button onClick={handleSubmit} className="two-tone-button" type="button">
-                        Submit
+                <div className="flex justify-start h-18">
+                    <button onClick={handleSubmit} className="two-tone-button w-40 h-[50px] mr-3" type="button">
+                        {loading ? <LoadingSpinner size={16} /> : 'Submit'}
                     </button>
+                    {formState.status &&
+                        <Alert show={showAlert}
+                            setShow={setShowAlert}
+                            message={formState.status}
+                            type={formState.status === 'Message sent successfully' ? 'success' : 'error'}
+                        />
+                    }
                 </div>
             </form>
         </div >
     );
+}
+
+
+const isValidForm = ({ formState, setFormState, setLoading }
+    : { formState: FormState, setFormState: (formState: FormState) => void, setLoading: (loading: boolean) => void }) => {
+    const { firstName, lastName, email, subject, message } = formState;
+    let isValid = true;
+    let errors = { ...formState };
+
+    if (firstName.value === '') {
+        errors.firstName.error = 'First name is required';
+        console.log('First name is required')
+        isValid = false;
+    }
+
+    if (!lastName.value) {
+        errors.lastName.error = 'Last name is required';
+        isValid = false;
+    }
+
+    if (!email.value) {
+        errors.email.error = 'Email is required';
+        isValid = false;
+    } else if (!email.value.includes('@')) {
+        errors.email.error = 'Invalid email';
+        isValid = false;
+    }
+
+    if (!subject.value) {
+        errors.subject.error = 'Subject is required';
+        isValid = false;
+    }
+
+    if (!message.value) {
+        errors.message.error = 'Message is required';
+        isValid = false;
+    } else if (message.value.length < 10) {
+        errors.message.error = 'Message must be at least 10 characters';
+        isValid = false;
+    }
+
+    if (!isValid) {
+        setFormState(errors);
+        setLoading(false);
+    }
+
+    return isValid;
 }

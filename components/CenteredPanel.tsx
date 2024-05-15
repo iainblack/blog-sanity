@@ -22,7 +22,7 @@ export default function CenteredPanel({
     return (
         <div
             id="content-panel-centered"
-            className={`centered-container ${sizeClass} ${singleContent ? '' : ''}`}
+            className={`centered-container ${sizeClass} bg-black}`}
         >
             {children}
         </div >

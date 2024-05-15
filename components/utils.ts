@@ -7,3 +7,5 @@ export const pages: { name: string; slug: string, contentType?: string}[] = [
     { name: "Recommended Resources", slug: "recommended-resources", contentType: "contentPanel"},
     { name: "Photos", slug: "photos", contentType: "gallery" },
 ];
+
+export const emailPreferenceOptions = pages.filter((page) => page.contentType === "post").map((page) => page.name);

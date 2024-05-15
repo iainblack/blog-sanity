@@ -12,9 +12,7 @@ export default function Page() {
                     I would love to hear from you.
                 </p>
             </div>
-            <div>
-                <MessageForm />
-            </div>
+            <MessageForm />
         </div>
     );
 }
