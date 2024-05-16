@@ -9,3 +9,9 @@ export const pages: { name: string; slug: string, contentType?: string}[] = [
 ];
 
 export const emailPreferenceOptions = pages.filter((page) => page.contentType === "post").map((page) => page.name);
+
+export interface BasicAlertState {
+    message: string;
+    type: "error" | "success";
+    show: boolean;
+}

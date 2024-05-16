@@ -2,13 +2,18 @@
 
 import { useState } from "react";
 import PreferencesModal from "./PreferencesModal";
-import { emailPreferenceOptions } from "./utils";
+import { BasicAlertState, emailPreferenceOptions } from "./utils";
+import Alert from "./Alert";
+import { isEmailSubscribedAction, subscribeUserAction } from "@/firebase/FirebaseActions";
+import LoadingSpinner from "./LoadingSpinner";
+import Link from "next/link";
 
 export default function SignUpForm() {
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [alertState, setAlertState] = useState<BasicAlertState>({ message: "", type: "success", show: false });
 
     const initialPreferences = emailPreferenceOptions.reduce((acc: { [key: string]: boolean }, option) => {
         acc[option] = true;
@@ -17,9 +22,9 @@ export default function SignUpForm() {
 
     const [preferences, setPreferences] = useState(initialPreferences);
 
+    const handleSignUp = async () => {
+        setError(null);
 
-    const handleSignUp = () => {
-        // validate email
         if (!email) {
             setError("Email is required");
             return;
@@ -29,14 +34,35 @@ export default function SignUpForm() {
             return;
         }
 
+        const emailExists = await isEmailSubscribedAction(email);
+        if (emailExists) {
+            setError("Email is already subscribed.");
+            return;
+        }
+
         setIsModalOpen(true);
     };
 
-    const handleSavePreferences = () => {
-        // Here you can handle saving preferences to the backend
-        console.log("Email:", email);
-        console.log("Preferences:", preferences);
+    const handleSavePreferences = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        setLoading(true);
+
+        const success = await subscribeUserAction(email, preferences);
+
+        if (success) {
+            setAlertState({ show: true, message: "Successfully subscribed.", type: "success" });
+        } else {
+            setAlertState({ show: true, message: "Failed to subscribe. Please try again.", type: "error" });
+        }
+
+        setEmail("");
         setIsModalOpen(false);
+        setLoading(false);
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            handleSignUp();
+        }
     };
 
     return (
@@ -48,14 +74,15 @@ export default function SignUpForm() {
                 aria-label="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={handleKeyDown}
             />
             {error && <p className="text-red-500 text-sm ml-2 absolute -top-6">{error}</p>}
             <button
-                className="two-tone-button-inverse whitespace-nowrap h-12"
+                className="two-tone-button-inverse whitespace-nowrap h-12 w-52"
                 type="button"
                 onClick={handleSignUp}
             >
-                Sign Up
+                {loading ? <LoadingSpinner size={16} /> : "Sign Up"}
             </button>
             <PreferencesModal
                 isOpen={isModalOpen}
@@ -63,6 +90,12 @@ export default function SignUpForm() {
                 preferences={preferences}
                 setPreferences={setPreferences}
                 handleSave={handleSavePreferences}
+            />
+            <Alert
+                show={alertState.show}
+                onClose={() => setAlertState({ ...alertState, show: false })}
+                message={alertState.message}
+                type={alertState.type}
             />
         </div>
     );

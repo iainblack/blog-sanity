@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import LoadingSpinner from './LoadingSpinner';
 import Alert from './Alert';
+import { BasicAlertState } from './utils';
 
 interface FormState {
     firstName: {
@@ -26,7 +27,6 @@ interface FormState {
         value: string;
         error?: string;
     };
-    status: string;
 }
 
 const initialFormState: FormState = {
@@ -45,13 +45,12 @@ const initialFormState: FormState = {
     message: {
         value: '',
     },
-    status: '',
 };
 
 export default function MessageForm() {
     const [loading, setLoading] = useState(false);
     const [formState, setFormState] = useState<FormState>(initialFormState);
-    const [showAlert, setShowAlert] = useState(false);
+    const [alertState, setAlertState] = useState<BasicAlertState>({ message: '', type: 'success', show: false });
 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -74,14 +73,9 @@ export default function MessageForm() {
 
 
         if (response.ok) {
-            setFormState({ ...formState, status: 'Message sent successfully' });
-            setShowAlert(true);
+            setAlertState({ show: true, message: 'Message sent successfully', type: 'success' });
         } else {
-            setFormState({
-                ...formState,
-                status: 'Message failed to send',
-            });
-            setShowAlert(true);
+            setAlertState({ show: true, message: 'Message failed to send', type: 'error' });
         }
 
         setLoading(false);
@@ -90,7 +84,7 @@ export default function MessageForm() {
     const { firstName, lastName, email, subject, message } = formState;
 
     return (
-        <div className='w-full p-5 md:max-w-xl'>
+        <div className='w-full p-5 md:max-w-xl lg:mt-20'>
             <form className="w-full">
                 <div className="flex flex-wrap -mx-3 mb-2">
                     <div className="w-full md:w-1/2 px-3 mb-2 md:mb-0">
@@ -150,13 +144,12 @@ export default function MessageForm() {
                     <button onClick={handleSubmit} className="two-tone-button w-40 h-[50px] mr-3" type="button">
                         {loading ? <LoadingSpinner size={16} /> : 'Submit'}
                     </button>
-                    {formState.status &&
-                        <Alert show={showAlert}
-                            onClose={() => setShowAlert(false)}
-                            message={formState.status}
-                            type={formState.status === 'Message sent successfully' ? 'success' : 'error'}
-                        />
-                    }
+                    <Alert
+                        show={alertState.show}
+                        onClose={() => setAlertState({ ...alertState, show: false })}
+                        message={alertState.message}
+                        type={alertState.type}
+                    />
                 </div>
             </form>
         </div >
