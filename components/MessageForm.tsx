@@ -152,7 +152,7 @@ export default function MessageForm() {
                     </button>
                     {formState.status &&
                         <Alert show={showAlert}
-                            setShow={setShowAlert}
+                            onClose={() => setShowAlert(false)}
                             message={formState.status}
                             type={formState.status === 'Message sent successfully' ? 'success' : 'error'}
                         />

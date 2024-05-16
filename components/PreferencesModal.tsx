@@ -1,7 +1,5 @@
 'use client';
-
 import React, { useEffect } from "react";
-import { pages } from "./utils";
 
 const PreferencesModal = ({ isOpen, onClose, preferences, setPreferences, handleSave }:
     {
