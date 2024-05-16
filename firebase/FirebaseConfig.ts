@@ -1,17 +1,17 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import * as admin from 'firebase-admin';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyBpBUmNp_Qlj5qkYuXMsD7NUXCqBnIFmmg",
-    authDomain: "lou-blog-f8703.firebaseapp.com",
-    projectId: "lou-blog-f8703",
-    storageBucket: "lou-blog-f8703.appspot.com",
-    messagingSenderId: "462819443080",
-    appId: "1:462819443080:web:7eeed2dabf9cea3159fa3d",
-    measurementId: "G-GBVE29DVPK"
+const serviceAccount: admin.ServiceAccount = {
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n') || '',
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+if (!admin.apps.length) {
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+    });
+}
+
+const db = admin.firestore();
 
 export { db };
