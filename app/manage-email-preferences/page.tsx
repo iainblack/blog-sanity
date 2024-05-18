@@ -1,26 +1,33 @@
 'use client';
 
-import { useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { getEmailPreferencesAction, unsubscribeUserAction, updateUserPreferencesAction } from '@/firebase/FirebaseActions';
 import PreferencesForm from '@/components/PreferencesForm';
 import Alert from '@/components/Alert';
 import { BasicAlertState } from '@/components/utils';
+import { CheckmarkCircleIcon } from '@sanity/icons'
+import { useSearchParams } from 'next/navigation';
 
 export default function Page() {
-    const [email, setEmail] = useState('');
+    const [inputValue, setInputValue] = useState('');
     const [preferences, setPreferences] = useState<{ [key: string]: boolean } | undefined>(undefined);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [alertState, setAlertState] = useState<BasicAlertState>({ message: '', type: 'success', show: false });
+    const [showUnsubscribed, setShowUnsubscribed] = useState(false);
 
-    const handleEmailSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const params = useSearchParams();
+    const emailParam = params.get('email');
+    const unsubscribeEmailParam = params.get('unsubscribe');
+
+    const handleEmailSubmit = async (e?: React.FormEvent, emailParam?: string) => {
+        e && e.preventDefault();
         setLoading(true);
         setError('');
 
         try {
-            const currentPreferences = await getEmailPreferencesAction(email);
+            const currentPreferences = await getEmailPreferencesAction(emailParam ?? inputValue);
             if (currentPreferences) {
                 setPreferences(currentPreferences);
             } else {
@@ -35,25 +42,54 @@ export default function Page() {
     };
 
     const handleSubmit = async () => {
-        const success = await updateUserPreferencesAction(email, preferences);
+        const success = await updateUserPreferencesAction(emailParam ?? inputValue, preferences);
         if (success) {
             setAlertState({ show: true, message: 'Preferences updated successfully.', type: 'success' });
             setPreferences(undefined);
-            setEmail('');
+            setInputValue('');
         } else {
             setAlertState({ show: true, message: 'Failed to update preferences. Please try again.', type: 'error' });
         }
     };
 
-    const handleUnsubscribeClick = async () => {
+    const handleUnsubscribeClick = async (email: string) => {
         const success = await unsubscribeUserAction(email);
         if (success) {
-            setAlertState({ show: true, message: 'Successfully unsubscribed.', type: 'success' });
-            setPreferences(undefined);
-            setEmail('');
+            setShowUnsubscribed(true);
         } else {
             setAlertState({ show: true, message: 'Failed to unsubscribe. Please try again.', type: 'error' });
         }
+    }
+
+    useEffect(() => {
+        if (unsubscribeEmailParam && !showUnsubscribed) {
+            handleUnsubscribeClick(unsubscribeEmailParam);
+        }
+    }, [params]);
+
+    useEffect(() => {
+        if (emailParam) {
+            handleEmailSubmit(undefined, emailParam);
+        }
+    }, [params]);
+
+    if (showUnsubscribed) {
+        return (
+            <div className="mx-auto flex-col py-6 md:flex-row md:pt-12 md:flex md:justify-evenly">
+                <div>
+                    <h1 className="header-text text-center">
+                        Unsubscribed
+                    </h1>
+                    <p className="body-text text-center mt-3">
+                        You have been successfully unsubscribed.
+                    </p>
+
+                    <div className="flex justify-center mt-5">
+                        <CheckmarkCircleIcon fontSize={68} color='green' />
+                    </div>
+                </div>
+            </div>
+        );
     }
 
     return (
@@ -63,7 +99,7 @@ export default function Page() {
                     Update Preferences
                 </h1>
                 <p className="body-text text-center mt-3">
-                    Enter your email to update your preferences.
+                    Enter your email to update your email preferences.
                 </p>
             </div>
             <div className='w-full p-5 md:max-w-xl lg:mt-20'>
@@ -75,8 +111,8 @@ export default function Page() {
                         <input
                             id="email"
                             type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
                             className={`contact-form-input ${error ? 'border-red-500' : ''}`}
                             required
                         />
@@ -97,7 +133,7 @@ export default function Page() {
                             preferences={preferences}
                             setPreferences={setPreferences}
                             handleSaveClick={handleSubmit}
-                            handleUnsubscribeClick={handleUnsubscribeClick}
+                            handleUnsubscribeClick={() => handleUnsubscribeClick(emailParam ?? inputValue)}
                         />
                     </div>
                 )}

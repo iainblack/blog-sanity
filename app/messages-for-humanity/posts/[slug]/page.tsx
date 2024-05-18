@@ -26,7 +26,7 @@ export async function generateMetadata(
   { params: { slug } }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const neighbors = await getPostAndNeighbors(slug, "Additional Topics");
+  const neighbors = await getPostAndNeighbors(slug, "Messages for Humanity");
   const previousImages = (await parent).openGraph?.images || [];
   const ogImage = resolveOpenGraphImage(neighbors.currentPost?.coverImage);
 
@@ -42,7 +42,7 @@ export async function generateMetadata(
 
 export default async function PostPage({ params: { slug } }: Props) {
 
-  const posts = await getPostAndNeighbors(slug, "Additional Topics");
+  const posts = await getPostAndNeighbors(slug, "Messages for Humanity");
 
   if (!posts.currentPost?._id) {
     return notFound();
@@ -50,7 +50,7 @@ export default async function PostPage({ params: { slug } }: Props) {
 
   return (
     <div className="container mx-auto px-5 relative py-5">
-      <BackButton route="/additional-topics" title="All Posts" />
+      <BackButton route="/messages-for-humanity" title="All Posts" />
       <article className="mx-auto max-w-4xl min-h-[50vh]">
         <PostHeader post={posts.currentPost} />
         {posts.currentPost.content?.length
