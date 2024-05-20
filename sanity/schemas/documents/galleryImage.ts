@@ -1,3 +1,4 @@
+import { pages } from "@/components/utils";
 import { ImageIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
@@ -12,6 +13,15 @@ export default defineType({
       title: "Picture",
       type: "image",
       fields: [
+        {
+            name: "pageId",
+            title: "Page",
+            type: "string",
+            description: "The page that this panel should be displayed on.",
+            options: {
+              list: pages.filter((page) => page.contentType === "gallery").map((page) => page.name),
+            }
+        },
         {
           name: "alt",
           type: "string",
