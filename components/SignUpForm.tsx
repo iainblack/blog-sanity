@@ -6,11 +6,11 @@ import { BasicAlertState, emailPreferenceOptions } from "./utils";
 import Alert from "./Alert";
 import { isEmailSubscribedAction, subscribeUserAction } from "@/firebase/FirebaseActions";
 import LoadingSpinner from "./LoadingSpinner";
-import Link from "next/link";
 
 export default function SignUpForm() {
     const [email, setEmail] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [isSubscribedLoading, setIsSubscribedLoading] = useState(false);
+    const [updatePreferencesLoading, setUpdatePreferencesLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [alertState, setAlertState] = useState<BasicAlertState>({ message: "", type: "success", show: false });
@@ -23,28 +23,33 @@ export default function SignUpForm() {
     const [preferences, setPreferences] = useState(initialPreferences);
 
     const handleSignUp = async () => {
+        setIsSubscribedLoading(true);
         setError(null);
 
         if (!email) {
+            setIsSubscribedLoading(false);
             setError("Email is required");
             return;
         }
         else if (!email.includes("@")) {
+            setIsSubscribedLoading(false);
             setError("Invalid email address");
             return;
         }
 
         const emailExists = await isEmailSubscribedAction(email);
         if (emailExists) {
+            setIsSubscribedLoading(false);
             setError("Email is already subscribed.");
             return;
         }
 
+        setIsSubscribedLoading(false);
         setIsModalOpen(true);
     };
 
     const handleSavePreferences = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        setLoading(true);
+        setUpdatePreferencesLoading(true);
 
         const success = await subscribeUserAction(email, preferences);
 
@@ -56,7 +61,7 @@ export default function SignUpForm() {
 
         setEmail("");
         setIsModalOpen(false);
-        setLoading(false);
+        setUpdatePreferencesLoading(false);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -78,11 +83,11 @@ export default function SignUpForm() {
             />
             {error && <p className="text-red-500 text-sm ml-2 absolute -top-6">{error}</p>}
             <button
-                className="two-tone-button-inverse whitespace-nowrap h-12 w-52"
+                className="two-tone-button whitespace-nowrap h-12 w-52"
                 type="button"
                 onClick={handleSignUp}
             >
-                {loading ? <LoadingSpinner size={16} /> : "Sign Up"}
+                {isSubscribedLoading ? <LoadingSpinner size={16} /> : "Sign Up"}
             </button>
             <PreferencesModal
                 isOpen={isModalOpen}
@@ -90,6 +95,7 @@ export default function SignUpForm() {
                 preferences={preferences}
                 setPreferences={setPreferences}
                 handleSave={handleSavePreferences}
+                loading={updatePreferencesLoading}
             />
             <Alert
                 show={alertState.show}

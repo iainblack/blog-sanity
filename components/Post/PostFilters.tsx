@@ -5,7 +5,7 @@ export default function PostFilters({ setOrder, order, postCount, loading }: { s
         <div className="flex pb-2 justify-left items-center">
             <label htmlFor="order-select" className="mr-2">Sort by:</label>
             <select
-                className="p-2 border-gray-300 rounded-md"
+                className="p-2 border-gray-300 rounded-md bg-inherit"
                 value={order}
                 onChange={(e) => setOrder(e.target.value)}
                 disabled={loading || !postCount || postCount === 0}

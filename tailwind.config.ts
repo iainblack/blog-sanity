@@ -9,9 +9,10 @@ export default {
         'default-bg': '#FFFBF5',
         'contrast-bg': '#D3D5CB',
         'dark-bg': '#322F2B',
-        'primary': '#8C9F8D',
-        'primary-dark': '#4D6B71',
-        'primary-light': '#A4B1A7',
+        'primary': '#A4B1A7',
+        'text-primary': '#1A1A1A',
+        'text-secondary': '#4D4D4D',
+        'text-contrast': '#FFFFFF',
       },
       fontFamily: {
         sans: ["var(--font-inter)"],

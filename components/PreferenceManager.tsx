@@ -2,7 +2,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
 import PreferencesForm from "./PreferencesForm";
-import { getEmailPreferencesAction, unsubscribeUserAction, updateUserPreferencesAction } from "@/firebase/FirebaseActions";
+import { getEmailPreferencesAction, isEmailSubscribedAction, unsubscribeUserAction, updateUserPreferencesAction } from "@/firebase/FirebaseActions";
 import { BasicAlertState } from "./utils";
 
 interface PreferencesManagerProps {
@@ -14,7 +14,8 @@ interface PreferencesManagerProps {
 export default function PreferencesManager({ setShowUnsubscribed, setAlertState, showUnsubscribed }: PreferencesManagerProps) {
     const [inputValue, setInputValue] = useState('');
     const [preferences, setPreferences] = useState<{ [key: string]: boolean } | undefined>(undefined);
-    const [loading, setLoading] = useState(false);
+    const [isSubscribedLoading, setIsSubscribedLoading] = useState(false);
+    const [updatePreferencesLoading, setUpdatePreferencesLoading] = useState(false);
     const [error, setError] = useState('');
 
     const params = useSearchParams();
@@ -35,33 +36,34 @@ export default function PreferencesManager({ setShowUnsubscribed, setAlertState,
 
     const handleEmailSubmit = async (e?: React.FormEvent, emailParam?: string) => {
         e && e.preventDefault();
-        setLoading(true);
+        setIsSubscribedLoading(true);
         setError('');
 
-        try {
-            const currentPreferences = await getEmailPreferencesAction(emailParam ?? inputValue);
-            if (currentPreferences) {
-                setPreferences(currentPreferences);
-            } else {
-                setError('Email not found.');
-            }
-        } catch (error) {
-            console.error('Error fetching preferences:', error);
-            setError('Error fetching preferences. Please try again.');
-        } finally {
-            setLoading(false);
+        const isSubscribed = await isEmailSubscribedAction(emailParam ?? inputValue);
+        if (!isSubscribed) {
+            setError('Email not found.');
+            setIsSubscribedLoading(false);
+            return;
         }
+
+        const currentPreferences = await getEmailPreferencesAction(emailParam ?? inputValue);
+        if (currentPreferences) {
+            setPreferences(currentPreferences);
+        } else {
+            setError('Failed to fetch preferences. Please try again.');
+        }
+        setIsSubscribedLoading(false);
     };
 
     const handleSubmit = async () => {
-        const success = await updateUserPreferencesAction(emailParam ?? inputValue, preferences);
+        setUpdatePreferencesLoading(true);
+        const success = await updateUserPreferencesAction(inputValue, preferences);
         if (success) {
             setAlertState({ show: true, message: 'Preferences updated successfully.', type: 'success' });
-            setPreferences(undefined);
-            setInputValue('');
         } else {
             setAlertState({ show: true, message: 'Failed to update preferences. Please try again.', type: 'error' });
         }
+        setUpdatePreferencesLoading(false);
     };
 
     const handleUnsubscribeClick = async (email: string) => {
@@ -92,9 +94,9 @@ export default function PreferencesManager({ setShowUnsubscribed, setAlertState,
                     <button
                         type="submit"
                         className="two-tone-button w-40 h-[50px] mt-4"
-                        disabled={loading}
+                        disabled={isSubscribedLoading}
                     >
-                        {loading ? <LoadingSpinner size={16} /> : 'Submit'}
+                        {isSubscribedLoading ? <LoadingSpinner size={16} /> : 'Submit'}
                     </button>
                 </form>
 
@@ -106,6 +108,7 @@ export default function PreferencesManager({ setShowUnsubscribed, setAlertState,
                         setPreferences={setPreferences}
                         handleSaveClick={handleSubmit}
                         handleUnsubscribeClick={() => handleUnsubscribeClick(emailParam ?? inputValue)}
+                        loading={updatePreferencesLoading}
                     />
                 </div>
             )}

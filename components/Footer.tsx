@@ -20,7 +20,7 @@ export default async function Footer() {
                             Never miss a post! Sign up to get email notifications.
                         </label>
                         <div className="text-xs text-white flex justify-center">
-                            Already subscribed? <Link href="/manage-email-preferences"><p className="text-contrast-bg ml-2">Manage preferences</p></Link>
+                            Already subscribed? <Link href="/manage-email-preferences"><p className="text-contrast-bg ml-2 hover:text-primary">Manage preferences</p></Link>
                         </div>
                     </div>
                 </div>

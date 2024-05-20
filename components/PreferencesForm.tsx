@@ -1,4 +1,4 @@
-import Link from "next/link";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface PreferencesFormProps {
     preferences: { [key: string]: boolean };
@@ -6,11 +6,12 @@ interface PreferencesFormProps {
     handleSaveClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
     handleCancelClick?: () => void;
     showUnsubscribe?: boolean;
+    loading?: boolean;
     handleUnsubscribeClick?: () => void;
 }
 
 export default function PreferencesForm(props: PreferencesFormProps) {
-    const { preferences, handleSaveClick, handleCancelClick, setPreferences, showUnsubscribe, handleUnsubscribeClick } = props;
+    const { preferences, handleSaveClick, handleCancelClick, setPreferences, showUnsubscribe, handleUnsubscribeClick, loading } = props;
 
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, checked } = e.target;
@@ -39,11 +40,11 @@ export default function PreferencesForm(props: PreferencesFormProps) {
                 ))}
             </div>
             <div className="flex justify-end mt-8 space-x-4">
-                {handleCancelClick && <button onClick={handleCancelClick} className="bg-gray-300 px-4 py-2 rounded-lg">
+                {handleCancelClick && <button onClick={handleCancelClick} className="bg-gray-300 px-4 py-2 shadow rounded-lg h-10 min-w-20">
                     Cancel
                 </button>}
-                <button onClick={handleSaveClick} className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-                    Submit
+                <button onClick={handleSaveClick} className="bg-blue-500 text-white px-4 py-2 shadow rounded-lg h-10 min-w-20">
+                    {loading ? <LoadingSpinner size={16} /> : "Save"}
                 </button>
             </div>
         </div>

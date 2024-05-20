@@ -30,8 +30,8 @@ export default function MorePosts({ previous, next, }: { previous?: Post, next?:
 
     return (
         <aside className="flex justify-center w-full my-20 p-3">
-            <div className="flex justify-center w-full">
-                <button disabled={!previous} className={`flex flex-col py-3 pr-3 border border-gray-200 rounded-l-xl shadow-xl ${previous ? 'hover:shadow-inner' : ''} `} onClick={goPrevious}>
+            <div className="flex justify-center w-full space-x-1">
+                <button disabled={!previous} className={`flex flex-col py-3 pr-3 rounded-l-xl shadow-xl bg-contrast-bg ${previous && 'hover:bg-primary hover:text-white'} ${previous ? 'hover:shadow-inner' : ''} `} onClick={goPrevious}>
                     <div className="flex justify-between items-center space-x-2">
                         <ChevronLeftIcon className={`h-12 w-12 ${previous ? '' : 'text-gray-400'}`} />
                         <div className=' min-w-24'>
@@ -40,7 +40,7 @@ export default function MorePosts({ previous, next, }: { previous?: Post, next?:
                     </div>
                 </button>
                 {
-                    <button disabled={!next} className={`flex flex-col py-3 pl-3 border border-gray-200 rounded-r-xl shadow-xl ${next ? 'hover:shadow-inner' : ''}`} onClick={goNext}>
+                    <button disabled={!next} className={`flex flex-col py-3 pl-3 rounded-r-xl shadow-xl bg-contrast-bg ${next && 'hover:bg-primary hover:text-white'} ${next ? 'hover:shadow-inner' : ''}`} onClick={goNext}>
                         <div className="flex justify-between items-center space-x-2">
                             <div className="min-w-24">
                                 <div className={`text-sm ${next ? '' : 'text-gray-400'}`}>Next Post</div>

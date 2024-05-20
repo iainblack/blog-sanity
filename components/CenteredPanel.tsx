@@ -4,11 +4,9 @@ import { stegaClean } from '@sanity/client/stega';
 export default function CenteredPanel({
     children,
     size,
-    singleContent
 }: {
     children: React.ReactNode;
     isFirst?: boolean;
-    singleContent?: boolean;
     size: 'normal' | 'large' | 'xl';
 }) {
     const sizeClasses: { [key: string]: string } = {
