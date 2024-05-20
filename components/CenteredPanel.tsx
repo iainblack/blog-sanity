@@ -10,9 +10,9 @@ export default function CenteredPanel({
     size: 'normal' | 'large' | 'xl';
 }) {
     const sizeClasses: { [key: string]: string } = {
-        normal: 'min-h-screen lg:min-h-[50vh]',
-        large: 'min-h-screen lg:min-h-[75vh]',
-        xl: 'min-h-screen lg:min-h-[100vh]',
+        normal: 'min-h-[25vh] xl:min-h-[50vh]',
+        large: 'min-h-[25vh] xl:min-h-[75vh]',
+        xl: 'min-h-[25vh] xl:min-h-[100vh]',
     };
 
     const sizeClass = sizeClasses[stegaClean(size)];

@@ -59,10 +59,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} bg-default-bg text-text-primary`}>
       <body>
-        <section>
+        <section className="min-h-screen flex flex-col">
           {draftMode().isEnabled && <AlertBanner />}
           <Header />
-          <main className="flex-grow">{children}</main>
+          <main className="flex-grow p-2 xl:py-10">{children}</main>
           <Footer />
         </section>
         {draftMode().isEnabled && <VisualEditing />}

@@ -84,7 +84,7 @@ export default function MessageForm() {
     const { firstName, lastName, email, subject, message } = formState;
 
     return (
-        <div className='w-full p-5 md:max-w-xl lg:mt-20'>
+        <div className='w-full mx-auto p-5 md:max-w-xl lg:mx-0'>
             <form className="w-full">
                 <div className="flex flex-wrap -mx-3 mb-2">
                     <div className="w-full md:w-1/2 px-3 mb-2 md:mb-0">

@@ -25,7 +25,7 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
         <>
             <PhotoAlbum
                 photos={photos}
-                layout="rows"
+                layout="columns"
                 renderPhoto={GalleryImage}
                 defaultContainerWidth={1200}
                 sizes={{

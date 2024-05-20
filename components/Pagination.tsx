@@ -17,7 +17,7 @@ export default function Pagination({ totalPages, active, setActive }: { totalPag
     return (
         <div className="flex items-center gap-4 p-6 pb-8">
             <button
-                className={`p-2 rounded-full border border-text-primary ${active === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+                className={`p-2 rounded-full border border-text-primary ${active === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary bg-contrast-bg'}`}
                 onClick={prev}
                 disabled={active === 0}
             >
@@ -27,7 +27,7 @@ export default function Pagination({ totalPages, active, setActive }: { totalPag
                 Page <strong className="text-gray-800">{active + 1}</strong> of <strong className="text-gray-800">{totalPages === 0 ? 1 : totalPages}</strong>
             </span>
             <button
-                className={`p-2 rounded-full border border-text-primary  ${active + 1 === totalPages || active == totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+                className={`p-2 rounded-full border border-text-primary  ${active + 1 === totalPages || active == totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary bg-contrast-bg'}`}
                 onClick={next}
                 disabled={active + 1 === totalPages || active === totalPages}
             >

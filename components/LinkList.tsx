@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ChevronRightIcon } from '@sanity/icons';
+import { ChevronRightIcon, LaunchIcon, LinkIcon } from '@sanity/icons';
 import { ExternalLink as ExternalLinkProps } from '@/sanity/lib/queries';
 
 interface LinkListProps {
@@ -15,7 +15,10 @@ const LinkList: React.FC<LinkListProps> = ({ links, title }) => {
 
     return (
         <div className='max-w-sm md:mx-auto'>
-            {title && <h1 className='text-2xl text-text-contrast pb-5 text-left'>{title}</h1>}
+            <div className='flex pb-5 items-center space-x-1'>
+                {title && <h1 className='text-2xl text-text-contrast text-left'>{title}</h1>}
+                <LinkIcon className='text-text-contrast' fontSize={36} />
+            </div>
             <LinksContainer links={links} />
         </div>
     );
@@ -96,8 +99,8 @@ const LinkColumn: React.FC<{ links: ExternalLinkProps[] }> = ({ links }) => {
 const ExternalLink = ({ url, title }: { url: string, title: string }) => {
     return (
         <div className='flex items-center space-x-2'>
-            <Link href={url} target='_blank' className='text-text-contrast hover:text-primary'>{title}</Link>
-            <ChevronRightIcon className='hover:text-primary' fontSize={16} />
+            <Link href={url} target='_blank' className='text-text-contrast hover:text-contrast-bg'>{title}</Link>
+            <LaunchIcon className='text-text-contrast' fontSize={16} />
         </div>
     )
 }

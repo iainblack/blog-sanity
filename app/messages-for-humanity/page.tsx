@@ -43,7 +43,7 @@ export default function Page() {
       <Intro title={"Messages for Humanity"} />
       <div className="flex flex-col items-center w-full px-4">
         <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} />
-        {loading && <div className="w-full h-28"><LoadingSpinner /></div>}
+        {loading && <div className="w-full min-h-[50vh]"><LoadingSpinner /></div>}
         {!loading &&
           <>
             <PostPreviewList posts={postState.visiblePosts} />

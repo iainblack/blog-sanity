@@ -58,9 +58,11 @@ export default async function Page() {
   const contentPanels = await getContentPanelsByPage('Home');
 
   return (
-    contentPanels && contentPanels.length > 0 && <>
+    contentPanels && contentPanels.length > 0 &&
+    <div>
       {contentPanels.map((panel) => (
         <Panel key={panel._id} panel={panel} />
       ))}
-    </>)
+    </div>
+  )
 }

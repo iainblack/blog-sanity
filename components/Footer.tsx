@@ -11,7 +11,7 @@ export default async function Footer() {
     });
 
     return (
-        <footer className="border-t border-black bg-dark-bg relative bottom-0">
+        <footer className="border-t border-black bg-dark-bg relative bottom-0 min-h-[20vh]">
             <div className="w-full px-5 py-12 flex flex-col md:flex-row">
                 <div className="md:w-1/2">
                     <div className="max-w-xs lg:max-w-sm pb-8 md:pb-0 md:mx-auto">

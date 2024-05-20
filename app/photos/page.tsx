@@ -1,6 +1,5 @@
 import PhotoGallery from "@/components/PhotoGallery";
 import { getGalleryImagesByPage } from "../actions";
-import { urlForImage } from "@/sanity/lib/utils";
 import { Photo } from "react-photo-album";
 
 export default async function Page() {
@@ -33,7 +32,7 @@ export default async function Page() {
     });
 
     return (
-        <div className="mx-auto p-2 md:p-10">
+        <div className="mx-auto md:p-2">
             <PhotoGallery photos={mappedPhotos} />
         </div >
     );
