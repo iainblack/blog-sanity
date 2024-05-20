@@ -1,6 +1,6 @@
-import { pages } from "@/components/utils";
 import { ImageIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { pages } from "@/components/utils";
 
 export default defineType({
   name: "galleryImage",
@@ -9,19 +9,19 @@ export default defineType({
   type: "document",
   fields: [
     defineField({
+      name: "pageId",
+      title: "Page",
+      type: "string",
+      description: "The page containing the gallery this image should be displayed in.",
+      options: {
+        list: pages.filter((page) => page.contentType === "gallery").map((page) => page.name),
+      }
+    }),
+    defineField({
       name: "picture",
       title: "Picture",
       type: "image",
       fields: [
-        {
-            name: "pageId",
-            title: "Page",
-            type: "string",
-            description: "The page that this panel should be displayed on.",
-            options: {
-              list: pages.filter((page) => page.contentType === "gallery").map((page) => page.name),
-            }
-        },
         {
           name: "alt",
           type: "string",

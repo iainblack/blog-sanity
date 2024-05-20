@@ -8,7 +8,7 @@ export default defineType({
   icon: BlockContentIcon,
   type: "document",
   fields: [
-    {
+    defineField({
       name: "pageId",
       title: "Page",
       type: "string",
@@ -16,7 +16,7 @@ export default defineType({
       options: {
         list: pages.filter((page) => page.contentType === "post").map((page) => page.name),
       }
-    },
+    }),
     defineField({
       name: "size",
       title: "Panel Size",

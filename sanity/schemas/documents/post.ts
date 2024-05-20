@@ -11,15 +11,15 @@ export default defineType({
   icon: DocumentTextIcon,
   type: "document",
   fields: [
-    {
+    defineField({
       name: "pageId",
       title: "Page",
       type: "string",
-      description: "The page that this panel should be displayed on.",
+      description: "The page that this post should be displayed on.",
       options: {
         list: pages.filter((page) => page.contentType === "post").map((page) => page.name),
       }
-    },
+    }),
     defineField({
       name: "title",
       title: "Title",
