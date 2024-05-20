@@ -59,10 +59,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} bg-default-bg text-text-primary`}>
       <body>
-        <section className="min-h-screen">
+        <section>
           {draftMode().isEnabled && <AlertBanner />}
           <Header />
-          <main>{children}</main>
+          <main className="flex-grow">{children}</main>
           <Footer />
         </section>
         {draftMode().isEnabled && <VisualEditing />}

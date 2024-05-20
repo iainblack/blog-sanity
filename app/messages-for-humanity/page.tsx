@@ -1,5 +1,4 @@
 "use client";
-import * as demo from "@/sanity/lib/demo";
 import {
   Post,
 } from "@/sanity/lib/queries";

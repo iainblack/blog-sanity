@@ -7,4 +7,7 @@ module.exports = {
   logging: {
     fetches: { fullUrl: false },
   },
+  images: {
+    remotePatterns: [{ hostname: "source.unsplash.com" }],
+  },
 };

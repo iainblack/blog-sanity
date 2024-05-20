@@ -6,8 +6,10 @@ export default function ContactLayout({
     children: React.ReactNode;
 }) {
     return (
-        <section className="min-h-[80vh]">
-            {children}
-        </section>
+        <div className="flex flex-col">
+            <section className="flex-grow">
+                {children}
+            </section>
+        </div>
     )
 }

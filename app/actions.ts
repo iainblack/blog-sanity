@@ -1,7 +1,7 @@
 "use server";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { ContentPanelsQueryResponse, Post, postFields } from "@/sanity/lib/queries";
+import { ContentPanelsQueryResponse, GalleryImage, Post, postFields } from "@/sanity/lib/queries";
 import { groq } from "next-sanity";
 import { draftMode } from "next/headers";
 
@@ -40,12 +40,30 @@ export const getPostsByPage = async (pageId: string, order: string = 'desc', off
   });
 
   return { posts, totalPosts: total };
-}
+};
 
-interface PostNeighbors {
-  currentPost?: Post,
-  previousPost?: Post,
-  nextPost?: Post
+export const getGalleryImagesByPage = async (pageId: string) => {
+  const query = groq`*[_type == "galleryImage" && pageId == $pageId] | order(_createdAt desc) {
+    _id,
+    picture {
+      asset -> {
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      },
+      alt
+    }
+  }`;
+
+  return sanityFetch<GalleryImage[]> ({
+    query,
+    params: { pageId },
+  });
 }
 
 export const getPostAndNeighbors = async (slug: string, pageId: string) => {

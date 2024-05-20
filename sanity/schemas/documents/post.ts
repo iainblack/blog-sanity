@@ -18,7 +18,8 @@ export default defineType({
       description: "The page that this post should be displayed on.",
       options: {
         list: pages.filter((page) => page.contentType === "post").map((page) => page.name),
-      }
+      },
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "title",

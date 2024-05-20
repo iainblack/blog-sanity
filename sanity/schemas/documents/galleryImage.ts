@@ -15,7 +15,8 @@ export default defineType({
       description: "The page containing the gallery this image should be displayed in.",
       options: {
         list: pages.filter((page) => page.contentType === "gallery").map((page) => page.name),
-      }
+      },
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "picture",

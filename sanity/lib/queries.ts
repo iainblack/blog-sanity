@@ -36,15 +36,22 @@ export interface Author {
 
 export interface GalleryImage {
   _id: string;
-  picture: Image & { alt?: string | null };
+  pageId: string;
+  picture: {
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        dimensions: {
+          width: number;
+          height: number;
+        };
+      };
+    };
+    alt?: string | null;
+  };
 }
 
-export const galleryImageFields = groq`
-  _id,
-  "picture": picture{asset->{url, metadata}};
-`;
-
-export const galleryImagesQuery = groq`*[_type == "galleryImage"] | order(_createdAt desc) { ${galleryImageFields} }`;
 
 /// POSTS
 export interface Post {
