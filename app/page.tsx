@@ -23,7 +23,7 @@ function Panel({
   const textPosition = cleanedPosition === "left" ? 'lg:order-2' : 'lg:order-1';
 
   return (
-    <CenteredPanel size={size} singleContent={!image}>
+    <CenteredPanel size={size}>
       {image && image?.asset &&
         <div className={`centered-container__image ${imagePosition}`}>
           <Image

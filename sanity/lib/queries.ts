@@ -11,6 +11,20 @@ export interface SettingsQueryResponse {
   ogImage?: (Image & { alt?: string; metadataBase?: string }) | null;
 }
 
+// Recommended Resource Link
+export interface ExternalLink {
+  _id: string;
+  url: string;
+  title: string;
+}
+
+export const externalLinkFields = groq`
+  _id,
+  url,
+  title,
+`;
+
+export const externalLinksQuery = groq`*[_type == "externalLink"] | order(title asc) { ${externalLinkFields} }`;
 /// AUTHOR
 export interface Author {
   name: string;
@@ -44,12 +58,6 @@ export const postFields = groq`
   "date": coalesce(date, _updatedAt),
   "author": author->{"name": coalesce(name, "Anonymous"), picture},
 `;
-
-// export const moreStoriesQuery = groq`*[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
-//   ${postFields}
-// }`;
-// export type MoreStoriesQueryResponse = Post[] | null;
-
 
 /// CONTENT PANEL
 export interface ContentPanel {

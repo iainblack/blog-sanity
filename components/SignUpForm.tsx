@@ -71,7 +71,7 @@ export default function SignUpForm() {
     };
 
     return (
-        <div className="flex items-center relative">
+        <div className="flex relative">
             <input
                 className={`w-full h-12 bg-white text-gray-600 border border-black py-3 px-4 leading-tight focus:outline-none focus:bg-white ${error ? "border-red-500" : ""}`}
                 type="email"
@@ -81,7 +81,7 @@ export default function SignUpForm() {
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyDown={handleKeyDown}
             />
-            {error && <p className="text-red-500 text-sm ml-2 absolute -top-6">{error}</p>}
+            {error && <p className="text-red-500 text-sm ml-2 absolute -bottom-6">{error}</p>}
             <button
                 className="two-tone-button whitespace-nowrap h-12 w-52"
                 type="button"
