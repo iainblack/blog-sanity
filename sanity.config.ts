@@ -1,7 +1,5 @@
 "use client";
-/**
- * This config is used to set up Sanity Studio that's mounted on the `app/(sanity)/studio/[[...tool]]/page.tsx` route
- */
+
 import { visionTool } from "@sanity/vision";
 import { PluginOptions, defineConfig } from "sanity";
 import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
@@ -16,6 +14,7 @@ import post from "@/sanity/schemas/documents/post";
 import settings from "@/sanity/schemas/singletons/settings";
 import contentPanel from "./sanity/schemas/documents/contentPanel";
 import externalLink from "./sanity/schemas/documents/externalLink";
+import galleryImage from "./sanity/schemas/documents/galleryImage";
 
 export default defineConfig({
   basePath: studioUrl,
@@ -30,6 +29,7 @@ export default defineConfig({
       author,
       contentPanel,
       externalLink,
+      galleryImage,
     ],
   },
   plugins: [

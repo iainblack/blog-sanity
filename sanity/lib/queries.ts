@@ -25,11 +25,26 @@ export const externalLinkFields = groq`
 `;
 
 export const externalLinksQuery = groq`*[_type == "externalLink"] | order(title asc) { ${externalLinkFields} }`;
+
 /// AUTHOR
 export interface Author {
   name: string;
   picture?: (Image & { alt?: string | null }) | null;
 }
+
+/// GALLERY IMAGE
+
+export interface GalleryImage {
+  _id: string;
+  picture: Image & { alt?: string | null };
+}
+
+export const galleryImageFields = groq`
+  _id,
+  "picture": picture{asset->{url, metadata}};
+`;
+
+export const galleryImagesQuery = groq`*[_type == "galleryImage"] | order(_createdAt desc) { ${galleryImageFields} }`;
 
 /// POSTS
 export interface Post {
