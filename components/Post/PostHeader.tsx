@@ -9,7 +9,7 @@ export default function PostHeader({ post: post }: { post: Post }) {
     return (
         <>
             <div className="flex justify-between items-center">
-                <h5 className="mt-8 lg:mb-8 header-text">
+                <h5 className="lg:mb-8 header-text">
                     {post.title}
                 </h5>
                 <div className="my-8 space-y-1 hidden lg:block">

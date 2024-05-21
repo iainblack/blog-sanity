@@ -34,7 +34,6 @@ export default defineConfig({
   },
   plugins: [
     presentationTool({
-      locate,
       previewUrl: { previewMode: { enable: "/api/draft" } },
     }),
     structureTool({ structure: pageStructure([settings]) }),

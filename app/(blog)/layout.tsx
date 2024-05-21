@@ -1,12 +1,10 @@
 import "@/styles/globals.css";
-
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata } from "next";
 import { VisualEditing, toPlainText } from "next-sanity";
 import { Inter } from "next/font/google";
 import { draftMode } from "next/headers";
-import { Suspense } from "react";
-import AlertBanner from "../components/alert-banner";
+import AlertBanner from "../../components/alert-banner";
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { SettingsQueryResponse, settingsQuery } from "@/sanity/lib/queries";
@@ -17,7 +15,6 @@ import Footer from "@/components/Footer";
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await sanityFetch<SettingsQueryResponse>({
     query: settingsQuery,
-    // Metadata should never contain stega
     stega: false,
   });
   const title = settings?.title || demo.title;
@@ -51,13 +48,10 @@ const inter = Inter({
   display: "swap",
 });
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} bg-default-bg text-text-primary`}>
+    <html lang="en" className={`bg-default-bg text-text-primary`}>
+      {draftMode().isEnabled && <VisualEditing />}
       <body>
         <section className="min-h-screen flex flex-col">
           {draftMode().isEnabled && <AlertBanner />}
@@ -65,7 +59,6 @@ export default function RootLayout({
           <main className="flex-grow p-2 xl:py-10">{children}</main>
           <Footer />
         </section>
-        {draftMode().isEnabled && <VisualEditing />}
         <SpeedInsights />
       </body>
     </html>

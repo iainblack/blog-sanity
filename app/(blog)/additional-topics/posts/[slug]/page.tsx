@@ -1,11 +1,11 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { groq } from "next-sanity";
 import { notFound } from "next/navigation";
-import PortableText from "../../../../components/portable-text";
+import PortableText from "../../../../../components/portable-text";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
-import { getPostAndNeighbors } from "@/app/actions";
+import { getPostAndNeighbors } from "@/app/(blog)/actions";
 import PostHeader from "@/components/Post/PostHeader";
 import MorePosts from "@/components/MorePosts";
 import BackButton from "@/components/BackButton";
