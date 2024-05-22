@@ -3,10 +3,12 @@ import Link from "next/link";
 import * as demo from "@/sanity/lib/demo";
 import { useState, useEffect } from "react";
 import { MenuIcon, CloseIcon, ChevronRightIcon } from '@sanity/icons'
+import Image from "next/image";
 import './header.css';
 import { pages } from "../utils";
 import { usePathname } from "next/navigation";
 import Drawer from "../Drawer";
+import HeaderLinks from "./HeaderLinks";
 
 export default function Header() {
     const [lastScrollY, setLastScrollY] = useState(0);
@@ -56,30 +58,37 @@ export default function Header() {
     const isActive = (path: string) => currentPath === `/${path}`;
 
     return (
-        <header className={`min-h-[10vh] header border-b border-black bg-default-bg ${headerVisible ? '' : 'header-hidden'}`}>
-            <div className="container mx-auto p-5">
-                <nav className="flex justify-between items-center py-3 px-8 xl:py-5">
-                    <a href="/" className="text-2xl font-bold">
-                        {demo.title}
-                    </a>
-                    {!isMenuOpen && (
-                        <>
-                            <ul className={`space-x-5 hidden lg:flex flex-wrap justify-center items-center align-baseline px-12 py-3 max-w-[60vw] lg:max-w-[50vw]`}>
-                                {pages.filter(page => page.name !== 'Home' && page.name !== 'Contact').map((page) => (
-                                    <li key={page.slug}>
-                                        <Link href={`/${page.slug}`} className={`hover:text-primary hover:underline ${isActive(page.slug) ? 'text-primary' : ''}`}>{page.name}</Link>
-                                    </li>
-                                ))}
-                            </ul>
-                            <Link href='/contact' className="hidden lg:block two-tone-button">
-                                Contact
-                            </Link>
-                        </>
-                    )}
+        <header className={`min-h-[10vh] w-screen header border-b border-black bg-default-bg ${headerVisible ? '' : 'header-hidden'}`}>
+            <nav className="p-10 flex items-center relative justify-between lg:justify-start lg:px-20">
+                {!isMenuOpen && (
+                    <div className="hidden lg:flex justify-start items-center w-[50vw] lg:w-[33%]">
+                        <HeaderLinks />
+                    </div>
+                )}
+                <div className="w-[50%] sm:w-[33%] flex justify-start">
+                    <Link href="/" className="w-full">
+                        <div className="h-12 lg:h-16 w-full relative">
+                            <Image
+                                src='/images/loulogo1.png'
+                                priority
+                                alt="logo"
+                                fill
+                                style={{
+                                    objectFit: "contain",
+                                }}
+                            />
+                        </div>
+                    </Link>
+                </div>
+                <div className="lg:w-[33%] flex justify-end">
+                    <Link href='/contact' className="hidden lg:block two-tone-button">
+                        Contact
+                    </Link>
                     <MenuIcon className="lg:hidden" fontSize={38} onClick={toggleMenu} />
-                </nav>
-                <Drawer isMenuOpen={isMenuOpen} closeMenu={closeMenu} isActive={isActive} />
-            </div>
+                </div>
+            </nav>
+            <Drawer isMenuOpen={isMenuOpen} closeMenu={closeMenu} isActive={isActive} />
         </header >
     );
+
 }
