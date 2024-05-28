@@ -38,3 +38,11 @@ body {
 .two-tone-button {
     @apply border border-black py-3 px-12 transition-colors duration-200 bg-contrast-bg hover:bg-primary hover:text-text-contrast;
 }
+
+.truncate-lines {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  

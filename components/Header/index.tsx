@@ -1,8 +1,7 @@
 "use client";
 import Link from "next/link";
-import * as demo from "@/sanity/lib/demo";
 import { useState, useEffect } from "react";
-import { MenuIcon, CloseIcon, ChevronRightIcon } from '@sanity/icons'
+import { MenuIcon } from '@sanity/icons'
 import Image from "next/image";
 import './header.css';
 import { pages } from "../utils";

@@ -17,7 +17,7 @@ export default function HeaderLinks() {
     return (
         <ul className={`space-x-5 align-baseline flex flex-wrap`}>
             <li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="relative">
-                <button className="text-text-primary hover:cursor-pointer">Writings</button>
+                <button className="text-text-primary hover:cursor-pointer">Blogs</button>
                 {showPopover && (
                     <div className="absolute top-full left-0 bg-default-bg shadow-xl border rounded px-4 py-2 z-10">
                         <ul className="w-full">
@@ -33,7 +33,7 @@ export default function HeaderLinks() {
                             </li>
                             <li className="py-1 whitespace-nowrap" onClick={handleMouseLeave}>
                                 <Link href="/messages-for-humanity">
-                                    <div className="hover:text-primary">Messages from Humanity</div>
+                                    <div className="hover:text-primary">Messages for Humanity</div>
                                 </Link>
                             </li>
                         </ul>

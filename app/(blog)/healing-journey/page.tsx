@@ -9,6 +9,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import PostFilters from "@/components/Post/PostFilters";
 import PostPreviewList from "@/components/Post/PostPreviewList";
 import { Intro } from "@/components/PageIntro";
+import PostPreviewGrid from "@/components/Post/PostPreviewGrid";
 
 interface PostState {
   visiblePosts?: Post[];
@@ -23,6 +24,7 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState('asc');
   const [page, setPage] = useState(0);
+  const [view, setView] = useState<"grid" | "list">("grid");
   const limit = 10;
 
   useEffect(() => {
@@ -39,14 +41,16 @@ export default function Page() {
   }, [order, page]);
 
   return (
-    <div className="mx-auto px-5">
-      <Intro title={"Lou's Healing Journey"} />
-      <div className="flex flex-col items-center w-full px-4">
-        <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} />
+    <div className="container mx-auto lg:px-16">
+      <div className="flex flex-col items-center space-y-3 my-6 md:space-y-0 md:flex-row md:justify-between md:my-12">
+        <Intro title={"Lou's Healing Journey"} />
+        <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} view={view} setView={setView} />
+      </div>
+      <div className="flex flex-col items-center">
         {loading && <div className="w-full min-h-[50vh]"><LoadingSpinner /></div>}
         {!loading &&
           <>
-            <PostPreviewList posts={postState.visiblePosts} />
+            {view === "grid" ? <PostPreviewGrid posts={postState.visiblePosts} /> : <PostPreviewList posts={postState.visiblePosts} />}
             <Pagination totalPages={Math.ceil(postState.totalPosts / limit)} active={page} setActive={setPage} />
           </>}
       </div>

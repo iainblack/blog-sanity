@@ -13,7 +13,7 @@ export default function PostHeader({ post: post }: { post: Post }) {
                     {post.title}
                 </h5>
                 <div className="my-8 space-y-1 hidden lg:block">
-                    <DateComponent dateString={post.date} />
+                    <DateComponent icon dateString={post.date} />
                     {post.author?.name && (
                         <div className="flex items-center">
                             <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
