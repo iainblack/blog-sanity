@@ -2,6 +2,7 @@ import BackButton from "../BackButton";
 import MorePosts from "../MorePosts";
 import PortableText from "../portable-text";
 import PostHeader from "./PostHeader";
+import PostShareControls from "./PostShareControls";
 
 interface PostFullViewProps {
     posts: {
@@ -25,6 +26,9 @@ export default function PostFullView({ posts, backRoute }: PostFullViewProps) {
                             <p>No content found! :/</p>
                         </div>
                     )}
+                <div className="w-full justify-end items-center pt-3">
+                    <PostShareControls post={posts.currentPost} />
+                </div>
             </article>
             <MorePosts previous={posts.previousPost} next={posts.nextPost} />
         </div>);

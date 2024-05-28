@@ -25,7 +25,7 @@ export default function PostHeader({ post: post }: { post: Post }) {
                 </div>
             </div >
             <div className="my-4 space-y-1 lg:hidden">
-                <DateComponent dateString={post.date} />
+                <DateComponent icon dateString={post.date} />
                 {post.author && (
                     <div className="flex items-center">
                         <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
