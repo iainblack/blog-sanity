@@ -94,7 +94,7 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
         >
             <Link href={`${path}/posts/${post.slug}`}>
                 <div className="flex flex-col justify-center md:flex-row md:justify-between items-center">
-                    <div className="flex flex-col w-full md:w-[90%] justify-center items-center min-h-12 md:flex-row md:justify-start">
+                    <div className="flex flex-col w-full md:w-[90%] justify-center items-center min-h-20 md:flex-row md:justify-start">
                         <div className="text-left pb-3 w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
                             <DateComponent icon dateString={post.date} />
                             {post.author?.name && (
