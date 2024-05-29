@@ -90,12 +90,12 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
 
     return (
         <div
-            className={`w-full min-w-2xl xl:w-2/3 px-3 py-3 my-2 border border-black md:border-transparent md:border-b-slate-200 rounded-xl transition-colors cursor-pointer hover:border-black`}
+            className={`w-full p-2 my-2 border border-black md:border-slate-200 rounded-xl shadow transition-colors cursor-pointer hover:border-black lg:max-w-md xl:max-w-2xl`}
         >
             <Link href={`${path}/posts/${post.slug}`}>
                 <div className="flex flex-col justify-center md:flex-row md:justify-between items-center">
-                    <div className="flex flex-col w-full md:w-[90%] justify-center items-center min-h-20 md:flex-row md:justify-start">
-                        <div className="text-left pb-3 w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
+                    <div className="flex flex-col w-full justify-center items-center min-h-20 md:flex-row md:justify-start">
+                        <div className="text-left pb-3 w-full md:pb-0 md:flex md:flex-col truncate">
                             <DateComponent icon dateString={post.date} />
                             {post.author?.name && (
                                 <div className="flex">

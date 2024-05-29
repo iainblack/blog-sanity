@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ChevronRightIcon, LaunchIcon, LinkIcon } from '@sanity/icons';
+import { LaunchIcon, LinkIcon } from '@sanity/icons';
 import { ExternalLink as ExternalLinkProps } from '@/sanity/lib/queries';
 
 interface LinkListProps {

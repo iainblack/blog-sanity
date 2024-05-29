@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import PostFilters from "@/components/Post/PostFilters";
-import PostPreviewList from "@/components/Post/PostPreviewList";
 import { Intro } from "@/components/PageIntro";
 import PostPreviewGrid from "@/components/Post/PostPreviewGrid";
 
@@ -51,7 +50,7 @@ export default function Page() {
         {loading && <div className="w-full min-h-[50vh]"><LoadingSpinner /></div>}
         {!loading &&
           <>
-            {view === "grid" ? <PostPreviewGrid posts={postState.visiblePosts} /> : <PostPreviewList posts={postState.visiblePosts} />}
+            <PostPreviewGrid posts={postState.visiblePosts} view={view} />
             <Pagination totalPages={Math.ceil(postState.totalPosts / limit)} active={page} setActive={setPage} />
           </>}
       </div>

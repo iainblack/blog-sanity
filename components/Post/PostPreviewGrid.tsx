@@ -1,28 +1,46 @@
 import { Post } from "@/sanity/lib/queries";
-import { HeroImagePreview, PostImagePreview } from "./PostPreview";
+import { HeroImagePreview, PostImagePreview, PostPreview } from "./PostPreview";
 
 interface PostPreviewGridProps {
     posts?: Post[];
+    view: "grid" | "list";
 }
 
-export default function PostPreviewGrid({ posts }: PostPreviewGridProps) {
+export default function PostPreviewGrid({ posts, view }: PostPreviewGridProps) {
 
     if (!posts || posts.length === 0) {
-        return null;
+        return (
+            <div className="flex justify-center">
+                <p>No posts yet...</p>
+            </div>
+        );
     }
 
     const [firstPost, ...otherPosts] = posts;
 
-    return (
-        <div className="pb-4 w-full">
-            <div className="w-full mb-6 p-3">
-                <HeroImagePreview post={firstPost} />
+    if (view === "grid") {
+        return (
+            <div className="pb-4 w-full">
+                <div className="w-full mb-6 p-3">
+                    <HeroImagePreview post={firstPost} />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
+                    {otherPosts.map(post => (
+                        <PostImagePreview key={post._id} post={post} />
+                    ))}
+                </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 xl:gap-8 w-full">
-                {otherPosts.map(post => (
-                    <PostImagePreview key={post._id} post={post} />
+        );
+    }
+
+    return (
+        <div className="flex flex-col w-full">
+            <div className="grid grid-rows-10 lg:grid-rows-5 gap-2 grid-flow-col row-auto">
+                {posts.map((post) => (
+                    <PostPreview key={post._id} post={post} />
                 ))}
             </div>
         </div>
-    );
+    )
+
 }

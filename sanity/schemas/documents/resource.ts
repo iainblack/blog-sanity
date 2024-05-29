@@ -1,23 +1,19 @@
-import { DocumentTextIcon } from "@sanity/icons";
-import { format, parseISO } from "date-fns";
+import { FaCubes } from "react-icons/fa6";
 import { defineField, defineType } from "sanity";
 
-import authorType from "./author";
-import { pages } from "@/components/utils";
-
 export default defineType({
-  name: "post",
-  title: "Post",
-  icon: DocumentTextIcon,
+  name: "resource",
+  title: "Resource",
+  icon: FaCubes,
   type: "document",
   fields: [
     defineField({
-      name: "pageId",
-      title: "Page",
+      name: "type",
+      title: "Resource Type",
       type: "string",
-      description: "The page that this post should be displayed on.",
+      description: "The type of resource. This will determine where it is displayed.",
       options: {
-        list: pages.filter((page) => page.contentType === "post").map((page) => page.name),
+        list: ["Book", "Website", "Other"]
       },
       validation: (rule) => rule.required(),
     }),
@@ -40,19 +36,40 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "content",
-      title: "Content",
+      name: "author",
+      title: "Author",
+      type: "string",
+      hidden: ({ document }) => document?.type !== "Book",
+    }),
+    defineField({
+      name: "publisher",
+      title: "Publisher",
+      type: "string",
+      hidden: ({ document }) => document?.type !== "Book",
+    }),
+    defineField({
+      name: "datePublished",
+      title: "Date Published",
+      type: "datetime",
+      initialValue: () => new Date().toISOString(),
+      hidden: ({ document }) => document?.type !== "Book",
+    }),
+    defineField({
+      name: "url",
+      title: "URL",
+      type: "url",
+      hidden: ({ document }) => document?.type !== "Website",
+      validation: (rule) => rule.required(),
+  }),
+    defineField({
+      name: "description",
+      title: "Description",
       type: "array",
       of: [{ type: "block" }],
     }),
     defineField({
-      name: "excerpt",
-      title: "Excerpt",
-      type: "string",
-    }),
-    defineField({
       name: "coverImage",
-      title: "Cover Image",
+      title: "Image",
       type: "image",
       options: {
         hotspot: true,
@@ -77,33 +94,14 @@ export default defineType({
         },
       ],
     }),
-    defineField({
-      name: "date",
-      title: "Date",
-      type: "datetime",
-      initialValue: () => new Date().toISOString(),
-    }),
-    defineField({
-      name: "author",
-      title: "Author",
-      type: "reference",
-      to: [{ type: authorType.name }],
-    }),
   ],
   preview: {
     select: {
       title: "title",
-      author: "author.name",
-      date: "date",
       media: "coverImage",
     },
-    prepare({ title, media, author, date }) {
-      const subtitles = [
-        author && `by ${author}`,
-        date && `on ${format(parseISO(date), "LLL d, yyyy")}`,
-      ].filter(Boolean);
-
-      return { title, media, subtitle: subtitles.join(" ") };
+    prepare({ title, media }) {
+      return { title, media };
     },
   },
 });
