@@ -57,7 +57,7 @@ export default function Header() {
     const isActive = (path: string) => currentPath === `/${path}`;
 
     return (
-        <header className={`min-h-[10vh] w-screen header border-b border-black bg-default-bg ${headerVisible ? '' : 'header-hidden'}`}>
+        <header className={`min-h-[10vh] w-full header border-b border-black bg-default-bg ${headerVisible ? '' : 'header-hidden'}`}>
             <nav className="p-10 flex items-center relative justify-between lg:justify-start lg:px-20">
                 {!isMenuOpen && (
                     <div className="hidden lg:flex justify-start items-center w-[50vw] lg:w-[33%]">
