@@ -17,11 +17,12 @@ export interface Resource {
   title: string;
   type: "Book" | "Website" | "Other";
   description: PortableTextBlock[];
-  coverImage?: (Image & { alt?: string }) | null;
-  author?: string | null;
-  publisher?: string | null;
-  datePublished?: string | null;
-  url?: string | null;
+  coverImage?: (Image & { alt?: string });
+  author?: string;
+  publisher?: string;
+  datePublished?: string;
+  url?: string;
+  urlDisplayName?: string;
 }
 
 export const resourceFields = groq`
@@ -34,6 +35,7 @@ export const resourceFields = groq`
   coverImage,
   description,
   url,
+  urlDisplayName,
 `;
 
 

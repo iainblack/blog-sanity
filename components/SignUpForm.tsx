@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from "react";
-import PreferencesModal from "./PreferencesModal";
 import { BasicAlertState, emailPreferenceOptions } from "./utils";
 import Alert from "./Alert";
 import { isEmailSubscribedAction, subscribeUserAction } from "@/firebase/FirebaseActions";
 import LoadingSpinner from "./LoadingSpinner";
 import SearchBar from "./SearchBar";
+import Modal from "./Modal";
+import PreferencesForm from "./PreferencesForm";
 
 export default function SignUpForm() {
     const [email, setEmail] = useState('');
@@ -49,7 +50,7 @@ export default function SignUpForm() {
         setIsModalOpen(true);
     };
 
-    const handleSavePreferences = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleSavePreferences = async () => {
         setUpdatePreferencesLoading(true);
 
         const success = await subscribeUserAction(email, preferences);
@@ -65,12 +66,6 @@ export default function SignUpForm() {
         setUpdatePreferencesLoading(false);
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            handleSignUp();
-        }
-    };
-
     return (
         <div className="flex relative">
             <SearchBar
@@ -83,14 +78,14 @@ export default function SignUpForm() {
                 loading={isSubscribedLoading}
                 buttonText="Sign Up"
             />
-            <PreferencesModal
+            <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                preferences={preferences}
-                setPreferences={setPreferences}
-                handleSave={handleSavePreferences}
+                title="Set Email Preferences"
                 loading={updatePreferencesLoading}
-            />
+                onSaveClick={handleSavePreferences}>
+                <PreferencesForm preferences={preferences} setPreferences={setPreferences} />
+            </Modal>
             <Alert
                 show={alertState.show}
                 onClose={() => setAlertState({ ...alertState, show: false })}

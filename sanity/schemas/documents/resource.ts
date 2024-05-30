@@ -27,26 +27,28 @@ export default defineType({
       name: "author",
       title: "Author",
       type: "string",
-      hidden: ({ document }) => document?.type !== "Book",
     }),
     defineField({
       name: "publisher",
       title: "Publisher",
       type: "string",
-      hidden: ({ document }) => document?.type !== "Book",
     }),
     defineField({
       name: "datePublished",
       title: "Date Published",
       type: "datetime",
-      hidden: ({ document }) => document?.type !== "Book",
     }),
     defineField({
       name: "url",
       title: "URL",
       type: "url",
-      hidden: ({ document }) => document?.type !== "Website",
-  }),
+    }),
+    defineField({
+      name: "urlDisplayName",
+      title: "URL Display Name",
+      type: "string",
+      description: "The text to display for the URL link.",
+    }),
     defineField({
       name: "description",
       title: "Description",
@@ -68,7 +70,7 @@ export default defineType({
           name: "alt",
           type: "string",
           title: "Alternative text",
-          description: "Important for SEO and accessiblity.",
+          description: "Fallback text if the image cannot be displayed.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
               if ((context.document?.coverImage as any)?.asset?._ref && !alt) {

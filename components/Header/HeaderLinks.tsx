@@ -40,7 +40,7 @@ export default function HeaderLinks() {
                     </div>
                 )}
             </li>
-            <Link href="/recommended-resources">
+            <Link href="/resources">
                 <div className="text-text-primary hover:text-primary">Resources</div>
             </Link>
             <Link href={"/photos"}>

@@ -24,7 +24,7 @@ export default function ResourcesDropdown({ selected, setSelected }: DropdownPro
     return (
         <div className="relative">
             <button
-                className="flex items-center justify-between w-52 h-10 bg-white text-gray-600 border border-black py-3 px-3 leading-tight focus:outline-none focus:bg-white"
+                className="flex items-center justify-between w-52 h-10 bg-contrast-bg text-gray-600 border border-black py-3 px-3 leading-tight focus:outline-none"
                 onClick={() => setIsOpen(!isOpen)}
             >
                 {"Filter by type"}
@@ -33,7 +33,7 @@ export default function ResourcesDropdown({ selected, setSelected }: DropdownPro
             {isOpen && (
                 <div className="absolute z-10 w-52 bg-white border border-black">
                     {options.map((option) => (
-                        <label key={option} className="flex items-center w-full h-10 px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                        <label key={option} className="flex items-center w-full h-10 px-4 py-1 hover:bg-primary hover:text-white cursor-pointer">
                             <input
                                 type="checkbox"
                                 checked={selected.includes(option)}

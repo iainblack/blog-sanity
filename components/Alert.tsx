@@ -31,7 +31,7 @@ export default function Alert({ message, type, show, onClose }: AlertProps) {
     };
 
     return createPortal(
-        <div className={`fixed bottom-20 left-20 z-50 max-w-lg ${type === 'success' ? alertClasses.success : alertClasses.error} px-4 rounded-lg flex items-center`} role="alert">
+        <div className={`fixed bottom-20 left-20 z-[9999] max-w-lg ${type === 'success' ? alertClasses.success : alertClasses.error} px-4 rounded-lg flex items-center`} role="alert">
             <span className="block sm:inline">{message}</span>
             <div className="pl-4 py-3 cursor-pointer">
                 <CloseIcon className="h-6 w-6" onClick={onClose} />
