@@ -55,3 +55,52 @@ export default function PostPreviewGrid({ posts, view, page }: PostPreviewGridPr
     )
 
 }
+
+export const PostPreviewGridSkeleton = () => {
+    return (
+        <div className="pb-4 w-full">
+            <div className="w-full mb-6 p-3">
+                <div className="p-4 w-full rounded-lg border border-gray-300 animate-pulse">
+                    <div className="flex flex-col md:flex-row">
+                        <div className="relative w-full md:w-1/2 h-52 md:h-72 lg:h-96 rounded-lg bg-gray-300"></div>
+                        <div className="md:w-1/2 md:pl-4 flex flex-col">
+                            <div className="py-4 md:py-0 space-y-3 md:space-y-6 lg:space-y-8">
+                                <div className="text-left pb-3 w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
+                                    <div className="flex items-center">
+                                        <div className="w-5 h-5 bg-gray-300 rounded-full mr-2"></div>
+                                        <div className="w-16 h-4 bg-gray-300 rounded"></div>
+                                    </div>
+                                    <div className="flex items-center mt-2">
+                                        <div className="w-5 h-5 bg-gray-300 rounded-full mr-2"></div>
+                                        <div className="w-16 h-4 bg-gray-300 rounded"></div>
+                                    </div>
+                                </div>
+                                <div className="w-48 h-6 bg-gray-300 rounded mt-4"></div>
+                                <div className="text-body text-sm overflow-hidden text-ellipsis truncate-lines">
+                                    <div className="w-full h-4 bg-gray-300 rounded mt-2"></div>
+                                    <div className="w-full h-4 bg-gray-300 rounded mt-2"></div>
+                                    <div className="w-full h-4 bg-gray-300 rounded mt-2"></div>
+                                </div>
+                                <div className="w-24 h-6 bg-gray-300 rounded mt-4"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
+                {[1, 2, 3].map((_, index) => (
+                    <div key={index} className="p-3 w-full rounded-lg border border-gray-300 animate-pulse">
+                        <div className="relative w-full h-52 rounded-lg bg-gray-300"></div>
+                        <div className="py-4 h-24">
+                            <div className="text-left pb-3 w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
+                                <div className="w-24 h-4 bg-gray-300 rounded"></div>
+                            </div>
+                            <div className="w-32 h-5 bg-gray-300 rounded mt-2"></div>
+                            <div className="w-full h-4 bg-gray-300 rounded mt-2"></div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};

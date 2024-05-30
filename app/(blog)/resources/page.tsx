@@ -6,9 +6,8 @@ import SearchBar from "@/components/SearchBar";
 import ResourcesDropdown from "@/components/Resource/ResourcesDropdown";
 import { getResources } from "../actions";
 import { Resource } from "@/sanity/lib/queries";
-import { ResourcePreview } from "@/components/Resource/ResourcePreview";
+import { ResourcePreview, ResourcePreviewSkeleton } from "@/components/Resource/ResourcePreview";
 import Pagination from "@/components/Pagination";
-import LoadingSpinner from "@/components/LoadingSpinner";
 import ResourceModal from "@/components/Resource/ResourceModal";
 
 interface ResourceState {
@@ -75,16 +74,18 @@ export default function Page() {
                     selected={selectedOptions}
                     setSelected={setSelectedOptions}
                 />
-                {loading && <div className="w-full min-h-[50vh]"><LoadingSpinner /></div>}
-                {!loading && <div className="pt-8 w-full">
-                    {!resources.resources || resources.resources.length === 0 ? <p className="text-body flex w-full justify-center h-[50vh]">No resources found.</p>
-                        :
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-                            {resources.resources.map(resource => (
-                                <ResourcePreview key={resource._id} resource={resource} onClick={handleResourceClick} />
-                            ))}
-                        </div>}
-                </div>}
+                {loading && <ResourcePreviewSkeleton />}
+                {!loading &&
+                    <div className="pt-5 w-full">
+                        {!resources.resources || resources.resources.length === 0
+                            ? <p className="text-body flex w-full justify-center h-[50vh]">No resources found.</p>
+                            :
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+                                {resources.resources.map(resource => (
+                                    <ResourcePreview key={resource._id} resource={resource} onClick={handleResourceClick} />
+                                ))}
+                            </div>}
+                    </div>}
                 <div className="w-full flex justify-center">
                     <Pagination totalPages={Math.ceil(resources.totalResources / limit)} active={page} setActive={setPage} />
                 </div>

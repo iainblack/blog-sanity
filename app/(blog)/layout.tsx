@@ -11,6 +11,8 @@ import { SettingsQueryResponse, settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import 'aos/dist/aos.css';
+import AOSInitializer from "@/components/AosInitializer";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await sanityFetch<SettingsQueryResponse>({
@@ -55,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <section className="min-h-screen flex flex-col">
           {draftMode().isEnabled && <AlertBanner />}
+          <AOSInitializer />
           <Header />
           <main className="flex-grow">{children}</main>
           <Footer />

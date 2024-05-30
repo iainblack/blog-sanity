@@ -1,15 +1,13 @@
 "use client";
-import * as demo from "@/sanity/lib/demo";
 import {
   Post,
 } from "@/sanity/lib/queries";
 import { getPostsByPage } from "../actions";
 import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
-import LoadingSpinner from "@/components/LoadingSpinner";
 import PostFilters from "@/components/Post/PostFilters";
 import { Intro } from "@/components/PageIntro";
-import PostPreviewGrid from "@/components/Post/PostPreviewGrid";
+import PostPreviewGrid, { PostPreviewGridSkeleton } from "@/components/Post/PostPreviewGrid";
 
 interface PostState {
   visiblePosts?: Post[];
@@ -47,7 +45,7 @@ export default function Page() {
         <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} view={view} setView={setView} />
       </div>
       <div className="flex flex-col items-center">
-        {loading && <div className="w-full min-h-[50vh]"><LoadingSpinner /></div>}
+        {loading && <PostPreviewGridSkeleton />}
         {!loading &&
           <>
             <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} />

@@ -26,8 +26,10 @@ export default function CenteredPanel({
     const bgClass = bgClasses[bgColor];
 
     return (
-        <div className={`centered-container ${sizeClass} ${bgClass} border-b border-black`}>
-            {children}
+        <div className={`h-full w-full ${bgClass} border-b border-black`}>
+            <div className={`centered-container ${sizeClass}`} data-aos="fade-up">
+                {children}
+            </div>
         </div>
     );
 }
