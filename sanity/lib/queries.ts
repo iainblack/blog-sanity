@@ -103,4 +103,5 @@ export interface ContentPanel {
   size: "normal" | "large" | "xl";
   backgroundColor: "default" | "contrast" | "primary" | "dark";
   pageId: string;
+  order: number;
 }

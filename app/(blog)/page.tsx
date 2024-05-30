@@ -61,6 +61,7 @@ export default async function Page() {
     }),
   ]);
   const contentPanels = await getContentPanelsByPage('Home');
+  contentPanels?.sort((a, b) => a.order - b.order);
 
   return (
     contentPanels && contentPanels.length > 0 &&

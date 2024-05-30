@@ -19,6 +19,13 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "order",
+      title: "Order",
+      type: "number",
+      description: "The order in which this panel should be displayed on the page.",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "size",
       title: "Panel Size",
       type: "string",
@@ -83,7 +90,7 @@ export default defineType({
             list: ["left", "right"],
             layout: "radio",
           },
-          hidden: ({document}) => !document?.image,
+          hidden: ({ document }) => !document?.image,
           initialValue: "left",
         }
       ],
