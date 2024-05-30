@@ -13,7 +13,7 @@ interface PreferencesManagerProps {
 
 export default function PreferencesManager({ setShowUnsubscribed, setAlertState, showUnsubscribed }: PreferencesManagerProps) {
     const [inputValue, setInputValue] = useState('');
-    const [preferences, setPreferences] = useState<{ [key: string]: boolean } | undefined>(undefined);
+    const [preferences, setPreferences] = useState<any>(undefined);
     const [isSubscribedLoading, setIsSubscribedLoading] = useState(false);
     const [updatePreferencesLoading, setUpdatePreferencesLoading] = useState(false);
     const [error, setError] = useState('');
@@ -106,9 +106,7 @@ export default function PreferencesManager({ setShowUnsubscribed, setAlertState,
                         showUnsubscribe
                         preferences={preferences}
                         setPreferences={setPreferences}
-                        handleSaveClick={handleSubmit}
                         handleUnsubscribeClick={() => handleUnsubscribeClick(emailParam ?? inputValue)}
-                        loading={updatePreferencesLoading}
                     />
                 </div>
             )}

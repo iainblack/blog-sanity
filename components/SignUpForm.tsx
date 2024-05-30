@@ -22,7 +22,7 @@ export default function SignUpForm() {
         return acc;
     }, {});
 
-    const [preferences, setPreferences] = useState(initialPreferences);
+    const [preferences, setPreferences] = useState<{ [key: string]: boolean }>(initialPreferences);
 
     const handleSignUp = async () => {
         setIsSubscribedLoading(true);
