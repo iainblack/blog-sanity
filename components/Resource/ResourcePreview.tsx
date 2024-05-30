@@ -1,5 +1,4 @@
 import { Resource } from "@/sanity/lib/queries";
-import { DocumentTextIcon } from "@sanity/icons";
 import CoverImage from "../CoverImage";
 import DateComponent from "../date";
 import PortableText from "../portable-text";
@@ -53,18 +52,21 @@ export const ResourcePreview: React.FC<ResourcePreviewProps> = ({ resource, onCl
                         <PortableText value={resource.description} />
                     </div>
                     {resource.url && (
-                        <a
-                            href={resource.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-500 underline"
-                        >
-                            {resource.urlDisplayName || resource.url}
-                        </a>
+                        <div className="flex space-x-1 items-center">
+                            <FaLink className="w-4 h-4 text-blue-500" />
+                            <a
+                                href={resource.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-500 hover:underline"
+                            >
+                                {resource.urlDisplayName || resource.url}
+                            </a>
+                        </div>
                     )}
                     <div>
                         <span
-                            className="text-blue-500 font-bold"
+                            className="text-primary font-bold"
                         >
                             Read More
                         </span>

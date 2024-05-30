@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
 import PostFilters from "@/components/Post/PostFilters";
 import { Intro } from "@/components/PageIntro";
-import PostPreviewGrid, { PostPreviewGridSkeleton } from "@/components/Post/PostPreviewGrid";
+import PostPreviewGrid, { PostPreviewGridSkeleton, PostPreviewGridWithHeroSkeleton, PostPreviewListSkeleton } from "@/components/Post/PostPreviewGrid";
 
 interface PostState {
   visiblePosts?: Post[];
@@ -24,6 +24,18 @@ export default function Page() {
   const [page, setPage] = useState(0);
   const [view, setView] = useState<"grid" | "list">("grid");
   const limit = 10;
+
+  const getLoadingSkeleton = (page: number, view: "grid" | "list") => {
+    if (view === "list") {
+      return <PostPreviewListSkeleton />
+    }
+
+    if (page === 0) {
+      return <PostPreviewGridWithHeroSkeleton />
+    }
+
+    return <PostPreviewGridSkeleton />
+  }
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -45,12 +57,12 @@ export default function Page() {
         <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} view={view} setView={setView} />
       </div>
       <div className="flex flex-col items-center">
-        {loading && <PostPreviewGridSkeleton />}
+        {loading && getLoadingSkeleton(page, view)}
         {!loading &&
-          <>
+          <div className="w-full flex flex-col items-center">
             <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} />
             <Pagination totalPages={Math.ceil(postState.totalPosts / limit)} active={page} setActive={setPage} />
-          </>}
+          </div>}
       </div>
     </div>
   );

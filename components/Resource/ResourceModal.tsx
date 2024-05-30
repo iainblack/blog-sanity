@@ -4,6 +4,7 @@ import CoverImage from "../CoverImage";
 import Modal from "../Modal";
 import DateComponent from "../date";
 import { Resource } from "@/sanity/lib/queries";
+import { FaLink } from "react-icons/fa6";
 
 interface ResourceModalProps {
     isOpen: boolean;
@@ -43,14 +44,17 @@ export default function ResourceModal({ isOpen, onClose, resource }: ResourceMod
                     <PortableText value={resource.description} />
                 </div>
                 {resource.url && (
-                    <a
-                        href={resource.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 underline"
-                    >
-                        {resource.urlDisplayName || resource.url}
-                    </a>
+                    <div className="flex space-x-1 items-center">
+                        <FaLink className="w-4 h-4 text-blue-500" />
+                        <a
+                            href={resource.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 hover:underline"
+                        >
+                            {resource.urlDisplayName || resource.url}
+                        </a>
+                    </div>
                 )}
             </div>
         </Modal>

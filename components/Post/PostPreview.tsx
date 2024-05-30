@@ -88,31 +88,25 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
     const path = usePathname();
 
     return (
-        <div
-            className={`w-full p-2 my-2 border border-black md:border-slate-200 rounded-xl shadow transition-colors cursor-pointer hover:border-black lg:max-w-md xl:max-w-2xl`}
-        >
-            <Link href={`${path}/posts/${post.slug}`}>
-                <div className="flex flex-col justify-center md:flex-row md:justify-between items-center">
-                    <div className="flex flex-col w-full justify-center items-center min-h-20 md:flex-row md:justify-start">
-                        <div className="text-left pb-3 w-full md:pb-0 md:flex md:flex-col truncate">
+        <div className="w-full flex items-center justify-between p-4 my-2 border border-black md:border-slate-200 rounded-xl shadow transition-colors cursor-pointer hover:border-black lg:max-w-md xl:max-w-2xl min-h-[80px]">
+            <Link href={`${path}/posts/${post.slug}`} className='w-full h-full flex flex-col justify-between'>
+                <div className="flex flex-col md:flex-row justify-between items-center h-full">
+                    <div className="flex flex-col md:flex-row items-start md:items-center w-full md:w-auto md:mr-4">
+                        <div className="text-left pb-3 md:pb-0 md:flex md:flex-col truncate">
                             <DateComponent icon dateString={post.date} />
                             {post.author?.name && (
-                                <div className="flex">
+                                <div className="flex items-center mt-2 md:mt-0">
                                     <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                    <div className="text-gray-600 text-sm">
-                                        {post.author.name}
-                                    </div>
+                                    <div className="text-gray-600 text-sm">{post.author.name}</div>
                                 </div>
                             )}
                         </div>
-                        <div className="w-full text-left md:flex md:flex-col truncate max-w-full px-4 md:px-0">
-                            <h2 className="text-lg truncate md:ml-10">{post.title}</h2>
-                            {post.excerpt && (
-                                <p className="text-gray-600 text-sm truncate md:ml-10">{post.excerpt}</p>
-                            )}
-                        </div>
                     </div>
-                    <ChevronRightIcon className="w-8 h-12 hidden md:block" />
+                    <div className="flex flex-col w-full text-left max-w-xs px-4 md:px-0 md:ml-10 md:flex-grow truncate">
+                        <h2 className="text-lg truncate">{post.title}</h2>
+                        <p className="text-gray-600 text-sm truncate flex-grow">{post.excerpt}</p>
+                    </div>
+                    <ChevronRightIcon className="w-8 h-8 hidden md:block" />
                 </div>
             </Link>
         </div>

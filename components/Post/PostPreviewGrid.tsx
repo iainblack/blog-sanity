@@ -21,7 +21,7 @@ export default function PostPreviewGrid({ posts, view, page }: PostPreviewGridPr
 
     if (view === "grid" && page === 0) {
         return (
-            <div className="pb-4 w-full">
+            <div className="pb-4 w-full items-center">
                 <div className="w-full mb-6 p-3">
                     <HeroImagePreview post={firstPost} />
                 </div>
@@ -36,7 +36,7 @@ export default function PostPreviewGrid({ posts, view, page }: PostPreviewGridPr
 
     if (view === "grid") {
         return (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full pb-4">
                 {posts.map(post => (
                     <PostImagePreview key={post._id} post={post} />
                 ))}
@@ -46,8 +46,8 @@ export default function PostPreviewGrid({ posts, view, page }: PostPreviewGridPr
 
     return (
         <div className="flex flex-col w-full">
-            <div className="grid grid-rows-10 lg:grid-rows-5 gap-2 grid-flow-col row-auto">
-                {posts.map((post) => (
+            <div className="grid grid-rows-10 lg:grid-rows-5 gap-2 w-full grid-flow-col row-auto">
+                {posts.map(post => (
                     <PostPreview key={post._id} post={post} />
                 ))}
             </div>
@@ -56,7 +56,7 @@ export default function PostPreviewGrid({ posts, view, page }: PostPreviewGridPr
 
 }
 
-export const PostPreviewGridSkeleton = () => {
+export const PostPreviewGridWithHeroSkeleton = () => {
     return (
         <div className="pb-4 w-full">
             <div className="w-full mb-6 p-3">
@@ -104,3 +104,57 @@ export const PostPreviewGridSkeleton = () => {
         </div>
     );
 };
+
+export const PostPreviewGridSkeleton = () => {
+    return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full pb-4">
+            {[1, 2, 3, 4, 5, 6].map((_, index) => (
+                <div key={index} className="p-3 w-full rounded-lg border border-gray-300 animate-pulse">
+                    <div className="relative w-full h-52 rounded-lg bg-gray-300"></div>
+                    <div className="py-4 h-24">
+                        <div className="text-left pb-3 w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
+                            <div className="w-24 h-4 bg-gray-300 rounded"></div>
+                        </div>
+                        <div className="w-32 h-5 bg-gray-300 rounded mt-2"></div>
+                        <div className="w-full h-4 bg-gray-300 rounded mt-2"></div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+export const PostPreviewListSkeleton = () => {
+    return (
+        <div className="flex flex-col w-full pb-4">
+            <div className="grid grid-rows-10 lg:grid-rows-5 gap-2 grid-flow-col row-auto">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, index) => (
+                    <div
+                        key={index}
+                        className="w-full p-4 my-2 border border-gray-300 rounded-xl shadow animate-pulse lg:max-w-md xl:max-w-2xl"
+                    >
+                        <div className="flex flex-col md:flex-row justify-between items-center">
+                            <div className="flex flex-col w-full md:w-auto md:flex-row md:items-center">
+                                <div className="text-left pb-3 md:pb-0 md:flex md:flex-col truncate md:mr-4">
+                                    <div className="flex items-center mb-2">
+                                        <div className="w-5 h-5 bg-gray-300 rounded-full mr-1"></div>
+                                        <div className="w-16 h-4 bg-gray-300 rounded"></div>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <div className="w-5 h-5 bg-gray-300 rounded-full mr-1"></div>
+                                        <div className="w-16 h-4 bg-gray-300 rounded"></div>
+                                    </div>
+                                </div>
+                                <div className="w-full text-left md:flex md:flex-col truncate max-w-full">
+                                    <div className="w-32 h-5 bg-gray-300 rounded mt-2 md:ml-10"></div>
+                                    <div className="w-full h-4 bg-gray-300 rounded mt-2 md:ml-10"></div>
+                                </div>
+                            </div>
+                            <div className="w-8 h-8 bg-gray-300 rounded hidden md:block"></div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}

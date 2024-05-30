@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
 import PostFilters from "@/components/Post/PostFilters";
 import { Intro } from "@/components/PageIntro";
-import PostPreviewGrid, { PostPreviewGridSkeleton } from "@/components/Post/PostPreviewGrid";
+import PostPreviewGrid, { PostPreviewGridSkeleton, PostPreviewGridWithHeroSkeleton } from "@/components/Post/PostPreviewGrid";
 
 interface PostState {
   visiblePosts?: Post[];
@@ -45,7 +45,8 @@ export default function Page() {
         <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} view={view} setView={setView} />
       </div>
       <div className="flex flex-col items-center">
-        {loading && <PostPreviewGridSkeleton />}
+        {loading && page === 0 && <PostPreviewGridWithHeroSkeleton />}
+        {loading && page !== 0 && <PostPreviewGridSkeleton />}
         {!loading &&
           <>
             <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} />

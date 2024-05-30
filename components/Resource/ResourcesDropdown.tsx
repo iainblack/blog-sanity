@@ -33,7 +33,7 @@ export default function ResourcesDropdown({ selected, setSelected }: DropdownPro
             {isOpen && (
                 <div className="absolute z-10 w-52 bg-white border border-black">
                     {options.map((option) => (
-                        <label key={option} className="flex items-center w-full h-10 px-4 py-1 hover:bg-primary hover:text-white cursor-pointer">
+                        <label key={option} className="flex space-x-2 items-center w-full h-10 px-4 py-1 hover:bg-primary hover:text-white cursor-pointer">
                             <input
                                 type="checkbox"
                                 checked={selected.includes(option)}
