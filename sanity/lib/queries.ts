@@ -101,7 +101,6 @@ export interface ContentPanel {
   title?: string;
   content: PortableTextBlock[];
   size: "normal" | "large" | "xl";
+  backgroundColor: "default" | "contrast" | "primary" | "dark";
   pageId: string;
 }
-
-export type ContentPanelsQueryResponse = ContentPanel[] | null;

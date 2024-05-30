@@ -62,7 +62,7 @@ export default function Page() {
             <div className="flex flex-col items-center space-y-3 my-6 md:space-y-0 md:flex-row md:justify-between md:my-12">
                 <Intro title={"Resources"} subtitle="Books, websites, and anything else I find useful for your spiritual journey." />
             </div>
-            <div className="flex flex-col space-y-3">
+            <div className="flex flex-col space-y-6">
                 <SearchBar
                     setSearch={setSearchVal}
                     value={searchVal}

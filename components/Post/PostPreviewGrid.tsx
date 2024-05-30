@@ -4,9 +4,10 @@ import { HeroImagePreview, PostImagePreview, PostPreview } from "./PostPreview";
 interface PostPreviewGridProps {
     posts?: Post[];
     view: "grid" | "list";
+    page: number;
 }
 
-export default function PostPreviewGrid({ posts, view }: PostPreviewGridProps) {
+export default function PostPreviewGrid({ posts, view, page }: PostPreviewGridProps) {
 
     if (!posts || posts.length === 0) {
         return (
@@ -18,7 +19,7 @@ export default function PostPreviewGrid({ posts, view }: PostPreviewGridProps) {
 
     const [firstPost, ...otherPosts] = posts;
 
-    if (view === "grid") {
+    if (view === "grid" && page === 0) {
         return (
             <div className="pb-4 w-full">
                 <div className="w-full mb-6 p-3">
@@ -29,6 +30,16 @@ export default function PostPreviewGrid({ posts, view }: PostPreviewGridProps) {
                         <PostImagePreview key={post._id} post={post} />
                     ))}
                 </div>
+            </div>
+        );
+    }
+
+    if (view === "grid") {
+        return (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
+                {posts.map(post => (
+                    <PostImagePreview key={post._id} post={post} />
+                ))}
             </div>
         );
     }

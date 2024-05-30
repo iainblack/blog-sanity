@@ -14,7 +14,7 @@ export default defineType({
       type: "string",
       description: "The page that this panel should be displayed on.",
       options: {
-        list: pages.filter((page) => page.contentType === "post").map((page) => page.name),
+        list: pages.filter((page) => page.contentType === "contentPanel").map((page) => page.name),
       },
       validation: (rule) => rule.required(),
     }),
@@ -26,6 +26,16 @@ export default defineType({
         list: ["normal", "large", "xl"],
       },
       initialValue: "normal"
+    }),
+    defineField({
+      name: "backgroundColor",
+      title: "Background Color",
+      type: "string",
+      description: "The color of the background for this panel.",
+      options: {
+        list: ["default", "contrast", "primary", "dark"],
+      },
+      initialValue: "default"
     }),
     defineField({
       name: "title",
@@ -55,7 +65,7 @@ export default defineType({
           name: "alt",
           type: "string",
           title: "Alternative text",
-          description: "Important for SEO and accessiblity.",
+          description: "Fallback text if the image cannot be displayed.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
               if ((context.document?.image as any)?.asset?._ref && !alt) {

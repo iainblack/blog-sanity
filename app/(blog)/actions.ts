@@ -1,7 +1,7 @@
 "use server";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { ContentPanelsQueryResponse, GalleryImage, Post, Resource, postFields, resourceFields } from "@/sanity/lib/queries";
+import { ContentPanel, GalleryImage, Post, Resource, postFields, resourceFields } from "@/sanity/lib/queries";
 import { groq } from "next-sanity";
 import { draftMode } from "next/headers";
 
@@ -16,7 +16,7 @@ export async function disableDraftMode() {
 
 export const getContentPanelsByPage = (pageId: string) => {
   const query = groq`*[_type == "contentPanel" && pageId == $pageId] | order(_createdAt asc)`;
-  return sanityFetch<ContentPanelsQueryResponse>({
+  return sanityFetch<ContentPanel[] | undefined>({
     query,
     params: { pageId },
   });

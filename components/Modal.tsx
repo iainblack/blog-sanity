@@ -22,7 +22,7 @@ export default function Modal({ isOpen, onClose, onSaveClick, onCancelClick, tit
         >
             <div
                 data-dialog="dialog"
-                className="relative m-4 w-2/5 min-w-[40%] max-w-[40%] rounded-lg bg-white text-base font-light leading-relaxed antialiased shadow-2xl overflow-hidden"
+                className="relative m-4 w-[90%] md:w-[60%] xl:w-[30%] rounded-lg bg-white text-base font-light leading-relaxed antialiased shadow-2xl overflow-hidden"
                 onClick={(e) => e.stopPropagation()} // Prevent closing modal when clicking inside the dialog
             >
                 {title && <div className="flex items-center p-5 text-2xl antialiased font-semibold leading-snug shrink-0 text-blue-gray-900">

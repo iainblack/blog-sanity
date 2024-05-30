@@ -1,13 +1,14 @@
 import React from 'react';
-import { stegaClean } from '@sanity/client/stega';
 
 export default function CenteredPanel({
     children,
     size,
+    bgColor,
 }: {
     children: React.ReactNode;
     isFirst?: boolean;
     size: 'normal' | 'large' | 'xl';
+    bgColor: 'default' | 'contrast' | 'primary' | 'dark';
 }) {
     const sizeClasses: { [key: string]: string } = {
         normal: 'min-h-[25vh] xl:min-h-[50vh]',
@@ -15,14 +16,18 @@ export default function CenteredPanel({
         xl: 'min-h-[25vh] xl:min-h-[100vh]',
     };
 
-    const sizeClass = sizeClasses[stegaClean(size)];
+    const bgClasses: { [key: string]: string } = {
+        contrast: 'bg-contrast-bg',
+        primary: 'bg-primary text-white',
+        dark: 'bg-dark-bg text-white',
+    }
+
+    const sizeClass = sizeClasses[size];
+    const bgClass = bgClasses[bgColor];
 
     return (
-        <div
-            id="content-panel-centered"
-            className={`centered-container ${sizeClass} bg-black}`}
-        >
+        <div className={`centered-container ${sizeClass} ${bgClass}`}>
             {children}
-        </div >
+        </div>
     );
 }

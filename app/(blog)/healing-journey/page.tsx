@@ -49,7 +49,7 @@ export default function Page() {
         {loading && <div className="w-full min-h-[50vh]"><LoadingSpinner /></div>}
         {!loading &&
           <>
-            <PostPreviewGrid posts={postState.visiblePosts} view={view} />
+            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} />
             <Pagination totalPages={Math.ceil(postState.totalPosts / limit)} active={page} setActive={setPage} />
           </>}
       </div>

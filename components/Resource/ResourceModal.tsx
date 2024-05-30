@@ -24,7 +24,7 @@ export default function ResourceModal({ isOpen, onClose, resource }: ResourceMod
                 : null
             }
         >
-            <div className="flex flex-col items-center space-y-5 w-full">
+            <div className="flex flex-col space-y-5 w-full">
                 {(resource.datePublished || resource.author) &&
                     <div className="space-y-1 w-full">
                         {resource.datePublished && <DateComponent icon dateString={resource.datePublished} />}

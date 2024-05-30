@@ -13,17 +13,20 @@ import { PortableTextBlock } from "next-sanity";
 import { getContentPanelsByPage } from "./actions";
 
 function Panel({
-  panel: { title, content, image, size },
+  panel: { title, content, image, size, backgroundColor },
 }: {
   panel: ContentPanel;
 }) {
 
   const cleanedPosition = stegaClean(image?.position);
+  const cleanedBgColor = stegaClean(backgroundColor);
+  const cleanedSize = stegaClean(size);
+
   const imagePosition = cleanedPosition === "left" ? 'lg:order-1' : 'lg:order-2';
   const textPosition = cleanedPosition === "left" ? 'lg:order-2' : 'lg:order-1';
 
   return (
-    <CenteredPanel size={size}>
+    <CenteredPanel size={cleanedSize} bgColor={cleanedBgColor}>
       {image && image?.asset &&
         <div className={`centered-container__image ${imagePosition}`}>
           <Image

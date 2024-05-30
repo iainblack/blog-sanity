@@ -56,7 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <section className="min-h-screen flex flex-col">
           {draftMode().isEnabled && <AlertBanner />}
           <Header />
-          <main className="flex-grow p-2 xl:py-8">{children}</main>
+          <main className="flex-grow">{children}</main>
           <Footer />
         </section>
         <SpeedInsights />

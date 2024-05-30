@@ -49,6 +49,7 @@ export default defineType({
       name: "excerpt",
       title: "Excerpt",
       type: "string",
+      description: "A short description of the post.",
     }),
     defineField({
       name: "coverImage",
@@ -65,7 +66,7 @@ export default defineType({
           name: "alt",
           type: "string",
           title: "Alternative text",
-          description: "Important for SEO and accessiblity.",
+          description: "Fallback text if the image cannot be displayed.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
               if ((context.document?.coverImage as any)?.asset?._ref && !alt) {
