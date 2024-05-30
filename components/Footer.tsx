@@ -1,14 +1,9 @@
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { ExternalLink, SettingsQueryResponse, externalLinksQuery, settingsQuery } from "@/sanity/lib/queries";
 import SignUpForm from "./SignUpForm";
 import Link from "next/link";
-import LinkList from "./LinkList";
 
 
 export default async function Footer() {
-    const links = await sanityFetch<ExternalLink[]>({
-        query: externalLinksQuery,
-    });
 
     return (
         <footer className="border-t border-black bg-dark-bg relative bottom-0 min-h-[20vh]">

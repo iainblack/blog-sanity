@@ -8,6 +8,8 @@ export const pages: { name: string; slug: string, contentType?: string}[] = [
     { name: "Photos", slug: "photos", contentType: "gallery" },
 ];
 
+export const resourceTypes = ["Books", "Websites", "Other"];
+
 export const emailPreferenceOptions = pages.filter((page) => page.contentType === "post").map((page) => page.name);
 
 export interface BasicAlertState {
@@ -15,6 +17,13 @@ export interface BasicAlertState {
     type: "error" | "success";
     show: boolean;
 }
+
+export const trimPlural = (type: string): string => {
+    if (type.endsWith('s')) {
+        return type.slice(0, -1);
+    }
+    return type;
+};
 
 export function formatTimeAgo(date: string | Date): string {
     const now = new Date();

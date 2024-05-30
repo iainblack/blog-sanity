@@ -6,13 +6,14 @@ import { BasicAlertState, emailPreferenceOptions } from "./utils";
 import Alert from "./Alert";
 import { isEmailSubscribedAction, subscribeUserAction } from "@/firebase/FirebaseActions";
 import LoadingSpinner from "./LoadingSpinner";
+import SearchBar from "./SearchBar";
 
 export default function SignUpForm() {
     const [email, setEmail] = useState('');
     const [isSubscribedLoading, setIsSubscribedLoading] = useState(false);
     const [updatePreferencesLoading, setUpdatePreferencesLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string | undefined>(undefined);
     const [alertState, setAlertState] = useState<BasicAlertState>({ message: "", type: "success", show: false });
 
     const initialPreferences = emailPreferenceOptions.reduce((acc: { [key: string]: boolean }, option) => {
@@ -24,7 +25,7 @@ export default function SignUpForm() {
 
     const handleSignUp = async () => {
         setIsSubscribedLoading(true);
-        setError(null);
+        setError(undefined);
 
         if (!email) {
             setIsSubscribedLoading(false);
@@ -72,23 +73,16 @@ export default function SignUpForm() {
 
     return (
         <div className="flex relative">
-            <input
-                className={`w-full h-12 bg-white text-gray-600 border border-black py-3 px-4 leading-tight focus:outline-none focus:bg-white ${error ? "border-red-500" : ""}`}
-                type="email"
-                placeholder="Email"
-                aria-label="Email"
+            <SearchBar
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onKeyDown={handleKeyDown}
+                setSearch={setEmail}
+                onSubmit={handleSignUp}
+                placeholder="Enter your email"
+                type="email"
+                error={error}
+                loading={isSubscribedLoading}
+                buttonText="Sign Up"
             />
-            {error && <p className="text-red-500 text-sm ml-2 absolute -bottom-6">{error}</p>}
-            <button
-                className="two-tone-button whitespace-nowrap h-12 w-52"
-                type="button"
-                onClick={handleSignUp}
-            >
-                {isSubscribedLoading ? <LoadingSpinner size={16} /> : "Sign Up"}
-            </button>
             <PreferencesModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}

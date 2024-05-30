@@ -12,19 +12,28 @@ export interface SettingsQueryResponse {
 }
 
 // Recommended Resource Link
-export interface ExternalLink {
+export interface Resource {
   _id: string;
-  url: string;
   title: string;
+  type: "Book" | "Website" | "Other";
+  description?: string | null;
+  coverImage?: (Image & { alt?: string }) | null;
+  author?: string | null;
+  publisher?: string | null;
+  datePublished?: string | null;
+  url?: string | null;
 }
 
-export const externalLinkFields = groq`
+export const resourceFields = groq`
   _id,
-  url,
   title,
+  type,
+  author,
+  publisher,
+  datePublished,
+  url,
 `;
 
-export const externalLinksQuery = groq`*[_type == "externalLink"] | order(title asc) { ${externalLinkFields} }`;
 
 /// AUTHOR
 export interface Author {

@@ -1,7 +1,7 @@
 "use server";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { ContentPanelsQueryResponse, GalleryImage, Post, postFields } from "@/sanity/lib/queries";
+import { ContentPanelsQueryResponse, GalleryImage, Post, Resource, postFields, resourceFields } from "@/sanity/lib/queries";
 import { groq } from "next-sanity";
 import { draftMode } from "next/headers";
 
@@ -21,6 +21,20 @@ export const getContentPanelsByPage = (pageId: string) => {
     params: { pageId },
   });
 };
+
+
+export const getResources = async (types: string[], search: string, limit: number, offset: number) => {
+  const searchFilter = search ? `&& title match $search` : '';
+  console.log(types);
+  const query = groq`*[_type == "resource" && type in $types ${searchFilter}] | order(_createdAt desc) [${offset}...${offset + limit}] {
+    ${resourceFields}
+  }`;
+  return sanityFetch<Resource[] | undefined>({
+    query,
+    params: { types, search: search ? `*${search}*` : '' },
+  });
+};
+
 
 export const getPostsByPage = async (pageId: string, order: string = 'desc', offset: number = 0, limit: number = 10) => {
   const query = groq`*[_type == "post" && pageId == $pageId] | order(date ${order}, _updatedAt ${order})[${offset}...${offset + limit}] {
