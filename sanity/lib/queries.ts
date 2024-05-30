@@ -11,12 +11,12 @@ export interface SettingsQueryResponse {
   ogImage?: (Image & { alt?: string; metadataBase?: string }) | null;
 }
 
-// Recommended Resource Link
+// RESOURCE
 export interface Resource {
   _id: string;
   title: string;
   type: "Book" | "Website" | "Other";
-  description?: string | null;
+  description: PortableTextBlock[];
   coverImage?: (Image & { alt?: string }) | null;
   author?: string | null;
   publisher?: string | null;
@@ -31,6 +31,8 @@ export const resourceFields = groq`
   author,
   publisher,
   datePublished,
+  coverImage,
+  description,
   url,
 `;
 
@@ -42,7 +44,6 @@ export interface Author {
 }
 
 /// GALLERY IMAGE
-
 export interface GalleryImage {
   _id: string;
   pageId: string;
@@ -62,7 +63,7 @@ export interface GalleryImage {
 }
 
 
-/// POSTS
+/// POST
 export interface Post {
   _id: string;
   _createdAt: string;

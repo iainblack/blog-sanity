@@ -39,7 +39,6 @@ export default defineType({
       name: "datePublished",
       title: "Date Published",
       type: "datetime",
-      initialValue: () => new Date().toISOString(),
       hidden: ({ document }) => document?.type !== "Book",
     }),
     defineField({

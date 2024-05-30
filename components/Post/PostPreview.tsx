@@ -42,7 +42,6 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
                                 )}
                             </div>
                             <h2 className="text-2xl font-bold truncate">{post.title}</h2>
-                            {/* <p className="text-gray-600 text-sm overflow-hidden text-ellipsis">{post.excerpt}</p> */}
                             <div className='text-body text-sm overflow-hidden text-ellipsis truncate-lines'>
                                 <PortableText value={post.content} />
                             </div>

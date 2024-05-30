@@ -25,14 +25,24 @@ export const getContentPanelsByPage = (pageId: string) => {
 
 export const getResources = async (types: string[], search: string, limit: number, offset: number) => {
   const searchFilter = search ? `&& title match $search` : '';
-  console.log(types);
-  const query = groq`*[_type == "resource" && type in $types ${searchFilter}] | order(_createdAt desc) [${offset}...${offset + limit}] {
+  const typeFilter = types.length > 0 ? `&& type in $types` : '';
+  const query = groq`*[_type == "resource" ${typeFilter} ${searchFilter}] | order(_createdAt desc) [${offset}...${offset + limit}] {
     ${resourceFields}
   }`;
-  return sanityFetch<Resource[] | undefined>({
+
+  const totalQuery = groq`count(*[_type == "resource" && type in $types ${searchFilter}])`;
+
+  const resources = await sanityFetch<Resource[] | undefined>({
     query,
     params: { types, search: search ? `*${search}*` : '' },
   });
+
+  const total = await sanityFetch<number>({
+    query: totalQuery,
+    params: { types, search: search ? `*${search}*` : '' },
+  });
+
+  return { resources, totalResources: total };
 };
 
 
