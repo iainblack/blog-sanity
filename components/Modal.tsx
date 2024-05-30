@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LoadingSpinner from './LoadingSpinner';
 
 interface ModalProps {
@@ -13,16 +13,25 @@ interface ModalProps {
 }
 
 export default function Modal({ isOpen, onClose, onSaveClick, onCancelClick, title, children, loading, imageHeader }: ModalProps) {
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [isOpen]);
+
     return (
         <div
-            data-dialog-backdrop="dialog"
-            data-dialog-backdrop-close="true"
             className={`fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
             onClick={onClose}
         >
             <div
-                data-dialog="dialog"
-                className="relative m-4 w-[90%] md:w-[60%] xl:w-[30%] rounded-lg bg-white text-base font-light leading-relaxed antialiased shadow-2xl overflow-hidden"
+                className="relative m-4 w-[90%] md:w-[60%] xl:w-[35%] rounded-lg bg-white text-base font-light leading-relaxed antialiased shadow-2xl overflow-hidden"
                 onClick={(e) => e.stopPropagation()} // Prevent closing modal when clicking inside the dialog
             >
                 {title && <div className="flex items-center p-5 text-2xl antialiased font-semibold leading-snug shrink-0 text-blue-gray-900">

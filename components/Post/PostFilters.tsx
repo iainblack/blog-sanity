@@ -1,4 +1,5 @@
 import { UlistIcon, ThLargeIcon, SortIcon } from "@sanity/icons";
+import Dropdown from "../Dropdown";
 
 interface PostFiltersProps {
     setOrder: (order: string) => void;
@@ -9,20 +10,18 @@ interface PostFiltersProps {
     setView: (view: "grid" | "list") => void;
 }
 
-export default function PostFilters({ setOrder, order, postCount, loading, view, setView }: PostFiltersProps) {
+export default function PostFilters({ setOrder, order, view, setView }: PostFiltersProps) {
     return (
         <div className="flex justify-center space-x-14 items-center">
-            <div>
+            <div className="flex space-x-2 items-center">
                 <label htmlFor="order-select" className="mr-2">Sort by:</label>
-                <select
-                    className="p-2 border-gray-300 rounded-md bg-inherit"
-                    value={order}
-                    onChange={(e) => setOrder(e.target.value)}
-                    disabled={loading || !postCount || postCount === 0}
-                >
-                    <option value="desc">Newest First</option>
-                    <option value="asc">Oldest First</option>
-                </select>
+                <Dropdown
+                    variant="outlined"
+                    options={["Oldest First", "Newest First"]}
+                    label={order === "asc" ? "Oldest First" : "Newest First"}
+                    selected={[order]}
+                    setSelected={() => setOrder(order === "asc" ? "desc" : "asc")}
+                />
             </div>
             <>
                 <div className="flex items-center">

@@ -19,7 +19,7 @@ export default function ResourceModal({ isOpen, onClose, resource }: ResourceMod
             isOpen={isOpen}
             onClose={onClose}
             imageHeader={resource.coverImage ?
-                <div className="relative w-full object-cover">
+                <div className="relative w-full">
                     <CoverImage image={resource.coverImage} priority={false} />
                 </div>
                 : null

@@ -31,8 +31,8 @@ export default function Page() {
     }
 
     return (
-        <div className="mx-auto flex-col py-6 md:flex-row md:pt-12 md:flex md:justify-evenly">
-            <div>
+        <div className="container mx-auto lg:flex lg:flex-row lg:justify-between lg:px-16">
+            <div className='my-6 lg:my-12'>
                 <h1 className="header-text text-center">
                     Update Preferences
                 </h1>

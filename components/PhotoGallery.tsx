@@ -13,7 +13,6 @@ import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 
-
 interface PhotoGalleryProps {
     photos: Photo[];
 }
@@ -26,6 +25,12 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
             <PhotoAlbum
                 photos={photos}
                 layout="columns"
+                columns={(containerWidth) => {
+                    if (containerWidth < 500) return 1;
+                    if (containerWidth < 1000) return 2;
+                    if (containerWidth < 1500) return 3;
+                    return 5;
+                }}
                 renderPhoto={GalleryImage}
                 defaultContainerWidth={1200}
                 sizes={{
@@ -44,7 +49,8 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
                 open={index >= 0}
                 index={index}
                 close={() => setIndex(-1)}
-                plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]} />
+                plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
+            />
         </>
     );
 }

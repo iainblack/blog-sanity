@@ -48,7 +48,7 @@ export default function Page() {
         {loading && page === 0 && <PostPreviewGridWithHeroSkeleton />}
         {loading && page !== 0 && <PostPreviewGridSkeleton />}
         {!loading &&
-          <div className="w-full flex justify-center">
+          <div className="w-full flex flex-col items-center">
             <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} />
             <Pagination totalPages={Math.ceil(postState.totalPosts / limit)} active={page} setActive={setPage} />
           </div>}

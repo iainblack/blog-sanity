@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { Intro } from "@/components/PageIntro";
 import { trimPlural } from "@/components/utils";
 import SearchBar from "@/components/SearchBar";
-import ResourcesDropdown from "@/components/Resource/ResourcesDropdown";
 import { getResources } from "../actions";
 import { Resource } from "@/sanity/lib/queries";
 import { ResourcePreview, ResourcePreviewSkeleton } from "@/components/Resource/ResourcePreview";
 import Pagination from "@/components/Pagination";
 import ResourceModal from "@/components/Resource/ResourceModal";
+import Dropdown from "@/components/Dropdown";
 
 interface ResourceState {
     resources?: Resource[];
@@ -19,6 +19,7 @@ interface ModalState {
     isOpen: boolean;
     resource?: Resource;
 }
+const options = ["Books", "Websites", "Other"];
 
 export default function Page() {
     const [searchVal, setSearchVal] = useState("");
@@ -70,7 +71,10 @@ export default function Page() {
                     searchIcon
                     loading={loading}
                 />
-                <ResourcesDropdown
+                <Dropdown
+                    checkbox
+                    options={options}
+                    label="Filter by type"
                     selected={selectedOptions}
                     setSelected={setSelectedOptions}
                 />

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import LoadingSpinner from "./LoadingSpinner";
 import { SearchIcon } from "@sanity/icons";
 
@@ -14,11 +15,26 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ setSearch, onSubmit, loading, value, type, placeholder, error, buttonText, searchIcon }: SearchBarProps) {
+    const [searchTerm, setSearchTerm] = useState(value);
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setSearch(searchTerm);
+        }, 300);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [searchTerm, setSearch]);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             onSubmit();
         }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value);
     };
 
     return (
@@ -29,11 +45,10 @@ export default function SearchBar({ setSearch, onSubmit, loading, value, type, p
                     className={`w-full h-12 bg-white border-y border-black ${searchIcon ? 'pl-4' : ''} focus:outline-none focus:bg-white`}
                     type={type || "text"}
                     placeholder={placeholder || "Search"}
-                    value={value}
-                    onChange={(e) => setSearch(e.target.value)}
+                    value={searchTerm}
+                    onChange={handleChange}
                     onKeyDown={handleKeyDown}
-                >
-                </input>
+                />
             </div>
             {error && <p className="text-red-500 text-sm ml-2 absolute -bottom-6">{error}</p>}
             {buttonText && <button
