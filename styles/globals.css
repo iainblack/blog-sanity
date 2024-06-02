@@ -10,7 +10,7 @@ body {
 
 /* class for mobile responsive content container */
 .centered-container {
-    @apply w-full flex flex-col items-center justify-center p-5 space-y-5 lg:flex-row lg:space-y-0 lg:space-x-5 lg:p-8 lg:justify-evenly xl:space-x-0 xl:p-12;
+    @apply w-full flex flex-col items-center justify-center p-5 py-12 space-y-5 md:py-0 lg:flex-row lg:space-y-0 lg:space-x-5 lg:p-8 lg:justify-evenly xl:space-x-0 xl:p-12;
 }
 
 /* class for mobile responsive image container */
@@ -24,7 +24,7 @@ body {
 }
 
 .body-text {
-    @apply text-base font-light;
+    @apply text-sm font-light md:text-base
 }
 
 .header-text {

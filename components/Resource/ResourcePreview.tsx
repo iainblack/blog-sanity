@@ -11,7 +11,6 @@ interface ResourcePreviewProps {
 }
 
 export const ResourcePreview: React.FC<ResourcePreviewProps> = ({ resource, onClick }) => {
-
     return (
         <div className="p-3 overflow-hidden transition-colors w-full rounded-lg border border-transparent shadow hover:shadow-xl hover:border-black">
             <div className="w-full flex flex-col h-full cursor-pointer" onClick={() => onClick(resource)}>
@@ -42,14 +41,12 @@ export const ResourcePreview: React.FC<ResourcePreviewProps> = ({ resource, onCl
                     )}
                 </div>
                 <div className="py-4 flex-grow flex flex-col space-y-3">
-                    {resource.datePublished && (
-                        <div className="text-left w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
-                            <DateComponent dateString={resource.datePublished} />
-                        </div>
-                    )}
+                    <div className="text-left w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
+                        {resource.datePublished ? <DateComponent dateString={resource.datePublished} /> : <div className="h-5" />}
+                    </div>
                     <h2 className="text-lg font-bold truncate">{resource.title}</h2>
                     <div className="text-body text-sm truncate-lines-small flex-grow">
-                        <PortableText value={resource.description} />
+                        {resource.description}
                     </div>
                     {resource.url && (
                         <div className="flex space-x-1 items-center">

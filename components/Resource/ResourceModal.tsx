@@ -14,18 +14,22 @@ interface ResourceModalProps {
 
 
 export default function ResourceModal({ isOpen, onClose, resource }: ResourceModalProps) {
+    const spacedDescription = resource.description.split("\n").map((paragraph, index) => (
+        <p key={index} className="body-text pb-2">{paragraph}</p>
+    ));
+
     return (
         <Modal
             isOpen={isOpen}
             onClose={onClose}
             imageHeader={resource.coverImage ?
-                <div className="relative w-full">
+                <div className="relative w-full h-64">
                     <CoverImage image={resource.coverImage} priority={false} />
                 </div>
                 : null
             }
         >
-            <div className="flex flex-col space-y-5 w-full">
+            <div id="resources-modal" className="flex flex-col space-y-5 w-full overflow-auto h-full">
                 {(resource.datePublished || resource.author) &&
                     <div className="space-y-1 w-full">
                         {resource.datePublished && <DateComponent icon dateString={resource.datePublished} />}
@@ -41,7 +45,7 @@ export default function ResourceModal({ isOpen, onClose, resource }: ResourceMod
                 }
                 <h2 className="text-lg font-bold">{resource.title}</h2>
                 <div className="text-body text-sm flex-grow w-full py-4 text-pretty">
-                    <PortableText value={resource.description} />
+                    <div className="body-text">{spacedDescription}</div>
                 </div>
                 {resource.url && (
                     <div className="flex space-x-1 items-center">

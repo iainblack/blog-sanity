@@ -15,7 +15,7 @@ export default defineType({
       options: {
         list: ["Book", "Website", "Other"]
       },
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().error("Resource type is required."),
     }),
     defineField({
       name: "title",
@@ -52,8 +52,8 @@ export default defineType({
     defineField({
       name: "description",
       title: "Description",
-      type: "array",
-      of: [{ type: "block" }],
+      type: "text",
+      //validation: (rule) => rule.required().max(800).error("Description must be 800 characters or less."),
     }),
     defineField({
       name: "coverImage",

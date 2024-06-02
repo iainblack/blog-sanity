@@ -14,7 +14,7 @@ export default function PostFilters({ setOrder, order, view, setView }: PostFilt
     return (
         <div className="flex justify-center space-x-14 items-center">
             <div className="flex space-x-2 items-center">
-                <label htmlFor="order-select" className="mr-2">Sort by:</label>
+                <label htmlFor="order-select" className="hidden md:block mr-2">Sort by:</label>
                 <Dropdown
                     variant="outlined"
                     options={["Oldest First", "Newest First"]}

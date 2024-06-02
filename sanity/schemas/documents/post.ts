@@ -19,13 +19,13 @@ export default defineType({
       options: {
         list: pages.filter((page) => page.contentType === "post").map((page) => page.name),
       },
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().error("Page is required."),
     }),
     defineField({
       name: "title",
       title: "Title",
       type: "string",
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().error("Title is required."),
     }),
     defineField({
       name: "slug",
@@ -37,7 +37,7 @@ export default defineType({
         maxLength: 96,
         isUnique: (value, context) => context.defaultIsUnique(value, context),
       },
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().error("Slug is required."),
     }),
     defineField({
       name: "content",

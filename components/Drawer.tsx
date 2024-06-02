@@ -1,31 +1,120 @@
+'use client';
 import Link from "next/link";
-import { ChevronRightIcon, CloseIcon } from '@sanity/icons';
-import { pages } from "./utils";
+import { ChevronDownIcon, ChevronUpIcon } from '@sanity/icons';
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
-export default function Drawer({ isMenuOpen, closeMenu, isActive }: { isMenuOpen: boolean, closeMenu: () => void, isActive: (path: string) => boolean }) {
+export default function Drawer({ isDrawerOpen, closeDrawer }: { isDrawerOpen: boolean, closeDrawer: () => void }) {
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    useEffect(() => {
+        const drawer = document.getElementById("drawer-top-example");
+        if (drawer) {
+            if (isDrawerOpen) {
+                drawer.classList.add("translate-y-0");
+                document.body.style.overflow = 'hidden';
+            } else {
+                drawer.classList.remove("translate-y-0");
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [isDrawerOpen]);
+
+    const handleClose = () => {
+        closeDrawer();
+        setMenuOpen(false);
+    }
+
     return (
-        <div className={`border-b border-black fixed top-0 left-0 z-40 w-full transition-transform ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'} bg-contrast-bg`} tabIndex={-1} aria-labelledby="drawer-navigation-label">
-            <div className="p-4">
-                <CloseIcon className="text-text-primary absolute top-5 right-5" fontSize={30} onClick={closeMenu} />
-                <div className="py-8 overflow-y-auto">
-                    <ul className="space-y-2 font-medium">
-                        {pages.filter(page => page.name !== 'Home').map((page) => (
-                            <li key={page.slug}>
-                                <Link href={`/${page.slug}`} onClick={closeMenu} className="flex items-center p-2 text-text-primary">
-                                    <ChevronRightIcon fontSize={18} className={`${isActive(page.slug) ? 'text-text-contrast' : 'text-text-primary'}`} />
-                                    <span className={`ml-3 ${isActive(page.slug) ? 'text-text-contrast' : 'text-text-primary'}`}>{page.name}</span>
+        <div className={`fixed inset-0 z-40 ${isDrawerOpen ? 'pointer-events-auto h-screen w-screen bg-opacity-60 backdrop-blur-sm' : 'pointer-events-none'}`} aria-hidden={!isDrawerOpen}>
+            <div
+                id="drawer"
+                className={`fixed top-0 left-0 right-0 z-50 w-full p-4 transition-transform duration-300 transform bg-default-bg rounded-b ${isDrawerOpen ? 'translate-y-0' : '-translate-y-full'}`}
+                tabIndex={-1}
+                aria-labelledby="drawer-top-label"
+            >
+                <div className="border-b border-black py-6">
+                    <Link href="/" onClick={handleClose}>
+                        <div className="h-12 lg:h-16 w-full relative">
+                            <Image
+                                src='/images/loulogo1.png'
+                                priority
+                                alt="logo"
+                                fill
+                                style={{
+                                    objectFit: "contain",
+                                }}
+                            />
+                        </div>
+                    </Link>
+                </div>
+                <div className="py-4 overflow-y-auto">
+                    <ul className="space-y-3">
+                        <li>
+                            <div
+                                className={`flex items-center justify-between w-full p-2`}
+                                onClick={() => setMenuOpen(!menuOpen)}
+                            >
+                                {'Blogs'}
+                                {menuOpen ? <ChevronUpIcon className="h-7 w-7" /> : <ChevronDownIcon className="h-7 w-7" />}
+                            </div>
+                            {menuOpen && (
+                                <div className={`overflow-hidden`}>
+                                    <ul className="space-y-3 mt-3">
+                                        <li>
+                                            <div className="p-2 w-full ms-3">
+                                                <Link href="/healing-journey" onClick={handleClose}>
+                                                    <span>My Healing Journey</span>
+                                                </Link>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="p-2 w-full ms-3">
+                                                <Link href="/additional-topics" onClick={handleClose}>
+                                                    <span>Additional Topics</span>
+                                                </Link>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="p-2 w-full ms-3">
+                                                <Link href="/messages-for-humanity" onClick={handleClose}>
+                                                    <span>Messages for Humanity</span>
+                                                </Link>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            )}
+                        </li>
+                        <li>
+                            <div className="p-2 w-full">
+                                <Link href="/resources" onClick={handleClose}>
+                                    <span>Resources</span>
                                 </Link>
-                            </li>
-                        ))}
-                        <li key='contact'>
-                            <Link href='/contact' onClick={closeMenu} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <ChevronRightIcon fontSize={18} className={`${isActive('contact') ? 'text-text-contrast' : 'text-text-primary'}`} />
-                                <span className={`ml-3 ${isActive('contact') ? 'text-text-contrast' : 'text-text-primary'}`}>Contact</span>
-                            </Link>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="p-2 w-full">
+                                <Link href="/photos" onClick={handleClose}>
+                                    <span>Photos</span>
+                                </Link>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="p-2 w-full">
+                                <Link href="/contact" onClick={handleClose}>
+                                    <span>Contact</span>
+                                </Link>
+                            </div>
                         </li>
                     </ul>
                 </div>
             </div>
+            <div className={`fixed inset-0 z-99 bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 ${isDrawerOpen ? 'opacity-100' : 'opacity-0'}`} onClick={handleClose}></div>
         </div>
     );
 }

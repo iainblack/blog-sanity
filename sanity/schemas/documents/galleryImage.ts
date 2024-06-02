@@ -16,7 +16,7 @@ export default defineType({
       options: {
         list: pages.filter((page) => page.contentType === "gallery").map((page) => page.name),
       },
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().error("Page is required."),
     }),
     defineField({
       name: "picture",
@@ -44,7 +44,7 @@ export default defineType({
           imageDescriptionField: "alt",
         },
       },
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().error("Image is required."),
     }),
   ],
 });

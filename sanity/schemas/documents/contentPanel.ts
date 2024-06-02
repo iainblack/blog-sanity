@@ -16,14 +16,14 @@ export default defineType({
       options: {
         list: pages.filter((page) => page.contentType === "contentPanel").map((page) => page.name),
       },
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().error("Page is required."),
     }),
     defineField({
       name: "order",
       title: "Order",
       type: "number",
       description: "The order in which this panel should be displayed on the page.",
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().error("Order is required."),
     }),
     defineField({
       name: "size",
@@ -55,7 +55,7 @@ export default defineType({
       type: "array",
       of: [{ type: "block" }],
       description: "Text should be kept short and to the point for this panel. One or two short paragraphs is best",
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().error("Content is required."),
     }),
     defineField({
       name: "image",

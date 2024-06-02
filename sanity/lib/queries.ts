@@ -16,7 +16,7 @@ export interface Resource {
   _id: string;
   title: string;
   type: "Book" | "Website" | "Other";
-  description: PortableTextBlock[];
+  description: string;
   coverImage?: (Image & { alt?: string });
   author?: string;
   publisher?: string;

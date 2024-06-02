@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronDownIcon } from "@sanity/icons";
 
 interface DropdownProps {
@@ -14,6 +14,7 @@ interface DropdownProps {
 
 export default function Dropdown({ selected, setSelected, options, label, checkbox, variant }: DropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const handleCheckboxSelect = (option: string) => {
         if (selected.includes(option)) {
@@ -26,7 +27,20 @@ export default function Dropdown({ selected, setSelected, options, label, checkb
     const handleListSelect = (option: string) => {
         setSelected([option]);
         setIsOpen(false);
-    }
+    };
+
+    const handleClickOutside = (event: MouseEvent) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+            setIsOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const filledButtonClass = 'bg-contrast-bg text-gray-600 border border-black leading-tight';
     const bottomBorderClass = 'border-b border-black focus:border-none';
@@ -34,7 +48,7 @@ export default function Dropdown({ selected, setSelected, options, label, checkb
     const bottomBorderMenuClass = 'border rounded-lg mt-1';
 
     return (
-        <div className="relative">
+        <div className="relative" ref={dropdownRef}>
             <button
                 className={`flex items-center justify-between w-52 h-10 py-3 pl-3 pr-1 ${variant === "outlined" ? bottomBorderClass : filledButtonClass}`}
                 onClick={() => setIsOpen(!isOpen)}

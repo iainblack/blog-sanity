@@ -83,10 +83,10 @@ export default function Header() {
                     <Link href='/contact' className="hidden lg:block two-tone-button">
                         Contact
                     </Link>
-                    <MenuIcon className="lg:hidden" fontSize={38} onClick={toggleMenu} />
+                    <MenuIcon className="lg:hidden " fontSize={38} onClick={toggleMenu} />
                 </div>
             </nav>
-            <Drawer isMenuOpen={isMenuOpen} closeMenu={closeMenu} isActive={isActive} />
+            <Drawer isDrawerOpen={isMenuOpen} closeDrawer={closeMenu} />
         </header >
     );
 
