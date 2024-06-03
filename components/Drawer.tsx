@@ -42,6 +42,7 @@ export default function Drawer({ isDrawerOpen, closeDrawer }: { isDrawerOpen: bo
                         <div className="h-12 lg:h-16 w-full relative">
                             <Image
                                 src='/images/loulogo1.png'
+                                sizes="50vw"
                                 priority
                                 alt="logo"
                                 fill
