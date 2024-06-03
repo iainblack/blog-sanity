@@ -4,7 +4,7 @@ import CoverImage from '../CoverImage';
 import { Post } from '@/sanity/lib/queries';
 import { ChevronRightIcon, DocumentTextIcon, UserIcon } from "@sanity/icons";
 import Link from 'next/link';
-import DateComponent from '../date';
+import DateComponent from '../Date';
 import { usePathname } from 'next/navigation';
 import PortableText from '../portable-text';
 
@@ -46,9 +46,7 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
                                 <PortableText value={post.content} />
                             </div>
                             <div>
-                                <Link href={`${path}/posts/${post.slug}`} className='pt-4'>
-                                    <span className="text-blue-500 font-bold">Read More</span>
-                                </Link>
+                                <span className="text-blue-500 font-bold pt-4">Read More</span>
                             </div>
                         </div>
                     </div>

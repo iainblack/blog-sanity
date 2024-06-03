@@ -1,7 +1,7 @@
 import { Post } from "@/sanity/lib/queries";
 import { UserIcon } from "@sanity/icons";
 import CoverImage from "../CoverImage";
-import DateComponent from "../date";
+import DateComponent from "../Date";
 
 export default function PostHeader({ post: post }: { post: Post }) {
     if (!post) return null;

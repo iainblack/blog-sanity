@@ -46,7 +46,7 @@ export default function PostPreviewGrid({ posts, view, page }: PostPreviewGridPr
 
     return (
         <div className="flex flex-col w-full">
-            <div className="grid grid-rows-10 lg:grid-rows-5 w-full grid-flow-col row-auto">
+            <div className="grid grid-rows-10 lg:grid-rows-5 w-full grid-flow-col row-auto px-3 py-1 md:px-0">
                 {posts.map(post => (
                     <PostPreview key={post._id} post={post} />
                 ))}

@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import { VisualEditing, toPlainText } from "next-sanity";
 import { Inter } from "next/font/google";
 import { draftMode } from "next/headers";
-import AlertBanner from "../../components/alert-banner";
+import AlertBanner from "../../components/Alert-banner";
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { SettingsQueryResponse, settingsQuery } from "@/sanity/lib/queries";
