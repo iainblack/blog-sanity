@@ -127,7 +127,7 @@ export const PostPreviewGridSkeleton = () => {
 export const PostPreviewListSkeleton = () => {
     return (
         <div className="flex flex-col w-full pb-4">
-            <div className="grid grid-rows-10 lg:grid-rows-5 gap-2 grid-flow-col row-auto">
+            <div className="grid grid-rows-10 lg:grid-rows-5 w-full grid-flow-col row-auto px-3 py-1 md:px-0">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, index) => (
                     <div
                         key={index}
