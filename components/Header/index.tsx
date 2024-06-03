@@ -56,8 +56,8 @@ export default function Header() {
     const isActive = (path: string) => currentPath === `/${path}`;
 
     return (
-        <header className={`min-h-[10vh] w-full header border-b border-black bg-default-bg  transition-transform duration-300 transform ${headerVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-            <nav className="p-10 flex items-center relative justify-between lg:justify-start lg:px-20">
+        <header className={`w-full header border-b border-black bg-default-bg  transition-transform duration-300 transform ${headerVisible ? 'translate-y-0' : '-translate-y-full'}`}>
+            <nav className="p-6 md:p-10 flex items-center relative justify-between lg:justify-start lg:px-20">
                 {!isMenuOpen && (
                     <div className="hidden lg:flex justify-start items-center w-[50vw] lg:w-[33%]">
                         <HeaderLinks />
