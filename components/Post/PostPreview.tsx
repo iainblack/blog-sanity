@@ -16,10 +16,10 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
     const path = usePathname();
 
     return (
-        <div className="p-4 overflow-hidden cursor-pointer w-full rounded-lg border border-black">
+        <div className="p-4 shadow overflow-hidden cursor-pointer w-full rounded-lg border border-black">
             <Link href={`${path}/posts/${post.slug}`} className="w-full block">
                 <div className="flex flex-col md:flex-row">
-                    <div className="relative w-full md:w-1/2 h-52 md:h-72 lg:h-96 rounded-lg overflow-hidden object-cover">
+                    <div className="relative w-full md:w-1/2 h-52 md:h-64 lg:h-96 rounded-lg overflow-hidden object-cover">
                         {post.coverImage ? (
                             <CoverImage image={post.coverImage} priority={true} />
                         ) : (
@@ -29,7 +29,7 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
                         )}
                     </div>
                     <div className="md:w-1/2 md:pl-4 flex flex-col">
-                        <div className="py-4 md:py-0 space-y-3 md:space-y-6 lg:space-y-8">
+                        <div className="py-4 md:py-0 space-y-3 lg:space-y-8">
                             <div className="text-left pb-3 w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
                                 <DateComponent icon dateString={post.date} />
                                 {post.author?.name && (
@@ -61,7 +61,7 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
     const path = usePathname();
 
     return (
-        <div className={`p-3 overflow-hidden transition-colors cursor-pointer w-full rounded-lg border border-transparent hover:shadow-xl hover:border-black`}>
+        <div className={`p-3 overflow-hidden transition-colors cursor-pointer shadow w-full rounded-lg border border-transparent hover:shadow-xl hover:border-black`}>
             <Link href={`${path}/posts/${post.slug}`} className='w-full'>
                 <div className={`relative w-full h-52 rounded-lg overflow-hidden object-cover`}>
                     {post.coverImage ? (

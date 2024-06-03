@@ -25,7 +25,7 @@ export default function PostPreviewGrid({ posts, view, page }: PostPreviewGridPr
                 <div className="w-full mb-6 p-3">
                     <HeroImagePreview post={firstPost} />
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                     {otherPosts.map(post => (
                         <PostImagePreview key={post._id} post={post} />
                     ))}
@@ -87,7 +87,7 @@ export const PostPreviewGridWithHeroSkeleton = () => {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                 {[1, 2, 3].map((_, index) => (
                     <div key={index} className="p-3 w-full rounded-lg border border-gray-300 animate-pulse">
                         <div className="relative w-full h-52 rounded-lg bg-gray-300"></div>
@@ -107,7 +107,7 @@ export const PostPreviewGridWithHeroSkeleton = () => {
 
 export const PostPreviewGridSkeleton = () => {
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full pb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full pb-4">
             {[1, 2, 3, 4, 5, 6].map((_, index) => (
                 <div key={index} className="p-3 w-full rounded-lg border border-gray-300 animate-pulse">
                     <div className="relative w-full h-52 rounded-lg bg-gray-300"></div>

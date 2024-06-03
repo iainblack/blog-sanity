@@ -26,7 +26,6 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
                 photos={photos}
                 layout="columns"
                 columns={(containerWidth) => {
-                    if (containerWidth < 500) return 1;
                     if (containerWidth < 1000) return 2;
                     if (containerWidth < 1500) return 3;
                     return 5;
