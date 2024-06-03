@@ -32,7 +32,7 @@ export default async function Page() {
     });
 
     return (
-        <div className="mx-auto md:p-2">
+        <div className="mx-auto p-2 md:p-4 xl:p-8">
             <PhotoGallery photos={mappedPhotos} />
         </div >
     );
