@@ -86,21 +86,21 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
     const path = usePathname();
 
     return (
-        <div className="w-full flex items-center justify-between p-4 my-2 border border-black md:border-slate-200 rounded-xl shadow transition-colors cursor-pointer hover:border-black lg:max-w-md xl:max-w-2xl min-h-[80px]">
+        <div className="w-full flex items-center justify-between p-3 md:p-4 border border-black lg:border-gray-300 rounded-xl shadow transition-colors cursor-pointer hover:border-black">
             <Link href={`${path}/posts/${post.slug}`} className='w-full h-full flex flex-col justify-between'>
-                <div className="flex flex-col md:flex-row justify-between items-center h-full">
-                    <div className="flex flex-col md:flex-row items-start md:items-center w-full md:w-auto md:mr-4">
-                        <div className="text-left pb-3 md:pb-0 md:flex md:flex-col truncate">
+                <div className="flex flex-row justify-between items-center h-full">
+                    <div className="w-auto">
+                        <div className="text-left truncate">
                             <DateComponent icon dateString={post.date} />
                             {post.author?.name && (
-                                <div className="flex items-center mt-2 md:mt-0">
+                                <div className="flex items-center">
                                     <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
                                     <div className="text-gray-600 text-sm">{post.author.name}</div>
                                 </div>
                             )}
                         </div>
                     </div>
-                    <div className="flex flex-col w-full text-left max-w-xs px-4 md:px-0 md:ml-10 md:flex-grow truncate">
+                    <div className="text-left ml-10 flex-grow truncate">
                         <h2 className="text-lg truncate">{post.title}</h2>
                         <p className="text-gray-600 text-sm truncate flex-grow">{post.excerpt}</p>
                     </div>

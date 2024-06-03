@@ -32,8 +32,8 @@ export default function Modal({ isOpen, onClose, onSaveClick, onCancelClick, tit
             onClick={onClose}
         >
             <div
-                className="max-h-[95vh] overflow-y-auto relative w-full sm:w-[90%] md:w-[60%] xl:w-[35%] rounded-lg bg-default-bg font-light leading-relaxed antialiased shadow-2xl overflow-hidden"
-                onClick={(e) => e.stopPropagation()} // Prevent closing modal when clicking inside the dialog
+                className="max-h-[95vh] overflow-y-auto relative w-[95%] sm:w-[90%] md:w-[60%] xl:w-[35%] rounded-lg bg-default-bg font-light leading-relaxed antialiased shadow-2xl overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
             >
                 <div className='absolute top-0 right-0 p-4 z-[995]'>
                     <button onClick={onClose}>

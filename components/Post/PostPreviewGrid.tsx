@@ -44,15 +44,24 @@ export default function PostPreviewGrid({ posts, view, page }: PostPreviewGridPr
         );
     }
 
+    const numRows = Math.min(posts.length, 10);
+    const numCols = Math.ceil(posts.length / numRows);
+
     return (
-        <div className="flex flex-col w-full">
-            <div className="grid grid-rows-10 lg:grid-rows-5 w-full grid-flow-col row-auto px-3 py-1 md:px-0">
+        <div className="flex flex-col w-full p-3">
+            <div
+                className="grid gap-3"
+                style={{
+                    gridTemplateRows: `repeat(${numRows}, minmax(0, 1fr))`,
+                    gridTemplateColumns: `repeat(${numCols}, 1fr)`,
+                }}
+            >
                 {posts.map(post => (
                     <PostPreview key={post._id} post={post} />
                 ))}
             </div>
         </div>
-    )
+    );
 
 }
 
@@ -127,7 +136,7 @@ export const PostPreviewGridSkeleton = () => {
 export const PostPreviewListSkeleton = () => {
     return (
         <div className="flex flex-col w-full pb-4">
-            <div className="grid grid-rows-10 lg:grid-rows-5 w-full grid-flow-col row-auto px-3 py-1 md:px-0">
+            <div className="grid grid-rows-10 gap-2 lg:grid-rows-5 w-full grid-flow-col row-auto px-3 py-1 md:px-0">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, index) => (
                     <div
                         key={index}
