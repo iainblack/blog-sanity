@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { MenuIcon } from '@sanity/icons'
 import Image from "next/image";
 import './header.css';
-import { pages } from "../utils";
 import { usePathname } from "next/navigation";
 import Drawer from "../Drawer";
 import HeaderLinks from "./HeaderLinks";
@@ -57,7 +56,7 @@ export default function Header() {
     const isActive = (path: string) => currentPath === `/${path}`;
 
     return (
-        <header className={`min-h-[10vh] w-full header border-b border-black bg-default-bg ${headerVisible ? '' : 'header-hidden'}`}>
+        <header className={`min-h-[10vh] w-full header border-b border-black bg-default-bg  transition-transform duration-300 transform ${headerVisible ? 'translate-y-0' : '-translate-y-full'}`}>
             <nav className="p-10 flex items-center relative justify-between lg:justify-start lg:px-20">
                 {!isMenuOpen && (
                     <div className="hidden lg:flex justify-start items-center w-[50vw] lg:w-[33%]">
