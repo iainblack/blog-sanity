@@ -1,6 +1,6 @@
 import { Resource } from "@/sanity/lib/queries";
 import CoverImage from "../CoverImage";
-import DateComponent from "../Date";
+import DateComponent from "../DateComponent";
 import { FaCubes, FaLink } from "react-icons/fa6";
 import { IoBookOutline } from "react-icons/io5";
 

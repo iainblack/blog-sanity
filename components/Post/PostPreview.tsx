@@ -4,7 +4,7 @@ import CoverImage from '../CoverImage';
 import { Post } from '@/sanity/lib/queries';
 import { ChevronRightIcon, DocumentTextIcon, UserIcon } from "@sanity/icons";
 import Link from 'next/link';
-import DateComponent from '../Date';
+import DateComponent from '../DateComponent';
 import { usePathname } from 'next/navigation';
 import PortableText from '../portable-text';
 

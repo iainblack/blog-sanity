@@ -1,7 +1,7 @@
 import { UserIcon } from "@sanity/icons";
 import CoverImage from "../CoverImage";
 import Modal from "../Modal";
-import DateComponent from "../Date";
+import DateComponent from "../DateComponent";
 import { Resource } from "@/sanity/lib/queries";
 import { FaLink } from "react-icons/fa6";
 
