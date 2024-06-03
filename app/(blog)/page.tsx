@@ -22,8 +22,8 @@ function Panel({
   const cleanedBgColor = stegaClean(backgroundColor);
   const cleanedSize = stegaClean(size);
 
-  const imagePosition = cleanedPosition === "left" ? 'lg:order-1' : 'lg:order-2';
-  const textPosition = cleanedPosition === "left" ? 'lg:order-2' : 'lg:order-1';
+  const imagePosition = cleanedPosition === "left" ? 'xl:order-1' : 'xl:order-2';
+  const textPosition = cleanedPosition === "left" ? 'xl:order-2' : 'xl:order-1';
 
   return (
     <CenteredPanel size={cleanedSize} bgColor={cleanedBgColor}>

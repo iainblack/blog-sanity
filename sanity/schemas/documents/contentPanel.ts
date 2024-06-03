@@ -30,9 +30,9 @@ export default defineType({
       title: "Panel Size",
       type: "string",
       options: {
-        list: ["normal", "large", "xl"],
+        list: ["Small", "Medium", "Large"],
       },
-      initialValue: "normal"
+      initialValue: "Medium"
     }),
     defineField({
       name: "backgroundColor",

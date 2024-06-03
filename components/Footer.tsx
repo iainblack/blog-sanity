@@ -6,7 +6,7 @@ import Link from "next/link";
 export default async function Footer() {
 
     return (
-        <footer className="border-t border-black bg-dark-bg relative bottom-0 min-h-[20vh]">
+        <footer className="bg-dark-bg relative bottom-0 min-h-[20vh]">
             <div className="w-full px-5 py-12 flex flex-col">
                 <div className="mx-auto">
                     <h1 className="text-center text-2xl text-text-contrast pb-5">Sign up for email alerts</h1>

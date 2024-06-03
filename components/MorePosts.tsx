@@ -1,7 +1,6 @@
 'use client';
 import { Post } from "@/sanity/lib/queries";
-import { ChevronLeftIcon, ChevronRightIcon } from "@sanity/icons";
-import Link from "next/link";
+import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
 import { usePathname, useRouter } from "next/navigation";
 
 
@@ -29,26 +28,30 @@ export default function MorePosts({ previous, next, }: { previous?: Post, next?:
     }
 
     return (
-        <aside className="flex justify-center w-full my-20 p-3">
+        <aside className="my-20">
             <div className="flex justify-center w-full space-x-1">
-                <button disabled={!previous} className={`flex flex-col py-3 pr-3 rounded-l-xl shadow-xl bg-contrast-bg ${previous && 'hover:bg-primary hover:text-white'} ${previous ? 'hover:shadow-inner' : ''} `} onClick={goPrevious}>
-                    <div className="flex justify-between items-center space-x-2">
-                        <ChevronLeftIcon className={`h-12 w-12 ${previous ? '' : 'text-gray-400'}`} />
-                        <div className=' min-w-24'>
-                            <div className={`text-sm ${previous ? '' : 'text-gray-400'}`}>Previous Post</div>
+                <button
+                    disabled={!previous}
+                    className={`rounded-l-xl shadow-lg bg-contrast-bg h-14 border ${previous ? 'border-black hover:bg-primary hover:text-white hover:shadow-inner' : 'border-gray-400 cursor-not-allowed'} `}
+                    onClick={goPrevious}>
+                    <div className="flex justify-between items-center space-x-2 pl-2">
+                        <IoIosArrowRoundBack className={`h-6 w-6 ${previous ? '' : 'text-gray-400'}`} />
+                        <div className='min-w-20'>
+                            <div className={`text-sm ${previous ? '' : 'text-gray-400'}`}>Prev</div>
                         </div>
                     </div>
                 </button>
-                {
-                    <button disabled={!next} className={`flex flex-col py-3 pl-3 rounded-r-xl shadow-xl bg-contrast-bg ${next && 'hover:bg-primary hover:text-white'} ${next ? 'hover:shadow-inner' : ''}`} onClick={goNext}>
-                        <div className="flex justify-between items-center space-x-2">
-                            <div className="min-w-24">
-                                <div className={`text-sm ${next ? '' : 'text-gray-400'}`}>Next Post</div>
-                            </div>
-                            <ChevronRightIcon className={`h-12 w-12 ${next ? '' : 'text-gray-400'}`} />
+
+                <button
+                    disabled={!next}
+                    className={`rounded-r-xl shadow-lg bg-contrast-bg h-14 border ${next ? 'border-black hover:bg-primary hover:text-white hover:shadow-inner' : 'border-gray-400 cursor-not-allowed'} `} onClick={goNext}>
+                    <div className="flex justify-between items-center space-x-2 pr-2">
+                        <div className="min-w-20">
+                            <div className={`text-sm ${next ? '' : 'text-gray-400'}`}>Next</div>
                         </div>
-                    </button>
-                }
+                        <IoIosArrowRoundForward className={`h-6 w-6 ${next ? '' : 'text-gray-400'}`} />
+                    </div>
+                </button>
             </div >
         </aside >
     )

@@ -42,7 +42,7 @@ export default function SearchBar({ setSearch, onSubmit, loading, value, type, p
             <div className={`relative flex items-center w-full h-12 bg-white text-gray-600 border border-black py-3 px-4 leading-tight focus:outline-none focus:bg-white ${error ? "border-red-500" : ""}`}>
                 {searchIcon && <SearchIcon className="h-6 w-6 text-gray-600" />}
                 <input
-                    className={`w-full h-12 bg-white border-y border-black ${searchIcon ? 'pl-4' : ''} focus:outline-none focus:bg-white`}
+                    className={`w-full h-12 bg-white border-y border-black body-text ${searchIcon ? 'pl-4' : ''} focus:outline-none focus:bg-white`}
                     type={type || "text"}
                     placeholder={placeholder || "Search"}
                     value={searchTerm}
@@ -52,7 +52,7 @@ export default function SearchBar({ setSearch, onSubmit, loading, value, type, p
             </div>
             {error && <p className="text-red-500 text-sm ml-2 absolute -bottom-6">{error}</p>}
             {buttonText && <button
-                className="two-tone-button whitespace-nowrap h-12 w-52"
+                className="two-tone-button whitespace-nowrap h-12 w-52 body-text"
                 type="button"
                 onClick={onSubmit}
             >

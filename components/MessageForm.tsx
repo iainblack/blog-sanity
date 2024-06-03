@@ -88,7 +88,7 @@ export default function MessageForm() {
             <form className="w-full">
                 <div className="flex flex-wrap -mx-3 mb-2">
                     <div className="w-full md:w-1/2 px-3 mb-2 md:mb-0">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="contact-first-name">
+                        <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-first-name">
                             First Name
                         </label>
                         <input
@@ -98,7 +98,7 @@ export default function MessageForm() {
                         {firstName.error && <p className="text-red-500 text-xs italic">{firstName.error}</p>}
                     </div>
                     <div className="w-full md:w-1/2 px-3 mb-2 md:mb-0">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="contact-last-name">
+                        <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-last-name">
                             Last Name
                         </label>
                         <input
@@ -110,7 +110,7 @@ export default function MessageForm() {
                 </div>
                 <div className="flex flex-wrap -mx-3 mb-2">
                     <div className="w-full px-3 mb-2">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="contact-password">
+                        <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-password">
                             Subject
                         </label>
                         <input
@@ -120,7 +120,7 @@ export default function MessageForm() {
                         {subject.error && <p className="text-red-500 text-xs italic">{subject.error}</p>}
                     </div>
                     <div className="w-full px-3 mb-2">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="contact-password">
+                        <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-password">
                             Email
                         </label>
                         <input
@@ -130,7 +130,7 @@ export default function MessageForm() {
                         {email.error && <p className="text-red-500 text-xs italic">{email.error}</p>}
                     </div>
                     <div className="w-full px-3">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="contact-message">
+                        <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-message">
                             Message
                         </label>
                         <textarea

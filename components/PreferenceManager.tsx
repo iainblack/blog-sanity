@@ -76,9 +76,9 @@ export default function PreferencesManager({ setShowUnsubscribed, setAlertState,
     }
 
     return (
-        <div className='w-full p-5 md:max-w-xl lg:mt-20'>
+        <div className='flex flex-col items-center w-full p-5 lg:mt-20 lg:max-w-xl'>
             {!preferences ? (
-                <form onSubmit={handleEmailSubmit} className="md:max-w-xl px-3">
+                <form onSubmit={handleEmailSubmit} className="w-full md:max-w-xl px-3">
                     <label htmlFor="email" className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Enter your email
                     </label>
@@ -101,13 +101,16 @@ export default function PreferencesManager({ setShowUnsubscribed, setAlertState,
                 </form>
 
             ) : (
-                <div className="flex flex-col items-center space-y-4">
+                <div className="flex flex-col space-y-8">
                     <PreferencesForm
                         showUnsubscribe
                         preferences={preferences}
                         setPreferences={setPreferences}
                         handleUnsubscribeClick={() => handleUnsubscribeClick(emailParam ?? inputValue)}
                     />
+                    <button onClick={handleSubmit} className="two-tone-button w-40 h-[50px] mr-3" type="button">
+                        {updatePreferencesLoading ? <LoadingSpinner size={16} /> : 'Submit'}
+                    </button>
                 </div>
             )}
         </div>

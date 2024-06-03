@@ -1,7 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { ChevronLeftIcon } from '@sanity/icons';
 import { IoIosArrowRoundBack } from "react-icons/io";
 
 interface BackButtonProps {

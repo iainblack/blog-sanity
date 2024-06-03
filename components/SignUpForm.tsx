@@ -4,7 +4,6 @@ import { useState } from "react";
 import { BasicAlertState, emailPreferenceOptions } from "./utils";
 import Alert from "./Alert";
 import { isEmailSubscribedAction, subscribeUserAction } from "@/firebase/FirebaseActions";
-import LoadingSpinner from "./LoadingSpinner";
 import SearchBar from "./SearchBar";
 import Modal from "./Modal";
 import PreferencesForm from "./PreferencesForm";

@@ -1,5 +1,4 @@
 import { UserIcon } from "@sanity/icons";
-import { PortableText } from "next-sanity";
 import CoverImage from "../CoverImage";
 import Modal from "../Modal";
 import DateComponent from "../date";
@@ -43,8 +42,8 @@ export default function ResourceModal({ isOpen, onClose, resource }: ResourceMod
                         )}
                     </div>
                 }
-                <h2 className="text-lg font-bold">{resource.title}</h2>
-                <div className="text-body text-sm flex-grow w-full py-4 text-pretty">
+                <h2 className="text-xl font-bold">{resource.title}</h2>
+                <div className="flex-grow w-full text-pretty">
                     <div className="body-text">{spacedDescription}</div>
                 </div>
                 {resource.url && (

@@ -7,19 +7,19 @@ export default function CenteredPanel({
 }: {
     children: React.ReactNode;
     isFirst?: boolean;
-    size: 'normal' | 'large' | 'xl';
+    size: 'Small' | 'Medium' | 'Large';
     bgColor: 'default' | 'contrast' | 'primary' | 'dark';
 }) {
     const sizeClasses: { [key: string]: string } = {
-        normal: 'min-h-[25vh] xl:min-h-[50vh]',
-        large: 'min-h-[25vh] xl:min-h-[80vh]',
-        xl: 'min-h-[25vh] xl:min-h-[100vh]',
+        Small: 'md:min-h-[35vh] xl:min-h-[50vh]',
+        Medium: 'md:min-h-[65vh] xl:min-h-[80vh]',
+        Large: 'md:min-h-[80vh] xl:min-h-[100vh]',
     };
 
     const bgClasses: { [key: string]: string } = {
-        contrast: 'bg-contrast-bg border-transparent',
-        primary: 'bg-primary text-white border-transparent',
-        dark: 'bg-dark-bg text-white border-transparent',
+        contrast: 'bg-contrast-bg ',
+        primary: 'bg-primary text-white',
+        dark: 'bg-dark-bg text-white',
     }
 
     const sizeClass = sizeClasses[size];

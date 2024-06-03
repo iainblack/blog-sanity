@@ -100,7 +100,7 @@ export interface ContentPanel {
   image?: (Image & { alt?: string, position?: "left" | "right" }) | null;
   title?: string;
   content: PortableTextBlock[];
-  size: "normal" | "large" | "xl";
+  size: "Small" | "Medium" | "Large";
   backgroundColor: "default" | "contrast" | "primary" | "dark";
   pageId: string;
   order: number;
