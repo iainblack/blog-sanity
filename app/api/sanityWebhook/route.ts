@@ -55,18 +55,18 @@ const getEmailHtml = (post: any, email: string) => {
   const emailBody = `
   <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
     <div style="background-color: #f7f7f7; padding: 20px; border-bottom: 1px solid #e0e0e0;">
-      <h1 style="margin: 0; color: #4CAF50;">New Post Alert</h1>
+      <h1 style="margin: 0; color: #A4B1A7;">Lou Posted!</h1>
     </div>
     <div style="padding: 20px;">
-      <h3 style="color: #333;">New Post from Lou's Blog: ${post.pageId}</h3>
+      <h3 style="color: #333;">A new post has been created in ${post.pageId}:</h3>
       <h2 style="color: #333;">${post.title}</h2>
       ${post.excerpt ? `<p>${post.excerpt}</p>` : ''}
-      <a href="${postUrl}" style="display: inline-block; background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; margin-top: 10px;">Read the full post</a>
+      <a href="${postUrl}" style="display: inline-block; background-color: #A4B1A7; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; margin-top: 10px;">Read the full post</a>
       <p style="margin-top: 20px; font-size: 0.9em; color: #777;">You are receiving this email because you subscribed to notifications on our website.</p>
-      <p style="font-size: 0.9em; color: #777;">Tired of receiving these emails? <a href="${managePreferencesUrl}" style="color: #4CAF50;">manage your preferences</a> or <a href="${unsubscribeUrl}" style="color: #4CAF50;">unsubscribe from all</a>.</p>
+      <p style="font-size: 0.9em; color: #777;">No longer wish to receive these emails? <a href="${managePreferencesUrl}" style="color: #A4B1A7;">manage your preferences</a> or <a href="${unsubscribeUrl}" style="color: #A4B1A7;">unsubscribe</a>.</p>
     </div>
     <div style="background-color: #f7f7f7; padding: 10px 20px; border-top: 1px solid #e0e0e0;">
-      <p style="font-size: 0.8em; text-align: center; color: #777;">&copy; ${new Date().getFullYear()} Lou's Blog. All rights reserved.</p>
+      <p style="font-size: 0.8em; text-align: center; color: #777;">&copy; ${new Date().getFullYear()} All rights reserved.</p>
     </div>
   </div>
   `;
