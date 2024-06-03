@@ -52,10 +52,11 @@ export default defineType({
     defineField({
       name: "content",
       title: "Content",
-      type: "array",
-      of: [{ type: "block" }],
-      description: "Text should be kept short and to the point for this panel. One or two short paragraphs is best",
-      validation: (rule) => rule.required().error("Content is required."),
+      type: "text",
+      validation: rule => [
+        rule.required().min(1).error("Content is required."),
+        rule.max(1300).error("Content cannot be longer than 1300 characters.")
+      ]
     }),
     defineField({
       name: "image",
@@ -72,7 +73,7 @@ export default defineType({
           name: "alt",
           type: "string",
           title: "Alternative text",
-          description: "Fallback text if the image cannot be displayed.",
+          description: "Fallback text if the image fails to load.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
               if ((context.document?.image as any)?.asset?._ref && !alt) {

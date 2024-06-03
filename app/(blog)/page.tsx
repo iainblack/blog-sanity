@@ -1,4 +1,3 @@
-import PortableText from "@/components/portable-text";
 import { stegaClean } from '@sanity/client/stega'
 import { sanityFetch } from "@/sanity/lib/fetch";
 import {
@@ -9,7 +8,6 @@ import {
 import { Image } from "next-sanity/image";
 import { urlForImage } from "@/sanity/lib/utils";
 import CenteredPanel from "@/components/CenteredPanel";
-import { PortableTextBlock } from "next-sanity";
 import { getContentPanelsByPage } from "./actions";
 
 function Panel({
@@ -24,6 +22,10 @@ function Panel({
 
   const imagePosition = cleanedPosition === "left" ? 'xl:order-1' : 'xl:order-2';
   const textPosition = cleanedPosition === "left" ? 'xl:order-2' : 'xl:order-1';
+
+  const spacedDescription = content.split("\n").map((paragraph, index) => (
+    <p key={index} className="body-text pb-2">{paragraph}</p>
+  ));
 
   return (
     <CenteredPanel size={cleanedSize} bgColor={cleanedBgColor}>
@@ -45,10 +47,7 @@ function Panel({
         {title && <h1 className="flex-wrap header-text">
           {title}
         </h1>}
-        <PortableText
-          className={`text-pretty flex-wrap mt-5 body-text`}
-          value={content as PortableTextBlock[]}
-        />
+        <h6 className={`text-pretty flex-wrap mt-5 body-text`}>{spacedDescription}</h6>
       </div>
     </CenteredPanel >
   );

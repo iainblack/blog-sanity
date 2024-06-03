@@ -11,7 +11,7 @@ export default defineType({
   fields: [
     defineField({
       name: "title",
-      description: "This field is the title of your blog.",
+      description: "This field is the title of your blog as it will appear in the browser tab.",
       title: "Title",
       type: "string",
       initialValue: demo.title,
@@ -19,8 +19,7 @@ export default defineType({
     }),
     defineField({
       name: "description",
-      description:
-        "Used both for the <meta> description tag for SEO, and the blog subheader.",
+      description: "This field is the description of your blog as it will appear in search engine results.",
       title: "Description",
       type: "array",
       initialValue: demo.description,
@@ -51,34 +50,6 @@ export default defineType({
       ],
     }),
     defineField({
-      name: "footer",
-      description:
-        "This is a block of text that will be displayed at the bottom of the page.",
-      title: "Footer Info",
-      type: "array",
-      of: [
-        defineArrayMember({
-          type: "block",
-          marks: {
-            annotations: [
-              {
-                name: "link",
-                type: "object",
-                title: "Link",
-                fields: [
-                  {
-                    name: "href",
-                    type: "url",
-                    title: "Url",
-                  },
-                ],
-              },
-            ],
-          },
-        }),
-      ],
-    }),
-    defineField({
       name: "ogImage",
       title: "Open Graph Image",
       type: "image",
@@ -92,7 +63,7 @@ export default defineType({
       fields: [
         defineField({
           name: "alt",
-          description: "Important for accessibility and SEO.",
+          description: "Fallback text if the image fails to load.",
           title: "Alternative text",
           type: "string",
           validation: (rule) => {

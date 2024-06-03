@@ -31,7 +31,7 @@ export default defineType({
       name: "slug",
       title: "Slug",
       type: "slug",
-      description: "A slug is required for the post to show up in the preview",
+      description: "A 'slug' is the path of the URL for this post. It should be unique.",
       options: {
         source: "title",
         maxLength: 96,
@@ -44,6 +44,7 @@ export default defineType({
       title: "Content",
       type: "array",
       of: [{ type: "block" }],
+      description: "The content of the post.",
     }),
     defineField({
       name: "excerpt",
@@ -53,7 +54,7 @@ export default defineType({
     }),
     defineField({
       name: "coverImage",
-      title: "Cover Image",
+      title: "Image",
       type: "image",
       options: {
         hotspot: true,
@@ -61,12 +62,13 @@ export default defineType({
           imageDescriptionField: "alt",
         },
       },
+      description: "Upload an image or search for one on Unsplash.",
       fields: [
         {
           name: "alt",
           type: "string",
           title: "Alternative text",
-          description: "Fallback text if the image cannot be displayed.",
+          description: "Fallback text if the image fails to load.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
               if ((context.document?.coverImage as any)?.asset?._ref && !alt) {

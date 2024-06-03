@@ -42,7 +42,6 @@ export const resourceFields = groq`
 /// AUTHOR
 export interface Author {
   name: string;
-  picture?: (Image & { alt?: string | null }) | null;
 }
 
 /// GALLERY IMAGE
@@ -99,7 +98,7 @@ export interface ContentPanel {
   _createdAt: string;
   image?: (Image & { alt?: string, position?: "left" | "right" }) | null;
   title?: string;
-  content: PortableTextBlock[];
+  content: string;
   size: "Small" | "Medium" | "Large";
   backgroundColor: "default" | "contrast" | "primary" | "dark";
   pageId: string;

@@ -11,7 +11,7 @@ export default defineType({
       name: "type",
       title: "Resource Type",
       type: "string",
-      description: "The type of resource. This will determine where it is displayed.",
+      description: "The type of resource, for filtering and display purposes.",
       options: {
         list: ["Book", "Website", "Other"]
       },
@@ -53,7 +53,7 @@ export default defineType({
       name: "description",
       title: "Description",
       type: "text",
-      //validation: (rule) => rule.required().max(800).error("Description must be 800 characters or less."),
+      validation: (rule) => rule.required().max(1300).error("Description must be 1300 characters or less."),
     }),
     defineField({
       name: "coverImage",
@@ -70,7 +70,7 @@ export default defineType({
           name: "alt",
           type: "string",
           title: "Alternative text",
-          description: "Fallback text if the image cannot be displayed.",
+          description: "Fallback text if the image fails to load.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
               if ((context.document?.coverImage as any)?.asset?._ref && !alt) {

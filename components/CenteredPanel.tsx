@@ -27,7 +27,7 @@ export default function CenteredPanel({
 
     return (
         <div className={`h-full w-full ${bgClass} border-b border-black`}>
-            <div className={`centered-container ${sizeClass}`} data-aos="fade-up">
+            <div className={`centered-container ${sizeClass}`} data-aos="zoom-out">
                 {children}
             </div>
         </div>
