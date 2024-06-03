@@ -22,7 +22,7 @@ export default function PreferencesForm(props: PreferencesFormProps) {
         <div className="w-full">
             <h6 className="text-sm md:text-base text-left text-gray-600">Select the types of content you would like to receive updates for</h6>
             {showUnsubscribe &&
-                <h6 className="text-sm text-left text-gray-500">
+                <h6 className="text-sm md:text-base text-left text-gray-600">
                     or <button onClick={handleUnsubscribeClick} className="text-blue-500 underline">unsubscribe</button>
                     {" "} from all emails.
                 </h6>}
