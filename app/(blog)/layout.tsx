@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Metadata } from "next";
 import { VisualEditing, toPlainText } from "next-sanity";
 import { Inter } from "next/font/google";
@@ -13,6 +13,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import 'aos/dist/aos.css';
 import AOSInitializer from "@/components/AosInitializer";
+import FirebaseAnalytics from "@/firebase/FirebaseClientConfig";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await sanityFetch<SettingsQueryResponse>({
@@ -63,6 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </section>
         <SpeedInsights />
+        <FirebaseAnalytics />
       </body>
     </html>
   );
