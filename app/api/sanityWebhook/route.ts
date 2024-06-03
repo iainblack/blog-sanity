@@ -1,6 +1,6 @@
 import sgMail from '@sendgrid/mail';
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient} from '@sanity/client';
+import { createClient } from '@sanity/client';
 import { db } from '@/firebase/FirebaseConfig';
 import { pages } from '@/components/utils';
 
@@ -46,7 +46,7 @@ const fetchSubscribers = async (pageId: string) => {
   return subscribers;
 };
 
-const getEmailHtml= (post: any, email: string) => {
+const getEmailHtml = (post: any, email: string) => {
   const pageSlug = pages.find(page => page.contentType === 'post' && page.name === post.pageId)?.slug;
   const postUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/${pageSlug}/posts/${post.slug.current}`;
   const unsubscribeUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/manage-email-preferences?unsubscribe=${email}`;
@@ -69,11 +69,10 @@ const getEmailHtml= (post: any, email: string) => {
       <p style="font-size: 0.8em; text-align: center; color: #777;">&copy; ${new Date().getFullYear()} Lou's Blog. All rights reserved.</p>
     </div>
   </div>
-    `;
+  `;
 
-    return emailBody;
-
-}
+  return emailBody;
+};
 
 const sendEmails = async (post: any, subscribers: string[]) => {
   const messages = subscribers.map(email => ({
@@ -83,15 +82,20 @@ const sendEmails = async (post: any, subscribers: string[]) => {
     html: getEmailHtml(post, email),
   }));
 
-  for (const message of messages) {
-    try {
-      await sgMail.send(message);
-      return true;
-    } catch (error) {
-      console.error(`Failed to send email to ${message.to}`, error);
-      return false;
-    }
-  }
+  const sendResults = await Promise.all(
+    messages.map(async message => {
+      try {
+        await sgMail.send(message);
+        console.log(`Email sent to ${message.to}`);
+        return true;
+      } catch (error) {
+        console.error(`Failed to send email to ${message.to}`, error);
+        return false;
+      }
+    })
+  );
+
+  return sendResults.every(result => result);
 };
 
 export async function POST(req: NextRequest) {
