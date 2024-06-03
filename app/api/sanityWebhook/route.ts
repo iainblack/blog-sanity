@@ -55,15 +55,15 @@ const getEmailHtml = (post: any, email: string) => {
   const emailBody = `
   <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
     <div style="background-color: #f7f7f7; padding: 20px; border-bottom: 1px solid #e0e0e0;">
-      <h1 style="margin: 0; color: #A4B1A7;">Lou Posted!</h1>
+      <h1 style="margin: 0; color: #65a765;">Lou Posted!</h1>
     </div>
     <div style="padding: 20px;">
       <h3 style="color: #333;">A new post has been created in ${post.pageId}:</h3>
       <h2 style="color: #333;">${post.title}</h2>
       ${post.excerpt ? `<p>${post.excerpt}</p>` : ''}
-      <a href="${postUrl}" style="display: inline-block; background-color: #A4B1A7; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; margin-top: 10px;">Read the full post</a>
+      <a href="${postUrl}" style="display: inline-block; background-color: #65a765; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; margin-top: 10px;">Read the full post</a>
       <p style="margin-top: 20px; font-size: 0.9em; color: #777;">You are receiving this email because you subscribed to notifications on our website.</p>
-      <p style="font-size: 0.9em; color: #777;">No longer wish to receive these emails? <a href="${managePreferencesUrl}" style="color: #A4B1A7;">manage your preferences</a> or <a href="${unsubscribeUrl}" style="color: #A4B1A7;">unsubscribe</a>.</p>
+      <p style="font-size: 0.9em; color: #777;">No longer wish to receive these emails? <a href="${managePreferencesUrl}" style="color: #65a765;">manage your preferences</a> or <a href="${unsubscribeUrl}" style="color: #65a765;">unsubscribe</a>.</p>
     </div>
     <div style="background-color: #f7f7f7; padding: 10px 20px; border-top: 1px solid #e0e0e0;">
       <p style="font-size: 0.8em; text-align: center; color: #777;">&copy; ${new Date().getFullYear()} All rights reserved.</p>
@@ -77,7 +77,7 @@ const getEmailHtml = (post: any, email: string) => {
 const sendEmails = async (post: any, subscribers: string[]) => {
   const messages = subscribers.map(email => ({
     to: email,
-    from: 'iainjblack20@gmail.com',
+    from: 'iainjblack20@gmail.com', // update
     subject: `New Post from Lou's Blog: ${post.pageId}`,
     html: getEmailHtml(post, email),
   }));
