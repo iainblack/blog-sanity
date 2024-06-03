@@ -69,14 +69,20 @@ export default defineType({
           type: "string",
           title: "Alternative text",
           description: "Fallback text if the image fails to load.",
-          validation: (rule) => {
-            return rule.custom((alt, context) => {
+          validation: (rule) => [
+            rule.custom((alt, context) => {
               if ((context.document?.coverImage as any)?.asset?._ref && !alt) {
                 return "Required";
               }
               return true;
-            });
-          },
+            }),
+            rule.custom((alt, context) => {
+              if (!(context.document?.coverImage as any)?.asset?._ref && alt) {
+                return "Remove alt text if there is no image";
+              }
+              return true;
+            }),
+          ]
         },
       ],
     }),

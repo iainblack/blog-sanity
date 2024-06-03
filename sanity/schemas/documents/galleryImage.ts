@@ -28,14 +28,20 @@ export default defineType({
           type: "string",
           title: "Alternative text",
           description: "Important for SEO and accessiblity.",
-          validation: (rule) => {
-            return rule.custom((alt, context) => {
-              if ((context.document?.picture as any)?.asset?._ref && !alt) {
+          validation: (rule) => [
+            rule.custom((alt, context) => {
+              if ((context.document?.coverImage as any)?.asset?._ref && !alt) {
                 return "Required";
               }
               return true;
-            });
-          },
+            }),
+            rule.custom((alt, context) => {
+              if (!(context.document?.coverImage as any)?.asset?._ref && alt) {
+                return "Remove alt text if there is no image";
+              }
+              return true;
+            }),
+          ]
         },
       ],
       options: {
