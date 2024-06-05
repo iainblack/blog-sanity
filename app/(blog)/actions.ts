@@ -80,8 +80,9 @@ export const getGalleryImagesByPage = async (pageId: string) => {
           }
         }
       },
-      alt
-    }
+      alt,
+    },
+    title,
   }`;
 
   return sanityFetch<GalleryImage[]> ({

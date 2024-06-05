@@ -27,6 +27,7 @@ export default async function Page() {
             width,
             height,
             alt: photo.picture.alt || "",
+            title: photo?.title,
         };
 
     });

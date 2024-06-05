@@ -77,7 +77,7 @@ export default defineType({
               return true;
             }),
             rule.custom((alt, context) => {
-              if (!(context.document?.coverImage as any)?.asset?._ref && alt) {
+              if (!(context.document?.image as any)?.asset?._ref && alt) {
                 return "Remove alt text if there is no image";
               }
               return true;

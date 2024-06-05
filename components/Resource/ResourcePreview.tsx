@@ -14,19 +14,19 @@ export const ResourcePreview: React.FC<ResourcePreviewProps> = ({ resource, onCl
         <div className="p-3 overflow-hidden transition-colors w-full rounded-lg border border-transparent shadow hover:shadow-xl hover:border-black">
             <div className="w-full flex flex-col h-full cursor-pointer" onClick={() => onClick(resource)}>
                 <div className="relative w-full h-52 rounded-lg overflow-hidden object-cover">
-                    {resource.type === "Book" && (
-                        <div className="absolute top-2 left-2 p-2 rounded-full bg-green-500">
-                            <IoBookOutline className="w-5 h-5 text-white" />
+                    {resource.type === "Book" && resource && resource.coverImage && (
+                        <div className="absolute top-2 left-2 p-2 rounded-full bg-transparent border border-gray-500">
+                            <IoBookOutline className="w-5 h-5 text-gray-500" />
                         </div>
                     )}
-                    {resource.type === "Website" && (
-                        <div className="absolute top-2 left-2 p-2 rounded-full bg-blue-500">
-                            <FaLink className="w-5 h-5 text-white" />
+                    {resource.type === "Website" && resource && resource.coverImage && (
+                        <div className="absolute top-2 left-2 p-2 rounded-full bg-transparent border border-gray-500">
+                            <FaLink className="w-5 h-5 text-gray-500" />
                         </div>
                     )}
-                    {resource.type === "Other" && (
-                        <div className="absolute top-2 left-2 p-2 rounded-full bg-gray-500">
-                            <FaCubes className="w-5 h-5 text-white" />
+                    {resource.type === "Other" && resource && resource.coverImage && (
+                        <div className="absolute top-2 left-2 p-2 rounded-full bg-transparent border border-gray-500">
+                            <FaCubes className="w-5 h-5 text-gray-500" />
                         </div>
                     )}
                     {resource.coverImage ? (

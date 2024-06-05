@@ -74,24 +74,12 @@ export default defineType({
               return true;
             }),
             rule.custom((alt, context) => {
-              if (!(context.document?.coverImage as any)?.asset?._ref && alt) {
+              if (!(context.document?.ogImage as any)?.asset?._ref && alt) {
                 return "Remove alt text if there is no image";
               }
               return true;
             }),
           ]
-        }),
-        defineField({
-          name: "metadataBase",
-          type: "url",
-          description: (
-            <a
-              href="https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase"
-              rel="noreferrer noopener"
-            >
-              More information
-            </a>
-          ),
         }),
       ],
     }),

@@ -36,7 +36,7 @@ export default defineType({
               return true;
             }),
             rule.custom((alt, context) => {
-              if (!(context.document?.coverImage as any)?.asset?._ref && alt) {
+              if (!(context.document?.picture as any)?.asset?._ref && alt) {
                 return "Remove alt text if there is no image";
               }
               return true;
@@ -51,6 +51,13 @@ export default defineType({
         },
       },
       validation: (rule) => rule.required().error("Image is required."),
+    }),
+    defineField({
+      name: "title",
+      title: "Title",
+      type: "string",
+      description: "A title to optionally display over the image.",
+      validation: (rule) => rule.max(50),
     }),
   ],
 });
