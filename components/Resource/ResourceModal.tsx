@@ -13,7 +13,7 @@ interface ResourceModalProps {
 
 
 export default function ResourceModal({ isOpen, onClose, resource }: ResourceModalProps) {
-    const spacedDescription = resource.description.split("\n").map((paragraph, index) => (
+    const spacedDescription = resource.description && resource.description.split("\n").map((paragraph, index) => (
         <p key={index} className="body-text pb-2">{paragraph}</p>
     ));
 

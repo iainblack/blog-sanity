@@ -76,7 +76,7 @@ export default defineType({
           description: "Fallback text if the image fails to load.",
           validation: (rule) => [
             rule.custom((alt, context) => {
-              if ((context.document?.coverImage as any)?.asset?._ref && !alt) {
+              if ((context.document?.image as any)?.asset?._ref && !alt) {
                 return "Required";
               }
               return true;

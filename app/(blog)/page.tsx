@@ -23,7 +23,7 @@ function Panel({
   const imagePosition = cleanedPosition === "left" ? 'xl:order-1' : 'xl:order-2';
   const textPosition = cleanedPosition === "left" ? 'xl:order-2' : 'xl:order-1';
 
-  const spacedDescription = content.split("\n").map((paragraph, index) => (
+  const spacedDescription = content && content.split("\n").map((paragraph, index) => (
     <p key={index} className="body-text pb-2">{paragraph}</p>
   ));
 
