@@ -24,7 +24,7 @@ body {
 }
 
 .body-text {
-    @apply text-sm font-light md:text-base text-text-primary;
+    @apply text-sm md:text-base text-text-primary;
 }
 
 .header-text {

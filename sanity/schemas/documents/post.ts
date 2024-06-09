@@ -44,7 +44,7 @@ export default defineType({
       title: "Content",
       type: "array",
       of: [{ type: "block" }],
-      description: "The content of the post.",
+      description: "The content of the post. (Don't mind the missing spaces after punctuation in the editor, it will be normalized on the webpage.)",
     }),
     defineField({
       name: "excerpt",

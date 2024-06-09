@@ -3,6 +3,8 @@ import {
   type PortableTextComponents,
   type PortableTextBlock,
 } from "next-sanity";
+import { normalizeText } from "./utils";
+
 
 export default function CustomPortableText({
   className,
@@ -23,7 +25,7 @@ export default function CustomPortableText({
     marks: {
       link: ({ children, value }) => {
         return (
-          <a href={value?.href} rel="noreferrer noopener">
+          <a href={value?.href} rel="noreferrer noopener" target="_blank">
             {children}
           </a>
         );
@@ -31,9 +33,11 @@ export default function CustomPortableText({
     },
   };
 
+  value = normalizeText(value);
+
   return (
     <div className={[className].filter(Boolean).join(" ")}>
-      <PortableText components={components} value={value} />
+      <PortableText value={value} />
     </div>
   );
 }

@@ -50,3 +50,23 @@ export function formatTimeAgo(date: string | Date): string {
         return `${seconds} second${seconds > 1 ? "s" : ""} ago`;
     }
 }
+
+export function normalizeText(blocks: any[]) {
+    return blocks.map(block => {
+      if (block._type === 'block' && block.children) {
+        return {
+          ...block,
+          children: block.children.map((child: { _type: string; text: string; }) => {
+            if (child._type === 'span' && typeof child.text === 'string') {
+              return {
+                ...child,
+                text: child.text.replace(/([:.?])([^\s])/g, '$1  $2'),
+              };
+            }
+            return child;
+          }),
+        };
+      }
+      return block;
+    });
+  }
