@@ -50,7 +50,7 @@ export default function Dropdown({ selected, setSelected, options, label, checkb
     return (
         <div className="relative" ref={dropdownRef}>
             <button
-                className={`flex items-center justify-between w-52 h-10 py-3 pl-3 pr-1 ${variant === "outlined" ? bottomBorderClass : filledButtonClass}`}
+                className={`flex items-center justify-between w-52 h-10 py-3 pl-3 pr-1 body-text ${variant === "outlined" ? bottomBorderClass : filledButtonClass}`}
                 onClick={() => setIsOpen(!isOpen)}
             >
                 {label || "Select"}
@@ -60,7 +60,7 @@ export default function Dropdown({ selected, setSelected, options, label, checkb
                 <div className={`absolute z-10 w-52 overflow-hidden bg-white border-x border-b border-black ${bottomBorderMenuClass}`}>
                     {options.map((option) => (
                         <label key={option} onClick={!checkbox ? () => handleListSelect(option) : undefined}
-                            className="flex space-x-2 items-center w-full h-10 px-4 py-1 hover:bg-primary hover:text-white cursor-pointer">
+                            className="flex space-x-2 items-center w-full h-10 px-4 py-1 hover:bg-primary hover:text-white cursor-pointer body-text">
                             {checkbox && <input
                                 type="checkbox"
                                 checked={selected.includes(option)}

@@ -38,6 +38,8 @@ export default function Page() {
     fetchPosts();
   }, [order, page]);
 
+  const noResultsMessage = "These Messages will be made available at a later time when they are in sync with the sharing of Lou's healing story."
+
   return (
     <div className="container mx-auto lg:px-16">
       <div className="flex flex-col items-center space-y-6 my-6 lg:space-y-0 lg:flex-row md:justify-between lg:my-12">
@@ -49,7 +51,7 @@ export default function Page() {
         {loading && page !== 0 && <PostPreviewGridSkeleton />}
         {!loading &&
           <>
-            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} />
+            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} noResultsMessage={noResultsMessage} />
             <Pagination totalPages={Math.ceil(postState.totalPosts / limit)} active={page} setActive={setPage} />
           </>}
       </div>

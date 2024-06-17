@@ -17,7 +17,7 @@ const BackButton: React.FC<BackButtonProps> = ({ route, title }) => {
 
     return (
         <button onClick={handleClick}>
-            <div className='flex items-center justify-center hover:underline text-gray-600 pl-6'>
+            <div className='flex items-center justify-center hover:underline body-text-styled text-gray-600 pl-6'>
                 <IoIosArrowRoundBack className='h-6 w-6 mr-1' />
                 {title ?? 'Back'}
             </div>

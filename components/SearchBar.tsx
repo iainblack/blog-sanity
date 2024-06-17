@@ -52,11 +52,11 @@ export default function SearchBar({ setSearch, onSubmit, loading, value, type, p
             </div>
             {error && <p className="text-red-500 text-sm ml-2 absolute -bottom-6">{error}</p>}
             {buttonText && <button
-                className="two-tone-button whitespace-nowrap h-12 w-52 body-text"
+                className="two-tone-button whitespace-nowrap h-12 w-52"
                 type="button"
                 onClick={onSubmit}
             >
-                {loading ? <LoadingSpinner size={16} /> : buttonText}
+                {loading ? <LoadingSpinner size={16} /> : <div className='font-garamond'>{buttonText}</div>}
             </button>}
         </div >
     );

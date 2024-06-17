@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Metadata } from "next";
 import { VisualEditing, toPlainText } from "next-sanity";
-import { Inter } from "next/font/google";
+import { EB_Garamond } from "next/font/google";
 import { draftMode } from "next/headers";
 import AlertBanner from "../../components/CMS-Banner";
 import * as demo from "@/sanity/lib/demo";
@@ -43,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const inter = Inter({
+const garamond = EB_Garamond({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
@@ -51,7 +51,7 @@ const inter = Inter({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`bg-default-bg text-text-primary`}>
+    <html lang="en" className={`${garamond.className}bg-default-bg text-text-primary`}>
       {draftMode().isEnabled && <VisualEditing />}
       <body>
         <section className="min-h-screen flex flex-col">

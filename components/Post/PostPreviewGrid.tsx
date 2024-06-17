@@ -5,15 +5,16 @@ interface PostPreviewGridProps {
     posts?: Post[];
     view: "grid" | "list";
     page: number;
+    noResultsMessage?: string;
 }
 
-export default function PostPreviewGrid({ posts, view, page }: PostPreviewGridProps) {
+export default function PostPreviewGrid({ posts, view, page, noResultsMessage }: PostPreviewGridProps) {
 
     if (!posts || posts.length === 0) {
         return (
-            <div className="flex justify-center">
-                <p>No posts yet...</p>
-            </div>
+            <div className="flex justify-center max-w-2xl text-text-secondary text-center">
+                <p>{noResultsMessage ?? 'No posts yet...'}</p>
+            </div >
         );
     }
 

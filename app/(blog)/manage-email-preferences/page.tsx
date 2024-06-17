@@ -36,8 +36,8 @@ export default function Page() {
                 <h1 className="header-text text-center">
                     Update Preferences
                 </h1>
-                <p className="body-text text-center mt-3">
-                    Enter your email to update your email preferences.
+                <p className="body-text text-center mt-6 max-w-2xl">
+                    Enter your email to view and update your preferences (existing accounts only).
                 </p>
             </div>
             <Suspense>

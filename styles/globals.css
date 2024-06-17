@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'Walbaum Display Light';
+    src: url('/fonts/Walbaum60ptLight.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 body {
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -24,11 +31,25 @@ body {
 }
 
 .body-text {
-    @apply text-sm md:text-base text-text-primary;
+    @apply  text-base lg:text-lg font-garamond leading-tight font-light;
+}
+
+.body-text-styled {
+    @apply text-base lg:text-lg font-walbaum;
 }
 
 .header-text {
-    @apply text-4xl lg:text-5xl tracking-tighter leading-tight whitespace-pre-wrap text-text-primary;
+    @apply text-4xl lg:text-5xl whitespace-pre-wrap font-walbaum;
+}
+
+.subheader-text {
+    @apply text-2xl lg:text-3xl leading-normal whitespace-pre-wrap font-garamond lg:leading-relaxed;
+
+}
+
+.subheader-text-styled {
+    @apply text-2xl lg:text-3xl leading-normal whitespace-pre-wrap font-walbaum lg:leading-relaxed;
+
 }
 
 .contact-form-input {
@@ -36,7 +57,7 @@ body {
 }
 
 .two-tone-button {
-    @apply border border-black py-3 px-12 transition-colors duration-200 bg-contrast-bg hover:bg-primary hover:text-text-contrast;
+    @apply border border-black py-3 px-12 transition-colors duration-200 bg-contrast-bg hover:bg-primary hover:text-text-contrast font-walbaum;
 }
 
 .truncate-lines {
@@ -49,6 +70,14 @@ body {
 .truncate-lines-small {
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.truncate-lines-smaller {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;

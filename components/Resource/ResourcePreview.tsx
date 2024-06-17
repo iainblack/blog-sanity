@@ -43,7 +43,7 @@ export const ResourcePreview: React.FC<ResourcePreviewProps> = ({ resource, onCl
                     <div className="text-left w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
                         {resource.datePublished ? <DateComponent dateString={resource.datePublished} /> : <div className="h-5" />}
                     </div>
-                    <h2 className="text-lg font-bold truncate">{resource.title}</h2>
+                    <h2 className="subheader-text">{resource.title}</h2>
                     <div className="text-body text-sm truncate-lines-small flex-grow">
                         {resource.description}
                     </div>
@@ -62,7 +62,7 @@ export const ResourcePreview: React.FC<ResourcePreviewProps> = ({ resource, onCl
                     )}
                     <div>
                         <span
-                            className="text-primary font-bold"
+                            className="text-primary body-text"
                         >
                             Read More
                         </span>

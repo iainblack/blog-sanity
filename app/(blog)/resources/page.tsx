@@ -60,7 +60,7 @@ export default function Page() {
     return (
         <div className="container mx-auto lg:px-16">
             <div className="flex flex-col items-center space-y-6 my-6 md:space-y-0 md:flex-row md:justify-between md:my-12">
-                <Intro title={"Resources"} subtitle="Books, websites, and anything else I find useful for your spiritual journey." />
+                <Intro title={"Lou's Recommended Resources"} />
             </div>
             <div className="flex flex-col space-y-6 px-2 md:px-4 items-center sm:items-start lg:px-0">
                 <SearchBar

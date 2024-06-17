@@ -23,7 +23,7 @@ export default function PostFullView({ posts, backRoute }: PostFullViewProps) {
                     ? (<PortableText className="body-text hyphens-auto break-words text-justify" value={posts.currentPost.content} />)
                     : (
                         <div className="flex justify-center items-center h-full w-full">
-                            <p>No content found! :/</p>
+                            <p>No content found.</p>
                         </div>
                     )}
                 <div className="w-full justify-end items-center pt-3">

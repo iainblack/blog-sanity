@@ -57,25 +57,17 @@ export default function Header() {
 
     return (
         <header className={`w-full header border-b border-black bg-default-bg  transition-transform duration-300 transform ${headerVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-            <nav className="p-6 md:p-10 flex items-center relative justify-between lg:justify-start lg:px-20">
+            <nav className="p-6 md:p-8 flex items-center relative justify-between lg:px-20">
                 {!isMenuOpen && (
                     <div className="hidden lg:flex justify-start items-center w-[50vw] lg:w-[33%]">
                         <HeaderLinks />
                     </div>
                 )}
-                <div className="w-[50%] sm:w-[33%] flex justify-start">
+                <div className="w-[50%] sm:w-[33%] flex justify-start align-middle">
                     <Link href="/" className="w-full">
-                        <div className="h-12 lg:h-16 w-full relative">
-                            <Image
-                                src='/images/loulogo1.png'
-                                sizes="50vw"
-                                priority
-                                alt="logo"
-                                fill
-                                style={{
-                                    objectFit: "contain",
-                                }}
-                            />
+                        <div className="w-full relative text-center space-y-1">
+                            <h1 className="header-text">Lou Fleming</h1>
+                            <h6 className="body-text">Journey to Healing - Journey of Awakening</h6>
                         </div>
                     </Link>
                 </div>

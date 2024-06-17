@@ -40,7 +40,7 @@ export default function Modal({ isOpen, onClose, onSaveClick, onCancelClick, tit
                         <CloseIcon className="w-6 h-6 text-black" />
                     </button>
                 </div>
-                {title && <div className="flex items-center p-5 text-xl font-bold">
+                {title && <div className="flex items-center p-5 subheader-text">
                     {title}
                 </div>}
                 {imageHeader && <div className="flex items-center justify-center">

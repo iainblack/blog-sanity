@@ -42,7 +42,7 @@ export default function ResourceModal({ isOpen, onClose, resource }: ResourceMod
                         )}
                     </div>
                 }
-                <h2 className="text-xl font-bold">{resource.title}</h2>
+                <h2 className="subheader-text">{resource.title}</h2>
                 <div className="flex-grow w-full text-pretty">
                     <div className="body-text">{spacedDescription}</div>
                 </div>

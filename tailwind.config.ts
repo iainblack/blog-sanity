@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        'default-bg': '#FFFBF5',
+        'default-bg': '#FFFFFF',
         'contrast-bg': '#D3D5CB',
         'dark-bg': '#322F2B',
         'primary': '#A4B1A7',
@@ -15,7 +15,8 @@ export default {
         'text-contrast': '#FFFFFF',
       },
       fontFamily: {
-        sans: ["var(--font-inter)"],
+        walbaum: ['"Walbaum Display Light"', 'sans-serif'],
+        garamond: ['EB Garamond', 'serif'],
       },
     },
   },

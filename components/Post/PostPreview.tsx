@@ -28,25 +28,25 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
                             </div>
                         )}
                     </div>
-                    <div className="md:w-1/2 md:pl-4 flex flex-col">
-                        <div className="py-4 md:py-0 space-y-3 lg:space-y-8">
+                    <div className="md:w-1/2 md:pl-4 flex flex-col justify-center">
+                        <div className="py-4 md:py-0 space-y-3 lg:space-y-6">
                             <div className="text-left pb-3 w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
                                 <DateComponent icon dateString={post.date} />
                                 {post.author?.name && (
                                     <div className="flex items-center">
                                         <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                        <div className="text-gray-600 text-sm">
+                                        <div className="text-gray-600 body-text">
                                             {post.author.name}
                                         </div>
                                     </div>
                                 )}
                             </div>
-                            <h2 className="text-2xl font-bold truncate">{post.title}</h2>
-                            <div className='text-body text-sm overflow-hidden text-ellipsis truncate-lines'>
+                            <h1 className="subheader-text truncate">{post.title}</h1>
+                            <div className='body-text truncate-lines'>
                                 <PortableText value={post.content} />
                             </div>
                             <div>
-                                <span className="text-blue-500 font-bold pt-4">Read More</span>
+                                <span className="text-blue-500 pt-6 body-text">Read More</span>
                             </div>
                         </div>
                     </div>
@@ -70,12 +70,12 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
                         </div>
                     )}
                 </div>
-                <div className={`py-4 h-24`}>
-                    <div className="text-left pb-3 w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
+                <div className={`py-2 space-y-1`}>
+                    <div className="text-left w-full md:w-auto md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
                         <DateComponent dateString={post.date} />
                     </div>
-                    <h2 className="text-lg font-bold truncate">{post.title}</h2>
-                    <p className="text-gray-600 text-sm overflow-hidden text-ellipsis">{post.excerpt}</p>
+                    <h2 className="text-lg truncate font-garamond">{post.title}</h2>
+                    <p className="text-gray-600 text-sm font-garamond truncate-lines">{post.excerpt}</p>
                 </div>
             </Link>
         </div>
@@ -101,7 +101,7 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
                         </div>
                     </div>
                     <div className="text-left ml-10 flex-grow truncate">
-                        <h2 className="text-lg truncate">{post.title}</h2>
+                        <h2 className="text-lg truncate font-garamond">{post.title}</h2>
                         <p className="text-gray-600 text-sm truncate flex-grow">{post.excerpt}</p>
                     </div>
                     <ChevronRightIcon className="w-8 h-8 hidden md:block" />

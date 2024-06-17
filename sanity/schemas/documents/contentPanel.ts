@@ -53,6 +53,7 @@ export default defineType({
       name: "content",
       title: "Content",
       type: "text",
+      description: "Content should be limited to one to two paragraphs per panel.",
       validation: rule => [
         rule.required().min(1).error("Content is required."),
         rule.max(1300).error("Content cannot be longer than 1300 characters.")

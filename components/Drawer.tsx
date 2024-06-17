@@ -56,6 +56,13 @@ export default function Drawer({ isDrawerOpen, closeDrawer }: { isDrawerOpen: bo
                 <div className="py-4 overflow-y-auto">
                     <ul className="space-y-3">
                         <li>
+                            <div className="p-2 w-full">
+                                <Link href="/" onClick={handleClose}>
+                                    <span>Home</span>
+                                </Link>
+                            </div>
+                        </li>
+                        <li>
                             <div
                                 className={`flex items-center justify-between w-full p-2`}
                                 onClick={() => setMenuOpen(!menuOpen)}
