@@ -12,6 +12,11 @@ export const resourceTypes = ["Books", "Websites", "Other"];
 
 export const emailPreferenceOptions = pages.filter((page) => page.contentType === "post").map((page) => page.name);
 
+export interface Tab {
+  name: string;
+  icon: React.ReactNode;
+}
+
 export interface BasicAlertState {
     message: string;
     type: "error" | "success";
@@ -60,7 +65,8 @@ export function normalizeText(blocks: any[]) {
             if (child._type === 'span' && typeof child.text === 'string') {
               return {
                 ...child,
-                text: child.text.replace(/([:.?])([^\s])/g, '$1  $2'),
+                text: child.text
+                .replace(/([:.?])([^\s])/g, '$1  $2'),
               };
             }
             return child;

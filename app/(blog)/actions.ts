@@ -23,23 +23,23 @@ export const getContentPanelsByPage = (pageId: string) => {
 };
 
 
-export const getResources = async (types: string[], search: string, limit: number, offset: number) => {
+export const getResources = async (type: string, search: string, limit: number, offset: number) => {
   const searchFilter = search ? `&& title match $search` : '';
-  const typeFilter = types.length > 0 ? `&& type in $types` : '';
-  const query = groq`*[_type == "resource" ${typeFilter} ${searchFilter}] | order(_createdAt desc) [${offset}...${offset + limit}] {
+  const typeFilter = type ? `&& type == $type` : '';
+  const query = groq`*[_type == "resource" ${typeFilter} ${searchFilter}] | order(title asc) [${offset}...${offset + limit}] {
     ${resourceFields}
   }`;
-
-  const totalQuery = groq`count(*[_type == "resource" && type in $types ${searchFilter}])`;
+  
+  const totalQuery = groq`count(*[_type == "resource" && type == $type ${searchFilter}])`;
 
   const resources = await sanityFetch<Resource[] | undefined>({
     query,
-    params: { types, search: search ? `*${search}*` : '' },
+    params: { type, search: search ? `*${search}*` : '' },
   });
 
   const total = await sanityFetch<number>({
     query: totalQuery,
-    params: { types, search: search ? `*${search}*` : '' },
+    params: { type, search: search ? `*${search}*` : '' },
   });
 
   return { resources, totalResources: total };

@@ -43,7 +43,13 @@ export default defineType({
       name: "content",
       title: "Content",
       type: "array",
-      of: [{ type: "block" }],
+      of: [{ 
+        type: "block",
+        styles: [
+          { title: "Normal", value: "normal" },
+          { title: "Subtitle", value: "h4" },
+        ],
+       }],
       description: "The content of the post. (Don't mind the missing spaces after punctuation in the editor, it will be normalized on the webpage.)",
     }),
     defineField({

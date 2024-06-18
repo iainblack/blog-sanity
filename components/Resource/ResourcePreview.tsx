@@ -3,16 +3,17 @@ import CoverImage from "../CoverImage";
 import DateComponent from "../DateComponent";
 import { FaCubes, FaLink } from "react-icons/fa6";
 import { IoBookOutline } from "react-icons/io5";
+import { ChevronRightIcon, UserIcon } from "@sanity/icons";
 
 interface ResourcePreviewProps {
     resource: Resource;
-    onClick: (resource: Resource) => void;
+    onClick?: (resource: Resource) => void;
 }
 
-export const ResourcePreview: React.FC<ResourcePreviewProps> = ({ resource, onClick }) => {
+export const ResourceImagePreview: React.FC<ResourcePreviewProps> = ({ resource, onClick }) => {
     return (
         <div className="p-3 overflow-hidden transition-colors w-full rounded-lg border border-transparent shadow hover:shadow-xl hover:border-black">
-            <div className="w-full flex flex-col h-full cursor-pointer" onClick={() => onClick(resource)}>
+            <div className="w-full flex flex-col h-full cursor-pointer" onClick={() => onClick && onClick(resource)}>
                 <div className="relative w-full h-52 rounded-lg overflow-hidden object-cover">
                     {resource.type === "Book" && resource && resource.coverImage && (
                         <div className="absolute top-2 left-2 p-2 rounded-full bg-transparent border border-gray-500">
@@ -72,6 +73,86 @@ export const ResourcePreview: React.FC<ResourcePreviewProps> = ({ resource, onCl
         </div>
     );
 }
+
+export const ResourceListItem: React.FC<ResourcePreviewProps> = ({ resource }) => {
+    return (
+        <div className="w-full overflow-hidden flex items-center justify-between p-3 md:p-4 border border-gray-300 rounded-xl shadow ">
+            <div className="flex flex-row justify-between items-center h-full">
+                <div className="text-left flex-grow w-full space-y-1">
+                    <div>
+                        <div className="flex space-x-1">
+                            {resource.datePublished && (
+                                <div className="flex items-center">
+                                    <p className="text-sm text-gray-600 font-garamond pr-1">Published</p>
+                                    <DateComponent dateString={resource.datePublished} />
+                                </div>)}
+                            {resource.publisher && (
+                                <p className="text-sm text-gray-600 font-garamond truncate-lines-smaller">{`by ${resource.publisher}`}</p>
+                            )}
+                        </div>
+                        {resource.author && (
+                            <p className="text-sm text-gray-600 font-garamond">{`Written by ${resource.author}`} </p>
+                        )}
+                    </div>
+                    <div>
+                        <h2 className="text-xl truncate font-garamond">{resource.title}</h2>
+                    </div>
+                    <p className="text-gray-600 text-sm font-garamond truncate-lines-smaller">{resource.description}</p>
+                    {resource.url && (
+                        <div className="flex items-center space-x-1 mt-2">
+                            <FaLink className="w-4 h-4 text-blue-500" />
+                            <a
+                                href={resource.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-500 hover:underline text-sm font-garamond"
+                            >
+                                {resource.urlDisplayName || resource.url}
+                            </a>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export const ResourceListItemSkeleton = () => {
+    return (
+        <div className="flex flex-col w-full pb-4">
+            <div className="grid grid-rows-5 gap-3 w-full">
+                {[1, 2, 3, 4, 5].map((_, index) => (
+                    <div
+                        key={index}
+                        className="w-full overflow-hidden flex items-center justify-between p-3 md:p-4 border border-gray-300 rounded-xl shadow animate-pulse"
+                    >
+                        <div className="flex flex-row justify-between items-center h-full w-full">
+                            <div className="text-left flex-grow w-full space-y-1">
+                                <div>
+                                    <div className="flex space-x-1">
+                                        <div className="flex items-center space-x-1">
+                                            <div className="h-4 bg-gray-300 rounded w-20"></div>
+                                            <div className="h-4 bg-gray-300 rounded w-10"></div>
+                                        </div>
+                                        <div className="h-4 bg-gray-300 rounded w-24"></div>
+                                    </div>
+                                    <div className="h-4 bg-gray-300 rounded w-32 mt-1"></div>
+                                </div>
+                                <div>
+                                    <div className="h-6 bg-gray-300 rounded w-1/4 mt-2"></div>
+                                </div>
+                                <div>
+                                    <div className="h-4 bg-gray-300 rounded w-full mt-2"></div>
+                                    <div className="h-4 bg-gray-300 rounded w-full mt-1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
 
 export const ResourcePreviewSkeleton: React.FC = () => {
     return (

@@ -31,7 +31,7 @@ body {
 }
 
 .body-text {
-    @apply  text-base lg:text-lg font-garamond leading-tight font-light;
+    @apply  text-base lg:text-lg font-garamond leading-none;
 }
 
 .body-text-styled {
@@ -57,7 +57,7 @@ body {
 }
 
 .two-tone-button {
-    @apply border border-black py-3 px-12 transition-colors duration-200 bg-contrast-bg hover:bg-primary hover:text-text-contrast font-walbaum;
+    @apply border border-black py-3 px-12 transition-colors duration-200 bg-contrast-bg hover:bg-primary hover:text-text-contrast font-garamond;
 }
 
 .truncate-lines {
@@ -81,5 +81,15 @@ body {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.custom-portable-text p {
+    margin-bottom: 0;
+  }
+  
+  .custom-portable-text br {
+    display: block;
+    content: "";
+    margin-bottom: 0;
 }
   

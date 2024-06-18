@@ -27,38 +27,44 @@ export default defineType({
       name: "author",
       title: "Author",
       type: "string",
+      hidden: ({ parent }) => parent?.type !== "Book",
     }),
     defineField({
       name: "publisher",
       title: "Publisher",
       type: "string",
+      hidden: ({ parent }) => parent?.type !== "Book",
     }),
     defineField({
       name: "datePublished",
       title: "Date Published",
       type: "datetime",
+      hidden: ({ parent }) => parent?.type !== "Book",
     }),
     defineField({
       name: "url",
       title: "URL",
       type: "url",
+      hidden: ({ parent }) => parent?.type === "Book",
     }),
     defineField({
       name: "urlDisplayName",
       title: "URL Display Name",
       type: "string",
       description: "The text to display for the URL link.",
+      hidden: ({ parent }) => parent?.type === "Book",
     }),
     defineField({
       name: "description",
       title: "Description",
       type: "text",
-      validation: (rule) => rule.required().max(1300).error("Description must be 1300 characters or less."),
+      validation: (rule) => rule.max(1300).error("Description must be 1000 characters or less."),
     }),
     defineField({
       name: "coverImage",
       title: "Image",
       type: "image",
+      hidden: true,
       options: {
         hotspot: true,
         aiAssist: {
@@ -92,10 +98,10 @@ export default defineType({
   preview: {
     select: {
       title: "title",
-      media: "coverImage",
+      //media: "coverImage",
     },
-    prepare({ title, media }) {
-      return { title, media };
+    prepare({ title }) {
+      return { title };
     },
   },
 });

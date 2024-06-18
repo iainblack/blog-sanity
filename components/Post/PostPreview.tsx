@@ -35,14 +35,14 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
                                 {post.author?.name && (
                                     <div className="flex items-center">
                                         <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                        <div className="text-gray-600 body-text">
+                                        <div className="text-gray-600 text-sm font-garamond">
                                             {post.author.name}
                                         </div>
                                     </div>
                                 )}
                             </div>
                             <h1 className="subheader-text truncate">{post.title}</h1>
-                            <div className='body-text truncate-lines'>
+                            <div className='body-text truncate-lines text-gray-600'>
                                 <PortableText value={post.content} />
                             </div>
                             <div>
@@ -72,10 +72,18 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
                 </div>
                 <div className={`py-2 space-y-1`}>
                     <div className="text-left w-full md:w-auto md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
-                        <DateComponent dateString={post.date} />
+                        <DateComponent icon dateString={post.date} />
+                        {post.author?.name && (
+                            <div className="flex items-center">
+                                <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
+                                <div className="text-gray-600 font-garamond text-sm">
+                                    {post.author.name}
+                                </div>
+                            </div>
+                        )}
                     </div>
                     <h2 className="text-lg truncate font-garamond">{post.title}</h2>
-                    <p className="text-gray-600 text-sm font-garamond truncate-lines">{post.excerpt}</p>
+                    <p className="text-gray-600 text-base font-garamond truncate-lines">{post.excerpt}</p>
                 </div>
             </Link>
         </div>
@@ -86,7 +94,7 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
     const path = usePathname();
 
     return (
-        <div className="w-full flex items-center justify-between p-3 md:p-4 border border-black lg:border-gray-300 rounded-xl shadow transition-colors cursor-pointer hover:border-black">
+        <div className="w-full overflow-hidden flex items-center justify-between p-3 md:p-4 border border-black lg:border-gray-300 rounded-xl shadow transition-colors cursor-pointer hover:border-black">
             <Link href={`${path}/posts/${post.slug}`} className='w-full h-full flex flex-col justify-between'>
                 <div className="flex flex-row justify-between items-center h-full">
                     <div className="w-auto">
@@ -95,14 +103,14 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
                             {post.author?.name && (
                                 <div className="flex items-center">
                                     <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                    <div className="text-gray-600 text-sm">{post.author.name}</div>
+                                    <p className="text-gray-600 text-sm font-garamond">{post.author.name}</p>
                                 </div>
                             )}
                         </div>
                     </div>
-                    <div className="text-left ml-10 flex-grow truncate">
+                    <div className="text-left ml-10 flex-grow">
                         <h2 className="text-lg truncate font-garamond">{post.title}</h2>
-                        <p className="text-gray-600 text-sm truncate flex-grow">{post.excerpt}</p>
+                        <p className="text-gray-600 text-base font-garamond truncate-lines">{post.excerpt}</p>
                     </div>
                     <ChevronRightIcon className="w-8 h-8 hidden md:block" />
                 </div>
