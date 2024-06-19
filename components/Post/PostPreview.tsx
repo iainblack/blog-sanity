@@ -43,7 +43,7 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
                             </div>
                             <h1 className="subheader-text truncate">{post.title}</h1>
                             <div className='body-text truncate-lines text-gray-600'>
-                                <PortableText value={post.content} />
+                                <PortableText className="body-text hyphens-auto break-words text-justify custom-portable-text" value={post.content} />
                             </div>
                             <div>
                                 <span className="text-blue-500 pt-6 body-text">Read More</span>
