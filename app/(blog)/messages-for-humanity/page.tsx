@@ -38,7 +38,7 @@ export default function Page() {
     fetchPosts();
   }, [order, page]);
 
-  const noResultsMessage = "These Messages will be made available at a later time when they are in sync with the sharing of Lou's healing story."
+  const noResultsMessage = "These messages will be made available at a later time when they are in sync with the sharing of Lou's healing story."
 
   return (
     <div className="container mx-auto lg:px-16">

@@ -12,8 +12,8 @@ export default function PostPreviewGrid({ posts, view, page, noResultsMessage }:
 
     if (!posts || posts.length === 0) {
         return (
-            <div className="flex justify-center max-w-2xl text-text-secondary text-center">
-                <p>{noResultsMessage ?? 'No posts yet...'}</p>
+            <div className="flex justify-center max-w-2xl text-center">
+                <p className="body-text text-gray-600">{noResultsMessage ?? 'No posts yet...'}</p>
             </div >
         );
     }
