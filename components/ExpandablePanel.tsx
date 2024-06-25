@@ -29,14 +29,16 @@ export default function ExpandablePanel({
     };
 
     const truncatedContent = cleanedContent && cleanedContent.slice(0, MAX_CHAR_LENGTH);
-    const shouldTruncate = cleanedContent && cleanedContent.length > MAX_CHAR_LENGTH;
+    const isSmallScreen = typeof window !== 'undefined' && window.innerWidth < 1280;
+    const shouldTruncate = cleanedContent && cleanedContent.length > MAX_CHAR_LENGTH && !isSmallScreen;
+    const shouldDisplayImage = isSmallScreen ? true : isCollapsed;
 
-    const displayContent = isCollapsed ? `${truncatedContent} ...` : cleanedContent;
+    const displayContent = !isSmallScreen && isCollapsed ? `${truncatedContent} ...` : cleanedContent;
 
 
     return (
         <CenteredPanel size={cleanedSize} bgColor={cleanedBgColor}>
-            {isCollapsed && image && image?.asset &&
+            {shouldDisplayImage && image && image?.asset &&
                 <div className={`centered-container__image ${imagePosition}`}>
                     <Image
                         alt={image?.alt || ""}
