@@ -4,7 +4,7 @@ import { defineField, defineType } from "sanity";
 
 export default defineType({
   name: "contentPanel",
-  title: "Content Panel",
+  title: "Landing Page Panel",
   icon: BlockContentIcon,
   type: "document",
   fields: [
@@ -56,7 +56,6 @@ export default defineType({
       description: "Content should be limited to one to two paragraphs per panel.",
       validation: rule => [
         rule.required().min(1).error("Content is required."),
-        rule.max(1300).error("Content cannot be longer than 1300 characters.")
       ]
     }),
     defineField({

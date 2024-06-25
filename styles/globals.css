@@ -9,6 +9,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Satista';
+    src: url('/fonts/Satista.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 body {
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -25,17 +32,17 @@ body {
     @apply relative w-full sm:w-1/3 md:w-1/2 xl:w-1/4 rounded-xl overflow-hidden;
     aspect-ratio: 1/1;
 }
-/* class for mobile responsive title and text container */
-.centered-container__text {
-    @apply w-full lg:w-1/2 xl:w-1/3;
-}
 
 .body-text {
-    @apply  text-base lg:text-lg font-garamond leading-none;
+    @apply  text-base lg:text-xl font-garamond leading-none;
 }
 
 .body-text-styled {
-    @apply text-base lg:text-lg font-walbaum;
+    @apply text-base lg:text-xl font-walbaum;
+}
+
+.body-text-satista {
+    @apply text-lg lg:text-2xl font-satista;
 }
 
 .header-text {
@@ -45,6 +52,10 @@ body {
 .subheader-text {
     @apply text-2xl lg:text-3xl leading-normal whitespace-pre-wrap font-garamond lg:leading-relaxed;
 
+}
+
+.subtitle-text {
+    @apply text-lg lg:text-xl leading-normal whitespace-pre-wrap font-garamond lg:leading-relaxed;
 }
 
 .subheader-text-styled {
@@ -57,12 +68,12 @@ body {
 }
 
 .two-tone-button {
-    @apply border border-black py-3 px-12 transition-colors duration-200 bg-contrast-bg hover:bg-primary hover:text-text-contrast font-garamond;
+    @apply border border-black py-3 px-12 transition-colors duration-200 bg-contrast-bg hover:bg-primary hover:text-text-contrast text-base lg:text-xl font-garamond;
 }
 
 .truncate-lines {
     display: -webkit-box;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }

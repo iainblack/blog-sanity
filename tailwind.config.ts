@@ -8,6 +8,7 @@ export default {
       colors: {
         'default-bg': '#FFFFFF',
         'contrast-bg': '#D3D5CB',
+        'pink-bg': '#ffecff',
         'dark-bg': '#322F2B',
         'primary': '#A4B1A7',
         'text-primary': '#1A1A1A',
@@ -17,6 +18,7 @@ export default {
       fontFamily: {
         walbaum: ['"Walbaum Display Light"', 'sans-serif'],
         garamond: ['EB Garamond', 'serif'],
+        satista: ['"Satista"', 'sans-serif'],
       },
     },
   },

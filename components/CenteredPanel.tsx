@@ -26,7 +26,7 @@ export default function CenteredPanel({
     const bgClass = bgClasses[bgColor];
 
     return (
-        <div className={`h-full w-full ${bgClass} border-b border-black`}>
+        <div className={`h-full w-full ${bgClass} border-b border-black py-5`}>
             <div className={`centered-container ${sizeClass}`} data-aos="fade-zoom-in">
                 {children}
             </div>

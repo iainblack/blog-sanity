@@ -35,7 +35,7 @@ export default function ResourceModal({ isOpen, onClose, resource }: ResourceMod
                         {resource.author && (
                             <div className="flex items-center">
                                 <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                <div className="text-gray-600 text-sm">
+                                <div className="text-gray-600 text-sm lg:text-base">
                                     {resource.author}
                                 </div>
                             </div>

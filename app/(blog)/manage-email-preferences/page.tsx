@@ -37,7 +37,7 @@ export default function Page() {
                     Update Preferences
                 </h1>
                 <p className="body-text text-center mt-6 max-w-2xl">
-                    Enter your email to view and update subscription your preferences (existing accounts only).
+                    Enter your email to view and update your subscription preferences (existing accounts only).
                 </p>
             </div>
             <Suspense>

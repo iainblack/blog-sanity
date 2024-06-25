@@ -65,9 +65,9 @@ export default function Header() {
                 )}
                 <div className="w-[50%] sm:w-[33%] flex justify-start align-middle">
                     <Link href="/" className="w-full">
-                        <div className="w-full relative text-center space-y-1">
+                        <div className="w-full relative text-center space-y-2">
                             <h1 className="header-text">Lou Fleming</h1>
-                            <h6 className="body-text-styled">Journey to Healing - Journey of Awakening</h6>
+                            <h6 className="body-text-satista">Journey to Healing - Journey of Awakening</h6>
                         </div>
                     </Link>
                 </div>

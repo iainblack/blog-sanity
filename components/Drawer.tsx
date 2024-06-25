@@ -37,26 +37,20 @@ export default function Drawer({ isDrawerOpen, closeDrawer }: { isDrawerOpen: bo
                 tabIndex={-1}
                 aria-labelledby="drawer-top-label"
             >
-                <div className="border-b border-black py-6">
+                <div className="border-b border-black py-5">
                     <Link href="/" onClick={handleClose}>
-                        <div className="h-12 lg:h-16 w-full relative">
-                            <Image
-                                src='/images/loulogo1.png'
-                                sizes="50vw"
-                                priority
-                                alt="logo"
-                                fill
-                                style={{
-                                    objectFit: "contain",
-                                }}
-                            />
+                        <div className="w-full relative">
+                            <div className="w-full relative text-center space-y-2">
+                                <h1 className="header-text">Lou Fleming</h1>
+                                <h6 className="body-text-satista">Journey to Healing - Journey of Awakening</h6>
+                            </div>
                         </div>
                     </Link>
                 </div>
                 <div className="py-4 overflow-y-auto">
                     <ul className="space-y-3">
                         <li>
-                            <div className="p-2 w-full">
+                            <div className="p-2 w-full body-text-styled">
                                 <Link href="/" onClick={handleClose}>
                                     <span>Home</span>
                                 </Link>
@@ -64,7 +58,7 @@ export default function Drawer({ isDrawerOpen, closeDrawer }: { isDrawerOpen: bo
                         </li>
                         <li>
                             <div
-                                className={`flex items-center justify-between w-full p-2`}
+                                className={`flex items-center justify-between w-full p-2 body-text-styled`}
                                 onClick={() => setMenuOpen(!menuOpen)}
                             >
                                 {'Blogs'}
@@ -72,7 +66,7 @@ export default function Drawer({ isDrawerOpen, closeDrawer }: { isDrawerOpen: bo
                             </div>
                             {menuOpen && (
                                 <div className={`overflow-hidden`}>
-                                    <ul className="space-y-3 mt-3">
+                                    <ul className="space-y-3 mt-3 body-text-styled">
                                         <li>
                                             <div className="p-2 w-full ms-3">
                                                 <Link href="/healing-journey" onClick={handleClose}>
@@ -99,21 +93,21 @@ export default function Drawer({ isDrawerOpen, closeDrawer }: { isDrawerOpen: bo
                             )}
                         </li>
                         <li>
-                            <div className="p-2 w-full">
+                            <div className="p-2 w-full body-text-styled">
                                 <Link href="/resources" onClick={handleClose}>
                                     <span>Resources</span>
                                 </Link>
                             </div>
                         </li>
                         <li>
-                            <div className="p-2 w-full">
+                            <div className="p-2 w-full body-text-styled">
                                 <Link href="/photos" onClick={handleClose}>
                                     <span>Photos</span>
                                 </Link>
                             </div>
                         </li>
                         <li>
-                            <div className="p-2 w-full">
+                            <div className="p-2 w-full body-text-styled">
                                 <Link href="/contact" onClick={handleClose}>
                                     <span>Contact</span>
                                 </Link>

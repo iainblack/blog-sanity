@@ -3,7 +3,6 @@ import CoverImage from "../CoverImage";
 import DateComponent from "../DateComponent";
 import { FaCubes, FaLink } from "react-icons/fa6";
 import { IoBookOutline } from "react-icons/io5";
-import { ChevronRightIcon, UserIcon } from "@sanity/icons";
 
 interface ResourcePreviewProps {
     resource: Resource;
@@ -45,7 +44,7 @@ export const ResourceImagePreview: React.FC<ResourcePreviewProps> = ({ resource,
                         {resource.datePublished ? <DateComponent dateString={resource.datePublished} /> : <div className="h-5" />}
                     </div>
                     <h2 className="subheader-text">{resource.title}</h2>
-                    <div className="text-body text-sm truncate-lines-small flex-grow">
+                    <div className="body-text truncate-lines-small flex-grow">
                         {resource.description}
                     </div>
                     {resource.url && (
@@ -83,21 +82,21 @@ export const ResourceListItem: React.FC<ResourcePreviewProps> = ({ resource }) =
                         <div className="flex space-x-1">
                             {resource.datePublished && (
                                 <div className="flex items-center">
-                                    <p className="text-sm text-gray-600 font-garamond pr-1">Published</p>
+                                    <p className="text-sm lg:text-base text-gray-600 font-garamond pr-1">Published</p>
                                     <DateComponent dateString={resource.datePublished} />
                                 </div>)}
                             {resource.publisher && (
-                                <p className="text-sm text-gray-600 font-garamond truncate-lines-smaller">{`by ${resource.publisher}`}</p>
+                                <p className="text-sm lg:text-base text-gray-600 font-garamond truncate-lines-smaller">{`by ${resource.publisher}`}</p>
                             )}
                         </div>
                         {resource.author && (
-                            <p className="text-sm text-gray-600 font-garamond">{`Written by ${resource.author}`} </p>
+                            <p className="text-sm lg:text-base text-gray-600 font-garamond">{`Written by ${resource.author}`} </p>
                         )}
                     </div>
                     <div>
-                        <h2 className="text-xl truncate font-garamond">{resource.title}</h2>
+                        <h2 className="text-xl lg:text-2xl truncate font-garamond">{resource.title}</h2>
                     </div>
-                    <p className="text-gray-600 text-sm font-garamond truncate-lines-smaller">{resource.description}</p>
+                    <p className="text-gray-600 body-text font-garamond truncate-lines">{resource.description}</p>
                     {resource.url && (
                         <div className="flex items-center space-x-1 mt-2">
                             <FaLink className="w-4 h-4 text-blue-500" />
@@ -105,7 +104,7 @@ export const ResourceListItem: React.FC<ResourcePreviewProps> = ({ resource }) =
                                 href={resource.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-blue-500 hover:underline text-sm font-garamond"
+                                className="text-blue-500 hover:underline text-sm lg:text-base font-garamond"
                             >
                                 {resource.urlDisplayName || resource.url}
                             </a>
@@ -142,8 +141,8 @@ export const ResourceListItemSkeleton = () => {
                                     <div className="h-6 bg-gray-300 rounded w-1/4 mt-2"></div>
                                 </div>
                                 <div>
-                                    <div className="h-4 bg-gray-300 rounded w-full mt-2"></div>
-                                    <div className="h-4 bg-gray-300 rounded w-full mt-1"></div>
+                                    <div className="h-5 bg-gray-300 rounded w-full mt-2"></div>
+                                    <div className="h-5 bg-gray-300 rounded w-full mt-1"></div>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +165,7 @@ export const ResourcePreviewSkeleton: React.FC = () => {
                                 <div className="w-24 h-4 bg-gray-300 rounded"></div>
                             </div>
                             <div className="w-32 h-5 bg-gray-300 rounded mt-2"></div>
-                            <div className="text-body text-sm truncate-lines-small flex-grow">
+                            <div className="body-text truncate-lines-small flex-grow">
                                 <div className="w-full h-4 bg-gray-300 rounded mt-2"></div>
                                 <div className="w-full h-4 bg-gray-300 rounded mt-2"></div>
                                 <div className="w-full h-4 bg-gray-300 rounded mt-2"></div>

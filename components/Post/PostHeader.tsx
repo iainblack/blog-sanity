@@ -9,15 +9,17 @@ export default function PostHeader({ post: post }: { post: Post }) {
     return (
         <>
             <div className="flex justify-between items-center">
-                <h5 className="lg:mb-8 header-text">
-                    {post.title}
-                </h5>
+                <div className="lg:mb-8 space-y-3">
+                    <h5 className="header-text">
+                        {post.title}
+                    </h5>
+                </div>
                 <div className="my-8 space-y-1 hidden lg:block">
                     <DateComponent icon dateString={post.date} />
                     {post.author?.name && (
                         <div className="flex items-center">
                             <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                            <div className="text-gray-600 text-sm">
+                            <div className="text-gray-600 text-sm lg:text-base font-garamond">
                                 {post.author.name}
                             </div>
                         </div>
@@ -29,17 +31,16 @@ export default function PostHeader({ post: post }: { post: Post }) {
                 {post.author && (
                     <div className="flex items-center">
                         <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                        <div className="text-gray-600 text-sm">
+                        <div className="text-gray-600 text-sm lg:text-base">
                             {post.author.name}
                         </div>
                     </div>
                 )}
             </div>
-            {
-                post.coverImage && <div className="mb-8 sm:mx-0 md:mb-16">
-                    <CoverImage image={post.coverImage} priority />
-                </div>
-            }
+            {post.coverImage && <div className="pb-6"><CoverImage image={post.coverImage} priority /></div>}
+            {post.subtitle && <div className="py-6">
+                <h6 className="text-xl lg:text-3xl font-walbaum text-center text-text-primary"> {post.subtitle}</h6>
+            </div>}
         </>
 
     )

@@ -24,7 +24,7 @@ export default function AlertBanner() {
       className={`${pending ? "animate-pulse" : ""
         } fixed top-0 left-0 z-50 w-full border-b bg-white/95 text-black backdrop-blur`}
     >
-      <div className="py-2 text-center text-sm">
+      <div className="py-2 text-center text-sm lg:text-base">
         {pending ? (
           "Disabling draft mode..."
         ) : (

@@ -35,18 +35,21 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
                                 {post.author?.name && (
                                     <div className="flex items-center">
                                         <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                        <div className="text-gray-600 text-sm font-garamond">
+                                        <div className="text-gray-600 text-sm lg:text-base font-garamond">
                                             {post.author.name}
                                         </div>
                                     </div>
                                 )}
                             </div>
-                            <h1 className="subheader-text truncate">{post.title}</h1>
+                            <div>
+                                <h1 className="subheader-text truncate">{post.title}</h1>
+                                {post.subtitle && <h3 className="subtitle-text truncate">{post.subtitle}</h3>}
+                            </div>
                             <div className='body-text truncate-lines text-gray-600'>
                                 <PortableText className="body-text hyphens-auto break-words text-justify custom-portable-text" value={post.content} />
                             </div>
                             <div>
-                                <span className="text-blue-500 pt-6 body-text">Read More</span>
+                                <span className="text-primary pt-6 text-base lg:text-lg">Read More</span>
                             </div>
                         </div>
                     </div>
@@ -55,13 +58,14 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
         </div>
     );
 }
+
 export const PostImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
     const path = usePathname();
 
     return (
         <div className={`p-3 overflow-hidden transition-colors cursor-pointer shadow w-full rounded-lg border border-transparent hover:shadow-xl hover:border-black`}>
             <Link href={`${path}/posts/${post.slug}`} className='w-full'>
-                <div className={`relative w-full h-52 rounded-lg overflow-hidden object-cover`}>
+                <div className={`relative w-full h-56 rounded-lg overflow-hidden object-cover`}>
                     {post.coverImage ? (
                         <CoverImage image={post.coverImage} priority={false} />
                     ) : (
@@ -70,20 +74,23 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
                         </div>
                     )}
                 </div>
-                <div className={`py-2 space-y-1`}>
+                <div className={`py-2 space-y-2`}>
                     <div className="text-left w-full md:w-auto md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
                         <DateComponent icon dateString={post.date} />
                         {post.author?.name && (
                             <div className="flex items-center">
                                 <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                <div className="text-gray-600 font-garamond text-sm">
+                                <div className="text-gray-600 font-garamond text-sm lg:text-base">
                                     {post.author.name}
                                 </div>
                             </div>
                         )}
                     </div>
-                    <h2 className="text-lg truncate font-garamond">{post.title}</h2>
-                    <p className="text-gray-600 text-base font-garamond truncate-lines">{post.excerpt}</p>
+                    <div>
+                        <h2 className="text-lg lg:text-2xl truncate font-garamond">{post.title}</h2>
+                        {post.subtitle && <h3 className="text-base truncate font-garamond">{post.subtitle}</h3>}
+                    </div>
+                    <p className="text-gray-600 text-base font-garamond truncate-lines-small">{post.excerpt}</p>
                 </div>
             </Link>
         </div>
@@ -103,7 +110,7 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
                             {post.author?.name && (
                                 <div className="flex items-center">
                                     <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                    <p className="text-gray-600 text-sm font-garamond">{post.author.name}</p>
+                                    <p className="text-gray-600 text-sm lg:text-base font-garamond">{post.author.name}</p>
                                 </div>
                             )}
                         </div>
@@ -112,7 +119,9 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
                         <h2 className="text-lg truncate font-garamond">{post.title}</h2>
                         <p className="text-gray-600 text-base font-garamond truncate-lines">{post.excerpt}</p>
                     </div>
-                    <ChevronRightIcon className="w-8 h-8 hidden md:block" />
+                    <div>
+                        <ChevronRightIcon className="w-8 h-8 hidden md:block" />
+                    </div>
                 </div>
             </Link>
         </div>

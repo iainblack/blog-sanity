@@ -11,13 +11,14 @@ interface PostFullViewProps {
         nextPost: any;
     },
     backRoute: string;
+    variantColor?: boolean;
 }
 
-export default function PostFullView({ posts, backRoute }: PostFullViewProps) {
+export default function PostFullView({ posts, backRoute, variantColor }: PostFullViewProps) {
     return (
         <div className="container mx-auto py-5">
             <BackButton route={backRoute} title="All Posts" />
-            <article className="mx-auto lg:max-w-5xl p-8">
+            <article className={`mx-auto lg:max-w-5xl p-8 ${variantColor ? 'rounded shadow bg-pink-bg' : ''}`}>
                 <PostHeader post={posts.currentPost} />
                 {posts.currentPost.content?.length
                     ? (<PortableText className="body-text hyphens-auto break-words text-justify custom-portable-text" value={posts.currentPost.content} />)

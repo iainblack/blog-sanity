@@ -12,7 +12,7 @@ export default async function Footer() {
                     <h1 className="text-center subheader-text text-text-contrast pb-5">Sign up for email alerts</h1>
                     <SignUpForm />
                     <div className="flex flex-col space-y-2 pt-8">
-                        <div className="text-sm text-text-contrast flex text-center justify-center font-garamond leading-tight font-light">
+                        <div className="text-sm lg:text-base text-text-contrast flex text-center justify-center font-garamond leading-tight font-light">
                             Already subscribed? <Link href="/manage-email-preferences"><p className="text-contrast-bg ml-2 hover:text-primary">Manage preferences</p></Link>
                         </div>
                     </div>

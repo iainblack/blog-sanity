@@ -135,7 +135,7 @@ export default function MessageForm() {
                         </label>
                         <textarea
                             id='contact-message' rows={10} value={message.value} onChange={(e) => setFormState({ ...formState, message: { value: e.target.value } })}
-                            className={`contact-form-input text-sm ${message.error ? 'border-red-500' : ''}`}
+                            className={`contact-form-input text-sm lg:text-base ${message.error ? 'border-red-500' : ''}`}
                         />
                         {message.error && <p className="text-red-500 text-xs italic">{message.error}</p>}
                     </div>

@@ -85,11 +85,16 @@ export const PostPreviewGridWithHeroSkeleton = () => {
                                         <div className="w-16 h-4 bg-gray-300 rounded"></div>
                                     </div>
                                 </div>
-                                <div className="w-48 h-6 bg-gray-300 rounded mt-4"></div>
-                                <div className="text-body text-sm overflow-hidden text-ellipsis truncate-lines">
-                                    <div className="w-full h-4 bg-gray-300 rounded mt-2"></div>
-                                    <div className="w-full h-4 bg-gray-300 rounded mt-2"></div>
-                                    <div className="w-full h-4 bg-gray-300 rounded mt-2"></div>
+                                <div>
+                                    <div className="w-48 h-8 bg-gray-300 rounded mt-4"></div>
+                                    <div className="w-48 h-6 bg-gray-300 rounded mt-3"></div>
+                                </div>
+                                <div className="text-body overflow-hidden text-ellipsis truncate-lines">
+                                    <div className="w-full h-5 bg-gray-300 rounded mt-2"></div>
+                                    <div className="w-full h-5 bg-gray-300 rounded mt-2"></div>
+                                    <div className="w-full h-5 bg-gray-300 rounded mt-2"></div>
+                                    <div className="w-full h-5 bg-gray-300 rounded mt-2"></div>
+                                    <div className="w-full h-5 bg-gray-300 rounded mt-2"></div>
                                 </div>
                                 <div className="w-24 h-6 bg-gray-300 rounded mt-4"></div>
                             </div>
@@ -100,13 +105,27 @@ export const PostPreviewGridWithHeroSkeleton = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                 {[1, 2, 3].map((_, index) => (
                     <div key={index} className="p-3 w-full rounded-lg border border-gray-300 animate-pulse">
-                        <div className="relative w-full h-52 rounded-lg bg-gray-300"></div>
-                        <div className="py-4 h-24">
-                            <div className="text-left pb-3 w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
-                                <div className="w-24 h-4 bg-gray-300 rounded"></div>
+                        <div className="relative w-full h-56 rounded-lg bg-gray-300"></div>
+                        <div className="py-4 space-y-3">
+                            <div className="text-left w-full md:w-auto md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
+                                <div className="flex items-center">
+                                    <div className="w-5 h-5 bg-gray-300 rounded-full mr-2"></div>
+                                    <div className="w-16 h-4 bg-gray-300 rounded"></div>
+                                </div>
+                                <div className="flex items-center mt-1">
+                                    <div className="w-5 h-5 bg-gray-300 rounded-full mr-2"></div>
+                                    <div className="w-16 h-4 bg-gray-300 rounded"></div>
+                                </div>
                             </div>
-                            <div className="w-32 h-5 bg-gray-300 rounded mt-2"></div>
-                            <div className="w-full h-4 bg-gray-300 rounded mt-2"></div>
+                            <div>
+                                <div className="w-32 h-5 bg-gray-300 rounded mt-3"></div>
+                                <div className="w-32 h-4 bg-gray-300 rounded mt-1"></div>
+                            </div>
+                            <div className="mt-4 space-y-2">
+                                <div className="w-full h-4 bg-gray-300 rounded"></div>
+                                <div className="w-full h-4 bg-gray-300 rounded"></div>
+                                <div className="w-full h-4 bg-gray-300 rounded"></div>
+                            </div>
                         </div>
                     </div>
                 ))}
@@ -114,6 +133,7 @@ export const PostPreviewGridWithHeroSkeleton = () => {
         </div>
     );
 };
+
 
 export const PostPreviewGridSkeleton = () => {
     return (

@@ -20,11 +20,13 @@ export default function PreferencesForm(props: PreferencesFormProps) {
 
     return (
         <div className="w-full">
-            <h6 className="text-sm md:text-base text-left text-gray-600">Select the types of content you would like to receive updates for</h6>
+            <h6 className="text-sm lg:text-base text-left text-gray-600">
+                Revise the types of content for which you would like to receive updates
+            </h6>
             {showUnsubscribe &&
-                <h6 className="text-sm md:text-base text-left text-gray-600">
-                    or <button onClick={handleUnsubscribeClick} className="text-blue-500 underline">unsubscribe</button>
-                    {" "} from all emails.
+                <h6 className="text-sm lg:text-base text-left text-gray-600">
+                    or click<button onClick={handleUnsubscribeClick} className="text-blue-500 underline">unsubscribe</button>
+                    {" "} if you no longer wish to receive any email communications.
                 </h6>}
             <div className="flex flex-col items-start w-full space-y-4 mt-5">
                 {Object.entries(preferences).map(([option, isChecked]) => (

@@ -72,6 +72,7 @@ export interface Post {
   pageId: string;
   status: "draft" | "published";
   title: string;
+  subtitle?: string;
   content: PortableTextBlock[];
   slug: string;
   excerpt?: string | null;
@@ -85,6 +86,7 @@ export const postFields = groq`
   _createdAt,
   "status": select(_originalId in path("drafts.**") => "draft", "published"),
   "title": coalesce(title, "Untitled"),
+  subtitle,
   "slug": slug.current,
   excerpt,
   coverImage,
