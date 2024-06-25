@@ -37,8 +37,8 @@ export default function PostHeader({ post: post }: { post: Post }) {
                     </div>
                 )}
             </div>
-            {post.coverImage && <div className="pb-6"><CoverImage image={post.coverImage} priority /></div>}
-            {post.subtitle && <div className="py-6">
+            {post.coverImage && <div className="pb-8"><CoverImage image={post.coverImage} priority /></div>}
+            {post.subtitle && <div className="pb-8">
                 <h6 className="text-xl lg:text-3xl font-walbaum text-center text-text-primary"> {post.subtitle}</h6>
             </div>}
         </>
