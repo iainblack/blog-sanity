@@ -49,7 +49,7 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
                                 <PortableText className="body-text hyphens-auto break-words text-justify custom-portable-text" value={post.content} />
                             </div>
                             <div>
-                                <span className="text-primary pt-6 text-base lg:text-lg">Read More</span>
+                                <span className="font-garamond text-primary pt-6 text-base lg:text-lg">Read More</span>
                             </div>
                         </div>
                     </div>

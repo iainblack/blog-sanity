@@ -33,10 +33,10 @@ export default function Page() {
     return (
         <div className="container mx-auto lg:flex lg:flex-row lg:justify-between lg:px-16">
             <div className='my-6 lg:my-12'>
-                <h1 className="header-text text-center">
+                <h1 className="header-text text-left">
                     Update Preferences
                 </h1>
-                <p className="body-text text-center mt-6 max-w-2xl">
+                <p className="body-text text-left mt-6 max-w-2xl">
                     Enter your email to view and update your subscription preferences (existing accounts only).
                 </p>
             </div>
