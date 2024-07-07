@@ -16,9 +16,6 @@ export default function PostShareControls({ post }: PostShareControlsProps) {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            console.log('window.location.origin', window.location.origin);
-            console.log('path', path);
-            console.log('slug', post.slug);
             setPostUrl(encodeURIComponent(`${window.location.origin}${path}`));
         }
     }, [path, post.slug]);
