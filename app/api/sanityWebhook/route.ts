@@ -48,9 +48,9 @@ const fetchSubscribers = async (pageId: string) => {
 
 const getEmailHtml = (post: any, email: string) => {
   const pageSlug = pages.find(page => page.contentType === 'post' && page.name === post.pageId)?.slug;
-  const postUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/${pageSlug}/posts/${post.slug.current}`;
-  const unsubscribeUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/manage-email-preferences?unsubscribe=${email}`;
-  const managePreferencesUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/manage-email-preferences?email=${email}`;
+  const postUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/${pageSlug}/posts/${post.slug.current}`;
+  const unsubscribeUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/manage-email-preferences?unsubscribe=${email}`;
+  const managePreferencesUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/manage-email-preferences?email=${email}`;
 
   const emailBody = `
   <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
