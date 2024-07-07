@@ -1,5 +1,5 @@
 import { UserIcon } from "@sanity/icons";
-import CoverImage from "../CoverImage";
+import NextImage from "../NextImage";
 import Modal from "../Modal";
 import DateComponent from "../DateComponent";
 import { Resource } from "@/sanity/lib/queries";
@@ -23,7 +23,7 @@ export default function ResourceModal({ isOpen, onClose, resource }: ResourceMod
             onClose={onClose}
             imageHeader={resource.coverImage ?
                 <div className="relative w-full h-64">
-                    <CoverImage image={resource.coverImage} priority={false} />
+                    <NextImage image={resource.coverImage} priority={false} />
                 </div>
                 : null
             }

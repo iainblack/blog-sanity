@@ -11,6 +11,10 @@ export default async function Page() {
     if (!photos) return null;
 
     const mappedPhotos: Photo[] = photos.map((photo) => {
+        if (!photo || !photo.picture || !photo.picture.asset) {
+            return null;
+        }
+
         const { width, height } = photo.picture.asset.metadata.dimensions;
         const srcSet = breakpoints.map((breakpoint) => {
             const calculatedHeight = Math.round((height / width) * breakpoint);
@@ -30,7 +34,7 @@ export default async function Page() {
             title: photo?.title,
         };
 
-    });
+    }).filter(photo => photo !== null) as Photo[];
 
     return (
         <div className="mx-auto p-2 md:p-4 xl:p-8">

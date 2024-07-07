@@ -10,6 +10,7 @@ export default function GalleryImage({
     return (
         <div style={{ ...wrapperStyle, position: "relative" }}>
             <Image
+                style={{ objectFit: "contain", objectPosition: "center" }}
                 fill
                 src={photo.src}
                 placeholder={"blurDataURL" in photo ? "blur" : undefined}

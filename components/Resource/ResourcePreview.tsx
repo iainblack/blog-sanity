@@ -1,5 +1,5 @@
 import { Resource } from "@/sanity/lib/queries";
-import CoverImage from "../CoverImage";
+import NextImage from "../NextImage";
 import DateComponent from "../DateComponent";
 import { FaCubes, FaLink } from "react-icons/fa6";
 import { IoBookOutline } from "react-icons/io5";
@@ -30,7 +30,7 @@ export const ResourceImagePreview: React.FC<ResourcePreviewProps> = ({ resource,
                         </div>
                     )}
                     {resource.coverImage ? (
-                        <CoverImage image={resource.coverImage} priority={false} />
+                        <NextImage image={resource.coverImage} priority={false} />
                     ) : (
                         <div className="flex items-center justify-center bg-gray-300 h-full rounded-lg">
                             {resource.type === "Book" && <IoBookOutline className="w-12 h-12" />}

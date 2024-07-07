@@ -55,7 +55,7 @@ body {
 }
 
 .subtitle-text {
-    @apply text-lg lg:text-xl leading-normal whitespace-pre-wrap font-garamond lg:leading-relaxed;
+    @apply text-xl lg:text-2xl leading-normal whitespace-pre-wrap font-garamond lg:leading-relaxed;
 }
 
 .subheader-text-styled {
@@ -98,9 +98,24 @@ body {
     margin-bottom: 0;
   }
   
-  .custom-portable-text br {
+.custom-portable-text br {
     display: block;
     content: "";
     margin-bottom: 0;
+}
+
+.custom-portable-text ul {
+    list-style: disc;
+    padding-left: 1.5em;
+    margin-bottom: 0;
+}
+
+.custom-portable-text ol {
+    list-style: decimal;
+    padding-left: 1.5em;
+}
+
+.custom-portable-text li {
+    margin-bottom: .5em;
 }
   

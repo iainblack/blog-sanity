@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import CoverImage from '../CoverImage';
+import NextImage from '../NextImage';
 import { Post } from '@/sanity/lib/queries';
 import { ChevronRightIcon, DocumentTextIcon, UserIcon } from "@sanity/icons";
 import Link from 'next/link';
@@ -19,9 +19,9 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
         <div className="p-4 shadow overflow-hidden cursor-pointer w-full rounded-lg border border-black">
             <Link href={`${path}/posts/${post.slug}`} className="w-full block">
                 <div className="flex flex-col md:flex-row">
-                    <div className="relative w-full md:w-1/2 h-52 md:h-64 lg:h-96 rounded-lg overflow-hidden object-cover">
+                    <div className="relative w-full md:w-1/2 h-52 md:h-64 lg:h-96 rounded-lg overflow-hidden">
                         {post.coverImage ? (
-                            <CoverImage image={post.coverImage} priority={true} />
+                            <NextImage image={post.coverImage} priority={true} fit='contain' />
                         ) : (
                             <div className="flex items-center justify-center bg-gray-300 h-full rounded-lg">
                                 <DocumentTextIcon className="w-12 h-12" />
@@ -67,7 +67,7 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
             <Link href={`${path}/posts/${post.slug}`} className='w-full'>
                 <div className={`relative w-full h-56 rounded-lg overflow-hidden object-cover`}>
                     {post.coverImage ? (
-                        <CoverImage image={post.coverImage} priority={false} />
+                        <NextImage image={post.coverImage} />
                     ) : (
                         <div className="flex items-center justify-center bg-gray-300 h-full rounded-lg">
                             <DocumentTextIcon className='w-12 h-12' />

@@ -60,9 +60,9 @@ export default function SignUpForm() {
             setAlertState({ show: true, message: "Failed to subscribe. Please try again.", type: "error" });
         }
 
-        setEmail("");
         setIsModalOpen(false);
         setUpdatePreferencesLoading(false);
+        setEmail("");
     };
 
     return (

@@ -27,6 +27,10 @@ export default function SearchBar({ setSearch, onSubmit, loading, value, type, p
         };
     }, [searchTerm, setSearch]);
 
+    useEffect(() => {
+        setSearchTerm(value);
+    }, [value]);
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             onSubmit();

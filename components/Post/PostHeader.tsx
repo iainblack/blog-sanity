@@ -1,7 +1,7 @@
 import { Post } from "@/sanity/lib/queries";
 import { UserIcon } from "@sanity/icons";
-import CoverImage from "../CoverImage";
 import DateComponent from "../DateComponent";
+import NextImage from "../NextImage";
 
 export default function PostHeader({ post: post }: { post: Post }) {
     if (!post) return null;
@@ -37,7 +37,9 @@ export default function PostHeader({ post: post }: { post: Post }) {
                     </div>
                 )}
             </div>
-            {post.coverImage && <div className="pb-8"><CoverImage image={post.coverImage} priority /></div>}
+            {post.coverImage && <div className="mb-8 relative w-full h-64 sm:h-96 lg:h-[500px]">
+                <NextImage image={post.coverImage} priority fit="contain" />
+            </div>}
             {post.subtitle && <div className="pb-8">
                 <h6 className="text-xl lg:text-3xl font-walbaum text-center text-text-primary"> {post.subtitle}</h6>
             </div>}

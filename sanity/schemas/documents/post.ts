@@ -49,13 +49,41 @@ export default defineType({
       name: "content",
       title: "Content",
       type: "array",
-      of: [{ 
+      of: [{
         type: "block",
         styles: [
           { title: "Normal", value: "normal" },
           { title: "Subtitle", value: "h4" },
         ],
-       }],
+        marks: {
+          decorators: [
+            { title: "Strong", value: "strong" },
+            { title: "Emphasis", value: "em" },
+            { title: "Underline", value: "underline" },
+            { title: "Strike", value: "strike-through" },
+          ],
+          annotations: [
+            {
+              name: "link",
+              type: "object",
+              title: "External link",
+              fields: [
+                {
+                  name: "href",
+                  title: "URL",
+                  type: "url",
+                  validation: (rule) => rule.required().uri({ scheme: ["http", "https", "mailto", "tel"] }),
+                },
+                {
+                  title: "Open in new tab",
+                  name: "blank",
+                  type: "boolean",
+                },
+              ],
+            },
+          ],
+        },
+      }],
       description: "The content of the post. (Don't mind the missing spaces after punctuation in the editor, it will be normalized on the webpage.)",
     }),
     defineField({
