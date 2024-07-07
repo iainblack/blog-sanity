@@ -1,3 +1,4 @@
+import { stegaClean } from '@sanity/client/stega'
 
 export const pages: { name: string; slug: string, contentType?: string }[] = [
   { name: "Home", slug: "", contentType: "contentPanel" },
@@ -66,7 +67,7 @@ export function normalizeText(blocks: any[]) {
           if (child._type === 'span' && typeof child.text === 'string') {
             return {
               ...child,
-              text: child.text
+              text: stegaClean(child.text)
                 // Add one space after a period if followed by a capital letter
                 .replace(/(\.)([A-Z])/g, '$1 $2')
                 // Original functionality to add one space if no space follows punctuation (excluding periods)

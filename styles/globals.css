@@ -95,14 +95,8 @@ body {
 }
 
 .custom-portable-text p {
-    margin-bottom: 0;
+    margin-bottom: 1.5em;
   }
-  
-.custom-portable-text br {
-    display: block;
-    content: "";
-    margin-bottom: 0;
-}
 
 .custom-portable-text ul {
     list-style: disc;
