@@ -10,18 +10,29 @@ import PortableText from '../portable-text';
 
 interface PostPreviewProps {
     post: Post;
+    backgroundColor?: string;
 }
 
-export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
+export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundColor }) => {
     const path = usePathname();
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+    let bgClass = '';
+
+    if (backgroundColor === 'contrast') {
+        bgClass = 'bg-contrast-bg';
+    } else if (backgroundColor === 'pink') {
+        bgClass = 'bg-pink-bg';
+    }
+
 
     return (
-        <div className="p-4 shadow overflow-hidden cursor-pointer w-full rounded-lg border border-black">
+        <div className={`p-4 px-6 shadow overflow-hidden ${bgClass} cursor-pointer w-full rounded-lg border border-black`}>
             <Link href={`${path}/posts/${post.slug}`} className="w-full block">
                 <div className="flex flex-col md:flex-row">
-                    <div className="relative w-full md:w-1/2 h-52 md:h-64 lg:h-96 rounded-lg overflow-hidden">
+                    <div className="relative w-full md:w-1/2 rounded-lg overflow-hidden">
                         {post.coverImage ? (
-                            <NextImage image={post.coverImage} priority={true} fit='contain' />
+                            <NextImage image={post.coverImage} priority={true} fit={isMobile ? 'cover' : 'contain'} />
                         ) : (
                             <div className="flex items-center justify-center bg-gray-300 h-full rounded-lg">
                                 <DocumentTextIcon className="w-12 h-12" />
@@ -59,11 +70,19 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
     );
 }
 
-export const PostImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
+export const PostImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundColor }) => {
     const path = usePathname();
 
+    let bgClass = '';
+
+    if (backgroundColor === 'contrast') {
+        bgClass = 'bg-contrast-bg';
+    } else if (backgroundColor === 'pink') {
+        bgClass = 'bg-pink-bg';
+    }
+
     return (
-        <div className={`p-3 overflow-hidden transition-colors cursor-pointer shadow w-full rounded-lg border border-transparent hover:shadow-xl hover:border-black`}>
+        <div className={`p-3 overflow-hidden ${bgClass} transition-colors cursor-pointer shadow w-full rounded-lg border border-transparent hover:shadow-xl hover:border-black`}>
             <Link href={`${path}/posts/${post.slug}`} className='w-full'>
                 <div className={`relative w-full h-56 rounded-lg overflow-hidden object-cover`}>
                     {post.coverImage ? (
@@ -88,7 +107,7 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
                     </div>
                     <div>
                         <h2 className="text-lg lg:text-2xl truncate font-garamond">{post.title}</h2>
-                        {post.subtitle && <h3 className="text-base truncate font-garamond">{post.subtitle}</h3>}
+                        {post.subtitle && <h3 className="text-base lg:text-lg truncate font-garamond">{post.subtitle}</h3>}
                     </div>
                     <p className="text-gray-600 text-base font-garamond truncate-lines-small">{post.excerpt}</p>
                 </div>
@@ -97,11 +116,20 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post }) => {
     );
 }
 
-export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
+export const PostPreview: React.FC<PostPreviewProps> = ({ post, backgroundColor }) => {
     const path = usePathname();
 
+    let bgClass = '';
+
+    if (backgroundColor === 'contrast') {
+        bgClass = 'bg-contrast-bg';
+    } else if (backgroundColor === 'pink') {
+        bgClass = 'bg-pink-bg';
+    }
+
+
     return (
-        <div className="w-full overflow-hidden flex items-center justify-between p-3 md:p-4 border border-black lg:border-gray-300 rounded-xl shadow transition-colors cursor-pointer hover:border-black">
+        <div className={`w-full overflow-hidden ${bgClass} flex items-center justify-between p-3 md:p-4 border border-black lg:border-gray-300 rounded-xl shadow transition-colors cursor-pointer hover:border-black`}>
             <Link href={`${path}/posts/${post.slug}`} className='w-full h-full flex flex-col justify-between'>
                 <div className="flex flex-row justify-between items-center h-full">
                     <div className="w-auto">

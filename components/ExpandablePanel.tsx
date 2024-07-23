@@ -6,7 +6,7 @@ import CenteredPanel from "@/components/CenteredPanel";
 import React, { useState } from 'react';
 import NextImage from './NextImage';
 
-const MAX_CHAR_LENGTH = 1004;
+const MAX_CHAR_LENGTH = 1005;
 
 export default function ExpandablePanel({
     panel: { title, content, image, size, backgroundColor },
@@ -32,7 +32,7 @@ export default function ExpandablePanel({
     const shouldTruncate = cleanedContent && cleanedContent.length > MAX_CHAR_LENGTH && !isSmallScreen;
     const shouldDisplayImage = isSmallScreen ? true : isCollapsed;
 
-    const formattedContent = !isSmallScreen && isCollapsed ? `${truncatedContent.replace(/\n/g, ' \n')} ...` : cleanedContent.replace(/\n/g, ' \n');
+    const formattedContent = !isSmallScreen && isCollapsed ? `${truncatedContent.replace(/\n/g, ' \n')}` : cleanedContent.replace(/\n/g, ' \n');
 
 
     return (
@@ -52,7 +52,7 @@ export default function ExpandablePanel({
                     </p>
                 ))}
                 {shouldTruncate && (
-                    <button onClick={handleToggle} className="text-primary mt-4 font-garamond text-base lg:text-lg">
+                    <button onClick={handleToggle} className="font-bold mt-4 font-garamond text-base lg:text-lg hover:underline">
                         {isCollapsed ? 'Read More' : 'Read Less'}
                     </button>
                 )}

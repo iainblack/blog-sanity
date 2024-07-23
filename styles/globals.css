@@ -24,17 +24,17 @@ body {
 
 /* class for mobile responsive content container */
 .centered-container {
-    @apply w-full flex flex-col items-center justify-center p-5 py-12 space-y-5 lg:space-x-5 md:px-10 lg:p-8 lg:justify-evenly xl:flex-row xl:space-y-0 xl:space-x-0 xl:py-0 xl:p-12;
+    @apply w-full flex flex-col items-center justify-center p-5 space-y-5 lg:space-x-5 md:px-10 lg:p-8 lg:justify-evenly 2xl:flex-row xl:space-y-0 xl:space-x-0 xl:py-0 xl:p-12;
 }
 
 /* class for mobile responsive image container */
 .centered-container__image {
-    @apply relative w-full sm:w-1/3 md:w-1/2 xl:w-1/4 rounded-xl overflow-hidden;
+    @apply relative w-full md:w-3/5 xl:w-1/3 rounded-xl overflow-hidden;
     aspect-ratio: 1/1;
 }
 
 .body-text {
-    @apply  text-base lg:text-xl font-garamond leading-none;
+    @apply  text-base lg:text-xl font-garamond;
 }
 
 .body-text-styled {

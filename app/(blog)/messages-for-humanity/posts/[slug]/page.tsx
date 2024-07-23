@@ -45,6 +45,6 @@ export default async function PostPage({ params: { slug } }: Props) {
   }
 
   return (
-    <PostFullView posts={posts} backRoute="/messages-for-humanity" variantColor />
+    <PostFullView posts={posts} backRoute="/messages-for-humanity" backgroundColor="pink" />
   );
 }

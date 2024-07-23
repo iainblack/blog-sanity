@@ -60,7 +60,7 @@ export default function Page() {
         {loading && getLoadingSkeleton(page, view)}
         {!loading &&
           <div className="w-full flex flex-col items-center">
-            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} />
+            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} backgroundColor="contrast" />
             <Pagination totalPages={Math.ceil(postState.totalPosts / limit)} active={page} setActive={setPage} />
           </div>}
       </div>

@@ -6,9 +6,10 @@ interface PostPreviewGridProps {
     view: "grid" | "list";
     page: number;
     noResultsMessage?: string;
+    backgroundColor?: string;
 }
 
-export default function PostPreviewGrid({ posts, view, page, noResultsMessage }: PostPreviewGridProps) {
+export default function PostPreviewGrid({ posts, view, page, noResultsMessage, backgroundColor }: PostPreviewGridProps) {
 
     if (!posts || posts.length === 0) {
         return (
@@ -24,11 +25,11 @@ export default function PostPreviewGrid({ posts, view, page, noResultsMessage }:
         return (
             <div className="pb-4 w-full items-center">
                 <div className="w-full mb-6 p-3">
-                    <HeroImagePreview post={firstPost} />
+                    <HeroImagePreview post={firstPost} backgroundColor={backgroundColor} />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                     {otherPosts.map(post => (
-                        <PostImagePreview key={post._id} post={post} />
+                        <PostImagePreview key={post._id} post={post} backgroundColor={backgroundColor} />
                     ))}
                 </div>
             </div>
@@ -39,7 +40,7 @@ export default function PostPreviewGrid({ posts, view, page, noResultsMessage }:
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full pb-4">
                 {posts.map(post => (
-                    <PostImagePreview key={post._id} post={post} />
+                    <PostImagePreview key={post._id} post={post} backgroundColor={backgroundColor} />
                 ))}
             </div>
         );
@@ -58,7 +59,7 @@ export default function PostPreviewGrid({ posts, view, page, noResultsMessage }:
                 }}
             >
                 {posts.map(post => (
-                    <PostPreview key={post._id} post={post} />
+                    <PostPreview key={post._id} post={post} backgroundColor={backgroundColor} />
                 ))}
             </div>
         </div>
@@ -70,9 +71,9 @@ export const PostPreviewGridWithHeroSkeleton = () => {
     return (
         <div className="pb-4 w-full">
             <div className="w-full mb-6 p-3">
-                <div className="p-4 w-full rounded-lg border border-gray-300 animate-pulse">
+                <div className="p-4 px-6 w-full rounded-lg border border-gray-300 animate-pulse">
                     <div className="flex flex-col md:flex-row">
-                        <div className="relative w-full md:w-1/2 h-52 md:h-72 lg:h-96 rounded-lg bg-gray-300"></div>
+                        <div className="relative w-full md:w-1/2 rounded-lg bg-gray-300"></div>
                         <div className="md:w-1/2 md:pl-4 flex flex-col">
                             <div className="py-4 md:py-0 space-y-3 md:space-y-6 lg:space-y-8">
                                 <div className="text-left pb-3 w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
@@ -90,6 +91,7 @@ export const PostPreviewGridWithHeroSkeleton = () => {
                                     <div className="w-48 h-6 bg-gray-300 rounded mt-3"></div>
                                 </div>
                                 <div className="text-body overflow-hidden text-ellipsis truncate-lines">
+                                    <div className="w-full h-5 bg-gray-300 rounded mt-2"></div>
                                     <div className="w-full h-5 bg-gray-300 rounded mt-2"></div>
                                     <div className="w-full h-5 bg-gray-300 rounded mt-2"></div>
                                     <div className="w-full h-5 bg-gray-300 rounded mt-2"></div>

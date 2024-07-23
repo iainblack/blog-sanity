@@ -51,7 +51,7 @@ export default function Page() {
         {loading && page !== 0 && <PostPreviewGridSkeleton />}
         {!loading &&
           <>
-            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} noResultsMessage={noResultsMessage} />
+            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} noResultsMessage={noResultsMessage} backgroundColor="pink" />
             <Pagination totalPages={Math.ceil(postState.totalPosts / limit)} active={page} setActive={setPage} />
           </>}
       </div>
