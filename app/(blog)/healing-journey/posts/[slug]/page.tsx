@@ -45,6 +45,6 @@ export default async function PostPage({ params: { slug } }: Props) {
   }
 
   return (
-    <PostFullView posts={posts} backRoute="/healing-journey" />
+    <PostFullView posts={posts} backRoute="/healing-journey" backgroundColor="contrast" />
   );
 }

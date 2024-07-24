@@ -5,7 +5,7 @@ import { Tab, trimPlural } from "@/components/utils";
 import SearchBar from "@/components/SearchBar";
 import { getResources } from "../actions";
 import { Resource } from "@/sanity/lib/queries";
-import { ResourceListItem, ResourceListItemSkeleton, ResourcePreviewSkeleton } from "@/components/Resource/ResourcePreview";
+import { ResourceListItem, ResourceListItemSkeleton } from "@/components/Resource/ResourcePreview";
 import { FaCubes, FaLink } from "react-icons/fa6";
 import { IoBookOutline } from "react-icons/io5";
 import Pagination from "@/components/Pagination";
@@ -31,6 +31,7 @@ export default function Page() {
     const [searchVal, setSearchVal] = useState("");
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [showSkeleton, setShowSkeleton] = useState(true);
     const [resourceState, setResourceState] = useState<ResourceState>({
         resources: [],
         totalResources: 0,
@@ -42,8 +43,11 @@ export default function Page() {
     const limit = 20;
 
     useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
+
         const fetchResources = async () => {
             setLoading(true);
+            setShowSkeleton(true);
             const offset = page * limit;
             const response = await getResources(trimPlural(activeTab), searchVal, limit, offset);
             setResourceState({
@@ -51,8 +55,14 @@ export default function Page() {
                 totalResources: response.totalResources,
             });
             setLoading(false);
+            timeoutId = setTimeout(() => {
+                setShowSkeleton(false);
+            }, 500); // Ensure skeleton displays for at least 500 ms
         };
+
         fetchResources();
+
+        return () => clearTimeout(timeoutId);
     }, [page, searchVal, activeTab]);
 
     return (
@@ -70,8 +80,8 @@ export default function Page() {
                     searchIcon
                     loading={loading}
                 />
-                {loading && <ResourceListItemSkeleton />}
-                {!loading &&
+                {showSkeleton && <ResourceListItemSkeleton />}
+                {!showSkeleton &&
                     <div className="w-full">
                         {!resourceState.resources || resourceState.resources.length === 0
                             ? <p className="text-body flex w-full justify-center h-[50vh]">No resources found.</p>

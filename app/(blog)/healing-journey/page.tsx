@@ -1,7 +1,5 @@
 "use client";
-import {
-  Post,
-} from "@/sanity/lib/queries";
+import { Post } from "@/sanity/lib/queries";
 import { getPostsByPage } from "../actions";
 import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
@@ -20,6 +18,7 @@ export default function Page() {
     totalPosts: 0,
   });
   const [loading, setLoading] = useState(true);
+  const [showSkeleton, setShowSkeleton] = useState(true);
   const [order, setOrder] = useState('asc');
   const [page, setPage] = useState(0);
   const [view, setView] = useState<"grid" | "list">("grid");
@@ -27,27 +26,36 @@ export default function Page() {
 
   const getLoadingSkeleton = (page: number, view: "grid" | "list") => {
     if (view === "list") {
-      return <PostPreviewListSkeleton />
+      return <PostPreviewListSkeleton />;
     }
 
     if (page === 0) {
-      return <PostPreviewGridWithHeroSkeleton />
+      return <PostPreviewGridWithHeroSkeleton />;
     }
 
-    return <PostPreviewGridSkeleton />
-  }
+    return <PostPreviewGridSkeleton />;
+  };
 
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
     const fetchPosts = async () => {
       setLoading(true);
+      setShowSkeleton(true);
       const response = await getPostsByPage("Lou's Healing Journey", order, page * limit, limit);
       setPostState({
         visiblePosts: response.posts,
         totalPosts: response.totalPosts,
       });
       setLoading(false);
+      timeoutId = setTimeout(() => {
+        setShowSkeleton(false);
+      }, 500); // Ensure skeleton displays for at least 500 ms
     };
+
     fetchPosts();
+
+    return () => clearTimeout(timeoutId);
   }, [order, page]);
 
   return (
@@ -57,12 +65,13 @@ export default function Page() {
         <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} view={view} setView={setView} />
       </div>
       <div className="flex flex-col items-center">
-        {loading && getLoadingSkeleton(page, view)}
-        {!loading &&
+        {showSkeleton && getLoadingSkeleton(page, view)}
+        {!showSkeleton && (
           <div className="w-full flex flex-col items-center">
             <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} backgroundColor="contrast" />
             <Pagination totalPages={Math.ceil(postState.totalPosts / limit)} active={page} setActive={setPage} />
-          </div>}
+          </div>
+        )}
       </div>
     </div>
   );

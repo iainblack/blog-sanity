@@ -32,7 +32,7 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
                 <div className="flex flex-col md:flex-row">
                     <div className="relative w-full md:w-1/2 rounded-lg overflow-hidden">
                         {post.coverImage ? (
-                            <NextImage image={post.coverImage} priority={true} fit={isMobile ? 'cover' : 'contain'} />
+                            <NextImage image={post.coverImage} priority fit={isMobile ? 'cover' : 'contain'} />
                         ) : (
                             <div className="flex items-center justify-center bg-gray-300 h-full rounded-lg">
                                 <DocumentTextIcon className="w-12 h-12" />

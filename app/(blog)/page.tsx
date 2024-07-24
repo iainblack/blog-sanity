@@ -1,8 +1,3 @@
-import { sanityFetch } from "@/sanity/lib/fetch";
-import {
-  SettingsQueryResponse,
-  settingsQuery,
-} from "@/sanity/lib/queries";
 import { getContentPanelsByPage } from "./actions";
 import ExpandablePanel from '@/components/ExpandablePanel';
 

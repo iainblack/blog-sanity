@@ -8,6 +8,9 @@ module.exports = {
     fetches: { fullUrl: false },
   },
   images: {
-    remotePatterns: [{ hostname: "source.unsplash.com" }],
+    remotePatterns: [
+      { hostname: "source.unsplash.com" },
+      { hostname: "cdn.sanity.io" },
+    ]
   },
 };
