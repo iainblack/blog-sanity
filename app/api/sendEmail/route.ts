@@ -15,7 +15,7 @@ export async function POST(req: NextRequest, res: any) {
         const { senderEmail, firstName, lastName, subject, message } = body;
 
         var content = {
-            to: 'iainjblack20@gmail.com',
+            to: process.env.NEXT_PUBLIC_CLIENT_EMAIL_ADDRESS,
             from: senderEmail,
             subject: subject,
             text: message,
