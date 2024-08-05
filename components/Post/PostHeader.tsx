@@ -9,12 +9,7 @@ export default function PostHeader({ post: post }: { post: Post }) {
     return (
         <>
             <div className="flex justify-between items-center">
-                <div className="lg:mb-8 space-y-3">
-                    <h5 className="header-text">
-                        {post.title}
-                    </h5>
-                </div>
-                <div className="my-8 space-y-1 hidden lg:block">
+                <div className="mb-8 space-y-1 hidden lg:block">
                     <DateComponent icon dateString={post.date} />
                     {post.author?.name && (
                         <div className="flex items-center">
@@ -40,8 +35,9 @@ export default function PostHeader({ post: post }: { post: Post }) {
             {post.coverImage && <div className="mb-8 relative w-full h-64 sm:h-96 lg:h-[500px]">
                 <NextImage image={post.coverImage} priority fit="contain" />
             </div>}
-            {post.subtitle && <div className="pb-8">
-                <h6 className="text-xl lg:text-3xl font-walbaum text-center text-text-primary"> {post.subtitle}</h6>
+            {<div className="pb-8">
+                <h5 className="header-text text-center py-5">{post.title}</h5>
+                {post.subtitle && <h6 className="text-xl lg:text-3xl font-walbaum text-center text-text-primary"> {post.subtitle}</h6>}
             </div>}
         </>
 

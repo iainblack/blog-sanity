@@ -1,11 +1,13 @@
 "use client";
+
 import { Post } from "@/sanity/lib/queries";
 import { getPostsByPage } from "../actions";
 import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
 import PostFilters from "@/components/Post/PostFilters";
 import { Intro } from "@/components/PageIntro";
-import PostPreviewGrid, { PostPreviewGridSkeleton, PostPreviewGridWithHeroSkeleton } from "@/components/Post/PostPreviewGrid";
+import { PostPreviewListSkeleton, PostPreviewGridWithHeroSkeleton, PostPreviewGridSkeleton } from "@/components/Post/LoadingSkeletons";
+import PostPreviewGrid from "@/components/Post/PostPreviewGrid";
 
 interface PostState {
   visiblePosts?: Post[];
@@ -38,7 +40,7 @@ export default function Page() {
       setLoading(false);
       timeoutId = setTimeout(() => {
         setShowSkeleton(false);
-      }, 500); // Ensure skeleton displays for at least 500 ms
+      }, 500);
     };
 
     fetchPosts();
@@ -48,6 +50,16 @@ export default function Page() {
 
   const noResultsMessage = "These messages will be made available at a later time when they are in sync with the sharing of Lou's healing story.";
 
+  const renderSkeleton = () => {
+    if (showSkeleton && view === 'list') {
+      return <PostPreviewListSkeleton />;
+    } else if (showSkeleton && page === 0) {
+      return <PostPreviewGridWithHeroSkeleton singleImage />;
+    } else if (showSkeleton) {
+      return <PostPreviewGridSkeleton />;
+    }
+  }
+
   return (
     <div className="container mx-auto lg:px-16">
       <div className="flex flex-col items-center space-y-6 my-6 lg:space-y-0 lg:flex-row md:justify-between lg:my-12">
@@ -55,11 +67,10 @@ export default function Page() {
         <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} view={view} setView={setView} />
       </div>
       <div className="flex flex-col items-center">
-        {showSkeleton && page === 0 && <PostPreviewGridWithHeroSkeleton />}
-        {showSkeleton && page !== 0 && <PostPreviewGridSkeleton />}
+        {renderSkeleton()}
         {!showSkeleton && (
           <>
-            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} noResultsMessage={noResultsMessage} backgroundColor="pink" />
+            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} noResultsMessage={noResultsMessage} backgroundColor="pink" singleImage />
             <Pagination totalPages={Math.ceil(postState.totalPosts / limit)} active={page} setActive={setPage} />
           </>
         )}

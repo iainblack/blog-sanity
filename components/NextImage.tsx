@@ -29,7 +29,7 @@ export default function NextImage(props: NextImageProps) {
       alt={image?.alt || ""}
       blurDataURL={blurDataUrl}
       src={urlForImage(image)?.url() as string}
-      sizes="10vw"
+      sizes="35vw"
       priority={priority}
       style={{ objectFit: fit || 'cover' }}
       onLoad={onLoad}

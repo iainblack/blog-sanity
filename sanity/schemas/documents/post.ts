@@ -54,6 +54,7 @@ export default defineType({
         styles: [
           { title: "Normal", value: "normal" },
           { title: "Subtitle", value: "h4" },
+          { title: "Quote", value: "blockquote" },
         ],
         marks: {
           decorators: [
@@ -84,7 +85,7 @@ export default defineType({
           ],
         },
       }],
-      description: "The content of the post. (Don't mind the missing spaces after punctuation in the editor, it will be normalized on the webpage.)",
+      description: "The content of the post",
     }),
     defineField({
       name: "excerpt",

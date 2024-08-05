@@ -52,6 +52,9 @@ export default function MessageForm() {
     const [formState, setFormState] = useState<FormState>(initialFormState);
     const [alertState, setAlertState] = useState<BasicAlertState>({ message: '', type: 'success', show: false });
 
+    const clearForm = () => {
+        setFormState(initialFormState);
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         setLoading(true);
@@ -74,6 +77,7 @@ export default function MessageForm() {
 
         if (response.ok) {
             setAlertState({ show: true, message: 'Message sent successfully', type: 'success' });
+            clearForm();
         } else {
             setAlertState({ show: true, message: 'Message failed to send', type: 'error' });
         }

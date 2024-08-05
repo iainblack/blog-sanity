@@ -16,7 +16,7 @@ export default function PostFilters({ setOrder, order, view, setView }: PostFilt
             <div className="flex space-x-2 items-center">
                 <Dropdown
                     variant="outlined"
-                    options={["Oldest First", "Newest First"]}
+                    options={order === "asc" ? ["Newest First"] : ["Oldest First"]}
                     label={order === "asc" ? "Oldest First" : "Newest First"}
                     selected={[order]}
                     setSelected={() => setOrder(order === "asc" ? "desc" : "asc")}

@@ -1,3 +1,5 @@
+'use client';
+
 import BackButton from "../BackButton";
 import MorePosts from "../MorePosts";
 import PortableText from "../portable-text";

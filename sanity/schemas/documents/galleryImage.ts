@@ -19,6 +19,13 @@ export default defineType({
       validation: (rule) => rule.required().error("Page is required."),
     }),
     defineField({
+      name: "order",
+      title: "Order",
+      type: "number",
+      description: "The order in which this image should be displayed in the gallery.",
+      validation: (rule) => rule.required().min(1).error("Order is required and must be at least 1."),
+    }),
+    defineField({
       name: "picture",
       title: "Picture",
       type: "image",

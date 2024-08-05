@@ -29,7 +29,7 @@ export const getResources = async (type: string, search: string, limit: number, 
   const query = groq`*[_type == "resource" ${typeFilter} ${searchFilter}] | order(title asc) [${offset}...${offset + limit}] {
     ${resourceFields}
   }`;
-  
+
   const totalQuery = groq`count(*[_type == "resource" && type == $type ${searchFilter}])`;
 
   const resources = await sanityFetch<Resource[] | undefined>({
@@ -50,7 +50,7 @@ export const getPostsByPage = async (pageId: string, order: string = 'desc', off
   const query = groq`*[_type == "post" && pageId == $pageId] | order(date ${order}, _updatedAt ${order})[${offset}...${offset + limit}] {
     ${postFields}
   }`;
-  
+
   const totalQuery = groq`count(*[_type == "post" && pageId == $pageId])`;
 
   const posts = await sanityFetch<Post[] | undefined>({
@@ -83,9 +83,10 @@ export const getGalleryImagesByPage = async (pageId: string) => {
       alt,
     },
     title,
+    order
   }`;
 
-  return sanityFetch<GalleryImage[]> ({
+  return sanityFetch<GalleryImage[]>({
     query,
     params: { pageId },
   });

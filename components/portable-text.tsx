@@ -18,6 +18,9 @@ export default function CustomPortableText({
       h4: ({ children }) => (
         <h6 className="text-xl text-center">{children}</h6>
       ),
+      blockquote: ({ children }) => (
+        <blockquote className="italic px-12">{children}</blockquote>
+      ),
     },
     marks: {
       link: ({ children, value }) => {

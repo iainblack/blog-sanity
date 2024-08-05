@@ -6,8 +6,6 @@ import CenteredPanel from "@/components/CenteredPanel";
 import React, { useState } from 'react';
 import NextImage from './NextImage';
 
-const MAX_CHAR_LENGTH = 1005;
-
 export default function ExpandablePanel({
     panel: { title, content, image, size, backgroundColor },
 }: {
@@ -22,18 +20,18 @@ export default function ExpandablePanel({
     const imagePosition = cleanedPosition === "left" ? 'xl:order-1' : 'xl:order-2';
     const textPosition = cleanedPosition === "left" ? 'xl:order-2' : 'xl:order-1';
 
-
     const handleToggle = () => {
         setIsCollapsed(!isCollapsed);
     };
 
-    const truncatedContent = cleanedContent && cleanedContent.slice(0, MAX_CHAR_LENGTH);
+    // Find the end of the first paragraph
+    const firstParagraphEnd = cleanedContent.indexOf('\n');
+    const truncatedContent = firstParagraphEnd !== -1 ? cleanedContent.slice(0, firstParagraphEnd) : cleanedContent;
     const isSmallScreen = typeof window !== 'undefined' && window.innerWidth < 1280;
-    const shouldTruncate = cleanedContent && cleanedContent.length > MAX_CHAR_LENGTH && !isSmallScreen;
+    const shouldTruncate = firstParagraphEnd !== -1 && !isSmallScreen;
     const shouldDisplayImage = isSmallScreen ? true : isCollapsed;
 
-    const formattedContent = !isSmallScreen && isCollapsed ? `${truncatedContent.replace(/\n/g, ' \n')}` : cleanedContent.replace(/\n/g, ' \n');
-
+    const formattedContent = !isSmallScreen && isCollapsed ? truncatedContent : cleanedContent;
 
     return (
         <CenteredPanel size={cleanedSize} bgColor={cleanedBgColor}>

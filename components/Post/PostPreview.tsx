@@ -18,11 +18,14 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
     let bgClass = '';
+    let readMoreClass = 'text-primary';
 
     if (backgroundColor === 'contrast') {
         bgClass = 'bg-contrast-bg';
+        readMoreClass = 'text-text-secondary';
     } else if (backgroundColor === 'pink') {
         bgClass = 'bg-pink-bg';
+        readMoreClass = 'text-text-secondary';
     }
 
 
@@ -30,14 +33,8 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
         <div className={`p-4 px-6 shadow overflow-hidden ${bgClass} cursor-pointer w-full rounded-lg border border-black`}>
             <Link href={`${path}/posts/${post.slug}`} className="w-full block">
                 <div className="flex flex-col md:flex-row">
-                    <div className="relative w-full md:w-1/2 rounded-lg overflow-hidden">
-                        {post.coverImage ? (
-                            <NextImage image={post.coverImage} priority fit={isMobile ? 'cover' : 'contain'} />
-                        ) : (
-                            <div className="flex items-center justify-center bg-gray-300 h-full rounded-lg">
-                                <DocumentTextIcon className="w-12 h-12" />
-                            </div>
-                        )}
+                    <div className={`relative w-full h-56 md:w-1/2 md:h-auto rounded-lg overflow-hidden object-cover`}>
+                        {post.coverImage && <NextImage image={post.coverImage} priority fit={'contain'} />}
                     </div>
                     <div className="md:w-1/2 md:pl-4 flex flex-col justify-center">
                         <div className="py-4 md:py-0 space-y-3 lg:space-y-6">
@@ -60,7 +57,7 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
                                 <PortableText className="body-text hyphens-auto break-words text-justify custom-portable-text" value={post.content} />
                             </div>
                             <div>
-                                <span className="font-garamond text-primary pt-6 text-base lg:text-lg">Read More</span>
+                                <span className={`font-garamond ${readMoreClass} pt-6 text-base lg:text-lg`}><b>Read More</b></span>
                             </div>
                         </div>
                     </div>
@@ -74,24 +71,21 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
     const path = usePathname();
 
     let bgClass = '';
+    let readMoreClass = '';
 
     if (backgroundColor === 'contrast') {
         bgClass = 'bg-contrast-bg';
+        readMoreClass = 'text-contrast';
     } else if (backgroundColor === 'pink') {
         bgClass = 'bg-pink-bg';
+        readMoreClass = 'text-pink';
     }
 
     return (
         <div className={`p-3 overflow-hidden ${bgClass} transition-colors cursor-pointer shadow w-full rounded-lg border border-transparent hover:shadow-xl hover:border-black`}>
             <Link href={`${path}/posts/${post.slug}`} className='w-full'>
                 <div className={`relative w-full h-56 rounded-lg overflow-hidden object-cover`}>
-                    {post.coverImage ? (
-                        <NextImage image={post.coverImage} />
-                    ) : (
-                        <div className="flex items-center justify-center bg-gray-300 h-full rounded-lg">
-                            <DocumentTextIcon className='w-12 h-12' />
-                        </div>
-                    )}
+                    {post.coverImage && <NextImage image={post.coverImage} />}
                 </div>
                 <div className={`py-2 space-y-2`}>
                     <div className="text-left w-full md:w-auto md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
@@ -106,10 +100,10 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
                         )}
                     </div>
                     <div>
-                        <h2 className="text-lg lg:text-2xl truncate font-garamond">{post.title}</h2>
+                        <h2 className="text-lg lg:text-2xl truncate-lines-smaller font-garamond">{post.title}</h2>
                         {post.subtitle && <h3 className="text-base lg:text-lg truncate font-garamond">{post.subtitle}</h3>}
                     </div>
-                    <p className="text-gray-600 text-base font-garamond truncate-lines-small">{post.excerpt}</p>
+                    <p className="text-gray-600 text-base font-garamond truncate-lines-smaller">{post.excerpt}</p>
                 </div>
             </Link>
         </div>
@@ -144,7 +138,7 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post, backgroundColor 
                         </div>
                     </div>
                     <div className="text-left ml-10 flex-grow">
-                        <h2 className="text-lg truncate font-garamond">{post.title}</h2>
+                        <h2 className="text-lg truncate-lines-smaller font-garamond">{post.title}</h2>
                         <p className="text-gray-600 text-base font-garamond truncate-lines">{post.excerpt}</p>
                     </div>
                     <div>

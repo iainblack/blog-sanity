@@ -8,7 +8,7 @@ export interface SettingsQueryResponse {
   title?: string;
   description?: PortableTextBlock[];
   footer?: PortableTextBlock[];
-  ogImage?: (Image & { alt?: string;}) | null;
+  ogImage?: (Image & { alt?: string; }) | null;
 }
 
 // RESOURCE
@@ -49,6 +49,7 @@ export interface GalleryImage {
   _id: string;
   pageId: string;
   title?: string;
+  order: number;
   picture: {
     asset: {
       _id: string;

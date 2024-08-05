@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
 import PostFilters from "@/components/Post/PostFilters";
 import { Intro } from "@/components/PageIntro";
-import PostPreviewGrid, { PostPreviewGridSkeleton, PostPreviewGridWithHeroSkeleton, PostPreviewListSkeleton } from "@/components/Post/PostPreviewGrid";
+import { PostPreviewListSkeleton, PostPreviewGridWithHeroSkeleton, PostPreviewGridSkeleton } from "@/components/Post/LoadingSkeletons";
+import PostPreviewGrid from "@/components/Post/PostPreviewGrid";
 
 interface PostState {
   visiblePosts?: Post[];

@@ -11,21 +11,40 @@ const parseBody = async (req: NextRequest) => {
 
 export async function POST(req: NextRequest, res: any) {
     try {
-    const body = await parseBody(req);
-    const { senderEmail, firstName, lastName, subject, message } = body;
+        const body = await parseBody(req);
+        const { senderEmail, firstName, lastName, subject, message } = body;
 
-    var content = {
-        to: 'iainjblack20@gmail.com',
-        from: senderEmail,
-        subject: subject,
-        text: message,
-        html: `New message from ${firstName} ${lastName} sent from your website:<br><br>${message}`,
-    };
+        var content = {
+            to: 'iainjblack20@gmail.com',
+            from: senderEmail,
+            subject: subject,
+            text: message,
+            html: getEmailHtml({ firstName, lastName, message }),
+        };
 
-    await sgMail.send(content);
-    return Response.json({ message: 'Email sent successfully' }, { status: 200 });
+        await sgMail.send(content);
+        return Response.json({ message: 'Email sent successfully' }, { status: 200 });
 
     } catch (error) {
+        console.log(error);
         return Response.json({ message: 'Email failed to send' }, { status: 500 });
     }
+}
+
+function getEmailHtml({ firstName, lastName, message }: { firstName: string, lastName: string, message: string }) {
+    const emailBody = `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <div style="background-color: #f7f7f7; padding: 20px; border-bottom: 1px solid #e0e0e0;">
+                <h1 style="margin: 0; color: #65a765;">New Message Received</h1>
+            </div>
+            <div style="padding: 20px;">
+                <p>New message from <strong>${firstName} ${lastName}</strong> sent from your website:</p>
+                <p>${message}</p>
+            </div>
+            <div style="background-color: #f7f7f7; padding: 10px 20px; border-top: 1px solid #e0e0e0;">
+                <p style="font-size: 0.8em; text-align: center; color: #777;">&copy; ${new Date().getFullYear()} All rights reserved.</p>
+            </div>
+        </div>
+    `;
+    return emailBody;
 }

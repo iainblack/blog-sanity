@@ -5,6 +5,7 @@ import { Photo } from "react-photo-album";
 export default async function Page() {
 
     const photos = await getGalleryImagesByPage('Photos');
+    photos?.sort((a, b) => a.order - b.order);
 
     const breakpoints = [1080, 640, 384, 256, 128, 96, 64, 48];
 
