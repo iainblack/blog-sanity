@@ -1,5 +1,6 @@
 import { pages } from "@/components/utils";
 import { BlockContentIcon } from "@sanity/icons";
+import { orderRankField } from "@sanity/orderable-document-list";
 import { defineField, defineType } from "sanity";
 
 export default defineType({
@@ -18,13 +19,7 @@ export default defineType({
       },
       validation: (rule) => rule.required().error("Page is required."),
     }),
-    defineField({
-      name: "order",
-      title: "Order",
-      type: "number",
-      description: "The order in which this panel should be displayed on the page.",
-      validation: (rule) => rule.required().error("Order is required."),
-    }),
+    orderRankField({ type: 'contentPanel', newItemPosition: 'after' }),
     defineField({
       name: "size",
       title: "Panel Size",
@@ -82,7 +77,7 @@ export default defineType({
               return true;
             }),
             rule.custom((alt, context) => {
-              if (alt && !(context.document?.image as any)?.asset?._ref){
+              if (alt && !(context.document?.image as any)?.asset?._ref) {
                 return "Remove alt text if there is no image";
               }
               return true;

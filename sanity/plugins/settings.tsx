@@ -4,6 +4,8 @@
 
 import { definePlugin, type DocumentDefinition } from "sanity";
 import { type StructureResolver } from "sanity/structure";
+import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
+import { BlockContentIcon, ImageIcon } from "@sanity/icons";
 
 export const singletonPlugin = definePlugin((types: string[]) => {
   return {
@@ -37,7 +39,7 @@ export const singletonPlugin = definePlugin((types: string[]) => {
 export const pageStructure = (
   typeDefArray: DocumentDefinition[],
 ): StructureResolver => {
-  return (S) => {
+  return (S, context) => {
     // Goes through all of the singletons that were provided and translates them into something the
     // Structure tool can understand
     const singletonItems = typeDefArray.map((typeDef) => {
@@ -60,6 +62,23 @@ export const pageStructure = (
 
     return S.list()
       .title("Content")
-      .items([...singletonItems, S.divider(), ...defaultListItems]);
+      .items([
+        ...singletonItems,
+        S.divider(),
+        orderableDocumentListDeskItem({
+          type: 'galleryImage',
+          title: 'Photo Gallery Images',
+          icon: ImageIcon,
+          S,
+          context
+        }),
+        orderableDocumentListDeskItem({
+          type: 'contentPanel',
+          title: 'Landing Page Panels',
+          icon: BlockContentIcon,
+          S,
+          context
+        }),
+        ...defaultListItems]);
   };
 };

@@ -15,7 +15,7 @@ export async function disableDraftMode() {
 }
 
 export const getContentPanelsByPage = (pageId: string) => {
-  const query = groq`*[_type == "contentPanel" && pageId == $pageId] | order(_createdAt asc)`;
+  const query = groq`*[_type == "contentPanel" && pageId == $pageId] | order(orderRank)`;
   return sanityFetch<ContentPanel[] | undefined>({
     query,
     params: { pageId },
@@ -67,7 +67,7 @@ export const getPostsByPage = async (pageId: string, order: string = 'desc', off
 };
 
 export const getGalleryImagesByPage = async (pageId: string) => {
-  const query = groq`*[_type == "galleryImage" && pageId == $pageId] | order(_createdAt desc) {
+  const query = groq`*[_type == "galleryImage" && pageId == $pageId] | order(orderRank) {
     _id,
     picture {
       asset -> {

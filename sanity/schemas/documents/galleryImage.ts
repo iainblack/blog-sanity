@@ -1,6 +1,7 @@
 import { ImageIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import { pages } from "@/components/utils";
+import { orderRankField } from "@sanity/orderable-document-list";
 
 export default defineType({
   name: "galleryImage",
@@ -18,13 +19,7 @@ export default defineType({
       },
       validation: (rule) => rule.required().error("Page is required."),
     }),
-    defineField({
-      name: "order",
-      title: "Order",
-      type: "number",
-      description: "The order in which this image should be displayed in the gallery.",
-      validation: (rule) => rule.required().min(1).error("Order is required and must be at least 1."),
-    }),
+    orderRankField({ type: 'galleryImage', newItemPosition: 'before' }),
     defineField({
       name: "picture",
       title: "Picture",
