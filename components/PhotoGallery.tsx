@@ -25,13 +25,10 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
             <PhotoAlbum
                 photos={photos}
                 layout='rows'
-                // columns={(containerWidth) => {
-                //     if (containerWidth < 1000) return 2;
-                //     if (containerWidth < 1500) return 3;
-                //     return 5;
-                // }}
+                targetRowHeight={300}
+                rowConstraints={{ maxPhotos: 6, singleRowMaxHeight: 300 }}
                 renderPhoto={GalleryImage}
-                //defaultContainerWidth={1200}
+                defaultContainerWidth={1200}
                 sizes={{
                     size: "calc(100vw - 40px)",
                     sizes: [
