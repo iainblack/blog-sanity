@@ -56,8 +56,14 @@ export const pageStructure = (
 
     // The default root list items (except custom ones)
     const defaultListItems = S.documentTypeListItems().filter(
-      (listItem) =>
-        !typeDefArray.find((singleton) => singleton.name === listItem.getId()),
+      (listItem) => {
+        const id = listItem.getId();
+        return (
+          id !== "galleryImage" &&
+          id !== "contentPanel" &&
+          !typeDefArray.find((singleton) => singleton.name === id)
+        );
+      }
     );
 
     return S.list()
