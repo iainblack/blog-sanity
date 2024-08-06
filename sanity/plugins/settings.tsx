@@ -69,8 +69,6 @@ export const pageStructure = (
     return S.list()
       .title("Content")
       .items([
-        ...singletonItems,
-        S.divider(),
         orderableDocumentListDeskItem({
           type: 'galleryImage',
           title: 'Photo Gallery Images',
@@ -85,6 +83,9 @@ export const pageStructure = (
           S,
           context
         }),
-        ...defaultListItems]);
+        ...defaultListItems,
+        S.divider(),
+        ...singletonItems,
+      ]);
   };
 };

@@ -5,13 +5,13 @@ import * as demo from "@/sanity/lib/demo";
 
 export default defineType({
   name: "settings",
-  title: "Settings",
+  title: "Additional Info",
   type: "document",
   icon: CogIcon,
   fields: [
     defineField({
       name: "title",
-      description: "This field is the title of your blog as it will appear in the browser tab.",
+      description: "This field is the title of your blog as it will appear on the browser tab.",
       title: "Title",
       type: "string",
       initialValue: demo.title,
@@ -51,7 +51,7 @@ export default defineType({
     }),
     defineField({
       name: "ogImage",
-      title: "Open Graph Image",
+      title: "Image",
       type: "image",
       description: "Displayed on social cards and search engine results.",
       options: {
@@ -87,7 +87,8 @@ export default defineType({
   preview: {
     prepare() {
       return {
-        title: "Settings",
+        title: "Additional Info",
+        description: "This document contains additional information about your blog.",
       };
     },
   },
