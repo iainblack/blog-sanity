@@ -56,7 +56,7 @@ export default function Page() {
     } else if (showSkeleton && page === 0) {
       return <PostPreviewGridWithHeroSkeleton singleImage />;
     } else if (showSkeleton) {
-      return <PostPreviewGridSkeleton />;
+      return <PostPreviewListSkeleton />;
     }
   }
 
