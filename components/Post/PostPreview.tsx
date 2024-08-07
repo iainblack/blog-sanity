@@ -85,7 +85,7 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
         <div className={`p-3 overflow-hidden ${bgClass} transition-colors cursor-pointer shadow w-full rounded-lg border border-transparent hover:shadow-xl hover:border-black`}>
             <Link href={`${path}/posts/${post.slug}`} className='w-full'>
                 <div className={`relative w-full h-56 rounded-lg overflow-hidden object-cover`}>
-                    {post.coverImage && <NextImage image={post.coverImage} />}
+                    {post.coverImage && <NextImage image={post.coverImage} fit='contain' />}
                 </div>
                 <div className={`py-2 space-y-2`}>
                     <div className="text-left w-full md:w-auto md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
