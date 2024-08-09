@@ -63,11 +63,15 @@ export default function Header() {
                         <HeaderLinks />
                     </div>
                 )}
-                <div className="w-[50%] sm:w-[33%] flex justify-start align-middle">
+                <div className="w-[60%] sm:w-[55%] md:w-[45%] flex justify-start align-middle">
                     <Link href="/" className="w-full">
                         <div className="w-full relative text-center space-y-2">
                             <h1 className="header-text">Lou Fleming</h1>
-                            <h6 className="body-text-satista hidden sm:block text-text-secondary">Journey to Healing - Journey of Awakening</h6>
+                            <div className="flex space-x-3 justify-center align-middle">
+                                <h6 className="body-text-satista hidden sm:block text-text-secondary whitespace-nowrap">Journey to Healing</h6>
+                                <p className="body-text-satista hidden sm:block text-text-secondary whitespace-nowrap">&#10192;</p>
+                                <h6 className="body-text-satista hidden sm:block text-text-secondary whitespace-nowrap">Journey of Awakening</h6>
+                            </div>
                         </div>
                     </Link>
                 </div>

@@ -77,7 +77,7 @@ export interface Post {
   content: PortableTextBlock[];
   slug: string;
   excerpt?: string | null;
-  coverImage?: (Image & { alt?: string }) | null;
+  coverImage?: (Image & { alt?: string, caption?: string }) | null;
   date: string;
   author?: Author | null;
 }
@@ -100,7 +100,7 @@ export const postFields = groq`
 export interface ContentPanel {
   _id: string;
   _createdAt: string;
-  image?: (Image & { alt?: string, position?: "left" | "right" }) | null;
+  image?: (Image & { alt?: string, caption?: string, position?: "left" | "right" }) | null;
   title?: string;
   content: string;
   size: "Small" | "Medium" | "Large";

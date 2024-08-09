@@ -19,7 +19,7 @@ export default function CustomPortableText({
         <h6 className="text-xl text-center">{children}</h6>
       ),
       blockquote: ({ children }) => (
-        <blockquote className="italic px-12">{children}</blockquote>
+        <blockquote className="italic sm:px-12 xl:px-16">{children}</blockquote>
       ),
     },
     marks: {

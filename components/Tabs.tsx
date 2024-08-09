@@ -10,7 +10,7 @@ interface TabsProps {
 export default function Tabs({ activeTab, setActiveTab, tabs }: TabsProps) {
     return (
         <div className="border-b border-gray-600 w-full">
-            <ul className="flex flex-wrap -mb-px text-sm lg:text-base font-medium text-center text-gray-500 dark:text-gray-400">
+            <ul className="flex flex-wrap -mb-px text-sm lg:text-base font-medium text-center text-gray-500 dark:text-gray-400 justify-center sm:justify-normal">
                 {tabs.map((tab) => (
                     <li key={tab.name} className="me-2">
                         <button

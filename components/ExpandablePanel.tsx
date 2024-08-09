@@ -35,25 +35,29 @@ export default function ExpandablePanel({
 
     return (
         <CenteredPanel size={cleanedSize} bgColor={cleanedBgColor}>
+
             {shouldDisplayImage && image && image?.asset &&
-                <div className={`centered-container__image ${imagePosition}`}>
-                    <NextImage image={image} priority fit='contain' />
+                <div className='w-full flex flex-col items-center justify-center'>
+                    {image?.caption && <p className="text-gray-600 text-center font-garamond">{image.caption}</p>}
+                    <div className={`centered-container__image ${imagePosition}`}>
+                        <NextImage image={image} priority fit='contain' />
+                    </div>
                 </div>
             }
-            <div className={`mt-4 w-full text-left max-w-3xl lg:mt-0${image && image?.asset ? 'md:text-left' : 'md:text-center'} ${textPosition}`}>
-                {title && <h1 className="flex-wrap header-text">
+            <div className={`mt-4 w-full text-left sm:max-w-2xl md:max-w-3xl lg:max-w-6xl lg:mt-0${image && image?.asset ? 'md:text-left' : 'md:text-center'} ${textPosition}`}>
+                {title && <h1 className="flex-wrap subheader-text text-center pb-5">
                     {title}
                 </h1>}
-                {formattedContent.split('\n').map((paragraph, index) => (
+                {cleanedContent.split('\n').map((paragraph, index) => (
                     <p key={index} className="body-text hyphens-auto break-words text-justify pb-2">
                         {paragraph}
                     </p>
                 ))}
-                {shouldTruncate && (
+                {/* {shouldTruncate && (
                     <button onClick={handleToggle} className="font-bold mt-4 font-garamond text-base lg:text-lg hover:underline">
                         {isCollapsed ? 'Read More' : 'Read Less'}
                     </button>
-                )}
+                )} */}
             </div>
         </CenteredPanel>
     );

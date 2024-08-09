@@ -42,7 +42,11 @@ export default function Drawer({ isDrawerOpen, closeDrawer }: { isDrawerOpen: bo
                         <div className="w-full relative">
                             <div className="w-full relative text-center space-y-2">
                                 <h1 className="header-text">Lou Fleming</h1>
-                                <h6 className="body-text-satista">Journey to Healing - Journey of Awakening</h6>
+                                <div className="flex space-x-3 justify-center align-middle">
+                                    <h6 className="body-text-satista text-text-secondary whitespace-nowrap">Journey to Healing</h6>
+                                    <p className="body-text-satista text-text-secondary whitespace-nowrap">&#10192;</p>
+                                    <h6 className="body-text-satista  text-text-secondary whitespace-nowrap">Journey of Awakening</h6>
+                                </div>
                             </div>
                         </div>
                     </Link>
@@ -70,7 +74,7 @@ export default function Drawer({ isDrawerOpen, closeDrawer }: { isDrawerOpen: bo
                                         <li>
                                             <div className="p-2 w-full ms-3">
                                                 <Link href="/healing-journey" onClick={handleClose}>
-                                                    <span>My Healing Journey</span>
+                                                    <span>Lou&apos;s Healing Journey</span>
                                                 </Link>
                                             </div>
                                         </li>

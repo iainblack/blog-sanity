@@ -50,7 +50,7 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
                                 )}
                             </div>
                             <div>
-                                <h1 className="subheader-text truncate">{post.title}</h1>
+                                <h1 className="subheader-text truncate font-walbaum">{post.title}</h1>
                                 {post.subtitle && <h3 className="subtitle-text truncate">{post.subtitle}</h3>}
                             </div>
                             <div className='body-text truncate-lines text-gray-600'>

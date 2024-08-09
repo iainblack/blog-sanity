@@ -31,11 +31,11 @@ export default function PostPreviewGrid({ posts, view, page, noResultsMessage, b
         if (singleImage) {
             return (
                 <div className="pb-4 w-full items-center">
-                    <div className="w-full mb-6 p-3">
+                    <div className="w-full mb-6 px-3">
                         <HeroImagePreview post={firstPost} backgroundColor={backgroundColor} />
                     </div>
                     <div
-                        className="grid gap-3"
+                        className="grid gap-3 px-3"
                     >
                         {otherPosts.map(post => (
                             <PostPreview key={post._id} post={post} backgroundColor={backgroundColor} />
@@ -51,7 +51,7 @@ export default function PostPreviewGrid({ posts, view, page, noResultsMessage, b
                 <div className="w-full mb-6 p-3">
                     <HeroImagePreview post={firstPost} backgroundColor={backgroundColor} />
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full px-3">
                     {otherPosts.map(post => (
                         <PostImagePreview key={post._id} post={post} backgroundColor={backgroundColor} />
                     ))}
@@ -65,7 +65,7 @@ export default function PostPreviewGrid({ posts, view, page, noResultsMessage, b
             return (
                 <div className="flex flex-col w-full p-3">
                     <div
-                        className="grid gap-3"
+                        className="grid gap-3 px-3"
                     >
                         {posts.map(post => (
                             <PostPreview key={post._id} post={post} backgroundColor={backgroundColor} />
@@ -75,7 +75,7 @@ export default function PostPreviewGrid({ posts, view, page, noResultsMessage, b
             );
         }
         return (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full pb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full pb-4 px-3">
                 {posts.map(post => (
                     <PostImagePreview key={post._id} post={post} backgroundColor={backgroundColor} />
                 ))}
@@ -86,7 +86,7 @@ export default function PostPreviewGrid({ posts, view, page, noResultsMessage, b
     return (
         <div className="flex flex-col w-full p-3">
             <div
-                className="grid gap-3"
+                className="grid gap-3 px-3"
             >
                 {posts.map(post => (
                     <PostPreview key={post._id} post={post} backgroundColor={backgroundColor} />

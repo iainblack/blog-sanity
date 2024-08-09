@@ -1,7 +1,7 @@
 export const PostPreviewGridWithHeroSkeleton = ({ singleImage }: { singleImage?: boolean }) => {
     return (
         <div className="pb-4 w-full">
-            <div className="w-full mb-6 p-3">
+            <div className="w-full mb-6 px-3">
                 <div className="p-4 px-6 w-full rounded-lg border border-gray-300 animate-pulse">
                     <div className="flex flex-col md:flex-row">
                         <div className="relative w-full h-56 md:w-1/2 md:h-auto rounded-lg bg-gray-300"></div>
@@ -36,7 +36,7 @@ export const PostPreviewGridWithHeroSkeleton = ({ singleImage }: { singleImage?:
                 </div>
             </div>
             {singleImage ? (
-                <div className="grid gap-3">
+                <div className="grid gap-3 px-3">
                     {[1, 2, 3].map((_, index) => (
                         <div
                             key={index}
@@ -66,7 +66,7 @@ export const PostPreviewGridWithHeroSkeleton = ({ singleImage }: { singleImage?:
                     ))}
                 </div>
             ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full px-3">
                     {[1, 2, 3].map((_, index) => (
                         <div key={index} className="p-3 w-full rounded-lg border border-gray-300 animate-pulse">
                             <div className="relative w-full h-56 rounded-lg bg-gray-300"></div>
@@ -103,7 +103,7 @@ export const PostPreviewGridSkeleton = () => {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full pb-4">
             {[1, 2, 3, 4, 5, 6].map((_, index) => (
-                <div key={index} className="p-3 w-full rounded-lg border border-gray-300 animate-pulse">
+                <div key={index} className="p-3 w-full rounded-lg border border-gray-300 animate-pulse px-3">
                     <div className="relative w-full h-52 rounded-lg bg-gray-300"></div>
                     <div className="py-4 h-24">
                         <div className="text-left pb-3 w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
@@ -121,7 +121,7 @@ export const PostPreviewGridSkeleton = () => {
 export const PostPreviewListSkeleton = () => {
     return (
         <div className="flex flex-col w-full p-3">
-            <div className="grid gap-3">
+            <div className="grid gap-3 px-3">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, index) => (
                     <div
                         key={index}

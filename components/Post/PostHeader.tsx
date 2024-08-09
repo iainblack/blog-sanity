@@ -32,12 +32,17 @@ export default function PostHeader({ post: post }: { post: Post }) {
                     </div>
                 )}
             </div>
-            {post.coverImage && <div className="mb-8 relative w-full h-64 sm:h-96 lg:h-[500px]">
-                <NextImage image={post.coverImage} priority fit="contain" />
-            </div>}
-            {<div className="pb-8">
-                <h5 className="header-text text-center py-5">{post.title}</h5>
-                {post.subtitle && <h6 className="text-xl lg:text-3xl font-walbaum text-center text-text-primary"> {post.subtitle}</h6>}
+            {post.coverImage &&
+                <div className="mb-8">
+                    <div className="relative w-full h-64 sm:h-96 lg:h-[500px]">
+                        <NextImage image={post.coverImage} priority fit="contain" />
+                    </div>
+                    <p className="text-gray-600 text-center font-garamond">{post.coverImage?.caption}</p>
+                </div>
+            }
+            {<div className="pb-8 space-y-6">
+                <h5 className="post-header-text text-center">{post.title}</h5>
+                {post.subtitle && <h6 className="text-xl lg:text-2xl font-garamond text-center text-text-primary"> {post.subtitle}</h6>}
             </div>}
         </>
 

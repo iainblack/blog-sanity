@@ -85,6 +85,12 @@ export default defineType({
           ]
         },
         {
+          name: "caption",
+          type: "string",
+          title: "Caption",
+          description: "A caption for the image.",
+        },
+        {
           name: "position",
           type: "string",
           title: "Position",
