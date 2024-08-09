@@ -27,12 +27,6 @@ body {
     @apply w-full flex flex-col items-center justify-center space-y-8 p-5 md:p-8 xl:p-12 xl:space-y-10;
 }
 
-/* class for mobile responsive image container */
-.centered-container__image {
-    @apply relative w-full sm:w-3/5 xl:w-1/3 rounded-xl overflow-hidden;
-    aspect-ratio: 1/1;
-}
-
 .body-text {
     @apply  text-base lg:text-xl font-garamond;
 }
