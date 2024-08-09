@@ -50,11 +50,11 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
                                 )}
                             </div>
                             <div>
-                                <h1 className="subheader-text truncate font-walbaum">{post.title}</h1>
-                                {post.subtitle && <h3 className="subtitle-text truncate">{post.subtitle}</h3>}
+                                <h2 className="text-xl lg:text-2xl truncate-lines-smaller font-garamond">{post.title}</h2>
+                                {post.subtitle && <h3 className="text-base lg:text-lg truncate font-garamond">{post.subtitle}</h3>}
                             </div>
                             <div className='body-text truncate-lines text-gray-600'>
-                                <PortableText className="body-text hyphens-auto break-words text-justify custom-portable-text" value={post.content} />
+                                <PortableText className="text-base lg:text-lg hyphens-auto break-words text-justify custom-portable-text" value={post.content} />
                             </div>
                             <div>
                                 <span className={`font-garamond ${readMoreClass} pt-6 text-base lg:text-lg`}><b>Read More</b></span>

@@ -50,7 +50,7 @@ body {
 }
 
 .post-header-text {
-    @apply text-3xl lg:text-4xl whitespace-pre-wrap font-garamond;
+    @apply text-xl lg:text-3xl whitespace-pre-wrap font-garamond;
 }
 
 .subheader-text {
@@ -60,6 +60,10 @@ body {
 
 .subtitle-text {
     @apply text-xl lg:text-2xl leading-normal whitespace-pre-wrap font-garamond lg:leading-relaxed;
+}
+
+.subtitle-text-smaller {
+    @apply text-lg lg:text-xl leading-normal whitespace-pre-wrap font-garamond lg:leading-relaxed;
 }
 
 .subheader-text-styled {
