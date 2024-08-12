@@ -43,18 +43,18 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
                                 {post.author?.name && (
                                     <div className="flex items-center">
                                         <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                        <div className="text-gray-600 text-sm lg:text-base font-garamond">
+                                        <div className="text-gray-600 text-base lg:text-xl font-garamond">
                                             {post.author.name}
                                         </div>
                                     </div>
                                 )}
                             </div>
                             <div>
-                                <h2 className="text-xl lg:text-2xl truncate-lines-smaller font-garamond">{post.title}</h2>
-                                {post.subtitle && <h3 className="text-base lg:text-lg truncate font-garamond">{post.subtitle}</h3>}
+                                <h2 className="text-2xl lg:text-4xl truncate-lines-smaller font-garamond">{post.title}</h2>
+                                {post.subtitle && <h3 className="text-xl lg:text-3xl truncate font-garamond">{post.subtitle}</h3>}
                             </div>
-                            <div className='body-text truncate-lines text-gray-600'>
-                                <PortableText className="text-base lg:text-lg hyphens-auto break-words text-justify custom-portable-text" value={post.content} />
+                            <div className='truncate-lines text-gray-600'>
+                                <PortableText className="body-text hyphens-auto break-words text-justify custom-portable-text" value={post.content} />
                             </div>
                             <div>
                                 <span className={`font-garamond ${readMoreClass} pt-6 text-base lg:text-lg`}><b>Read More</b></span>
@@ -84,7 +84,7 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
     return (
         <div className={`p-3 overflow-hidden ${bgClass} transition-colors cursor-pointer shadow w-full rounded-lg border border-transparent hover:shadow-xl hover:border-black`}>
             <Link href={`${path}/posts/${post.slug}`} className='w-full'>
-                <div className={`relative w-full h-56 rounded-lg overflow-hidden object-cover`}>
+                <div className={`relative w-full h-56 rounded-lg overflow-hidden mb-2`}>
                     {post.coverImage && <NextImage image={post.coverImage} fit='contain' />}
                 </div>
                 <div className={`py-2 space-y-2`}>
@@ -93,7 +93,7 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
                         {post.author?.name && (
                             <div className="flex items-center">
                                 <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                <div className="text-gray-600 font-garamond text-sm lg:text-base">
+                                <div className="text-gray-600 font-garamond text-base lg:text-xl">
                                     {post.author.name}
                                 </div>
                             </div>
@@ -101,9 +101,9 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
                     </div>
                     <div>
                         <h2 className="text-lg lg:text-2xl truncate-lines-smaller font-garamond">{post.title}</h2>
-                        {post.subtitle && <h3 className="text-base lg:text-lg truncate font-garamond">{post.subtitle}</h3>}
+                        {post.subtitle && <h3 className="text-base lg:text-xl truncate font-garamond">{post.subtitle}</h3>}
                     </div>
-                    <p className="text-gray-600 text-base font-garamond truncate-lines-smaller">{post.excerpt}</p>
+                    <p className="text-gray-600 text-base lg:text-lg font-garamond truncate-lines-smaller">{post.excerpt}</p>
                 </div>
             </Link>
         </div>
@@ -132,14 +132,14 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post, backgroundColor 
                             {post.author?.name && (
                                 <div className="flex items-center">
                                     <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                    <p className="text-gray-600 text-sm lg:text-base font-garamond">{post.author.name}</p>
+                                    <p className="text-gray-600 text-base lg:text-xl">{post.author.name}</p>
                                 </div>
                             )}
                         </div>
                     </div>
                     <div className="text-left ml-10 flex-grow">
-                        <h2 className="text-lg truncate-lines-smaller font-garamond">{post.title}</h2>
-                        <p className="text-gray-600 text-base font-garamond truncate-lines">{post.excerpt}</p>
+                        <h2 className="text-lg lg:text-2xl truncate-lines-smaller font-garamond">{post.title}</h2>
+                        <p className="text-gray-600 text-base lg:text-lg font-garamond truncate-lines">{post.excerpt}</p>
                     </div>
                     <div>
                         <ChevronRightIcon className="w-8 h-8 hidden md:block" />

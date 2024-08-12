@@ -82,15 +82,15 @@ export const ResourceListItem: React.FC<ResourcePreviewProps> = ({ resource }) =
                         <div className="flex space-x-1">
                             {resource.datePublished && (
                                 <div className="flex items-center">
-                                    <p className="text-sm lg:text-base text-gray-600 font-garamond pr-1">Published</p>
+                                    <p className="text-base lg:text-xl text-gray-600 font-garamond pr-1">Published</p>
                                     <DateComponent dateString={resource.datePublished} />
                                 </div>)}
                             {resource.publisher && (
-                                <p className="text-sm lg:text-base text-gray-600 font-garamond truncate-lines-smaller">{`by ${resource.publisher}`}</p>
+                                <p className="text-base lg:text-xl text-gray-600 font-garamond truncate-lines-smaller">{`by ${resource.publisher}`}</p>
                             )}
                         </div>
                         {resource.author && (
-                            <p className="text-sm lg:text-base text-gray-600 font-garamond">{`Written by ${resource.author}`} </p>
+                            <p className="text-base lg:text-xl text-gray-600 font-garamond">{`Written by ${resource.author}`} </p>
                         )}
                     </div>
                     <div>
@@ -104,7 +104,7 @@ export const ResourceListItem: React.FC<ResourcePreviewProps> = ({ resource }) =
                                 href={resource.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-blue-500 hover:underline text-sm lg:text-base font-garamond"
+                                className="text-blue-500 hover:underline text-base lg:text-xl font-garamond"
                             >
                                 {resource.urlDisplayName || resource.url}
                             </a>

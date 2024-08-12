@@ -28,11 +28,11 @@ body {
 }
 
 .body-text {
-    @apply  text-base lg:text-xl font-garamond;
+    @apply  text-base lg:text-2xl font-garamond;
 }
 
 .body-text-styled {
-    @apply text-base lg:text-xl font-walbaum;
+    @apply text-base lg:text-2xl font-walbaum;
 }
 
 .body-text-satista {
@@ -44,7 +44,7 @@ body {
 }
 
 .post-header-text {
-    @apply text-xl lg:text-3xl whitespace-pre-wrap font-garamond;
+    @apply text-xl lg:text-4xl whitespace-pre-wrap font-garamond;
 }
 
 .subheader-text {
@@ -96,10 +96,6 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-.custom-portable-text p {
-    margin-bottom: 1.5em;
-  }
 
 .custom-portable-text ul {
     list-style: disc;

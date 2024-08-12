@@ -14,7 +14,7 @@ export default function PostHeader({ post: post }: { post: Post }) {
                     {post.author?.name && (
                         <div className="flex items-center">
                             <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                            <div className="text-gray-600 text-sm lg:text-base font-garamond">
+                            <div className="text-gray-600 text-base lg:text-xl font-garamond">
                                 {post.author.name}
                             </div>
                         </div>
@@ -26,7 +26,7 @@ export default function PostHeader({ post: post }: { post: Post }) {
                 {post.author && (
                     <div className="flex items-center">
                         <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                        <div className="text-gray-600 text-sm lg:text-base">
+                        <div className="text-gray-600 text-base lg:text-xl">
                             {post.author.name}
                         </div>
                     </div>
@@ -42,7 +42,7 @@ export default function PostHeader({ post: post }: { post: Post }) {
             }
             {<div className="pb-8 space-y-6">
                 <h5 className="post-header-text text-center">{post.title}</h5>
-                {post.subtitle && <h6 className="text-xl lg:text-2xl font-garamond text-center text-text-primary"> {post.subtitle}</h6>}
+                {post.subtitle && <h6 className="text-xl lg:text-3xl font-garamond text-center text-text-primary"> {post.subtitle}</h6>}
             </div>}
         </>
 

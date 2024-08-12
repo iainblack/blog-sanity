@@ -16,7 +16,7 @@ export default function CustomPortableText({
   const components: PortableTextComponents = {
     block: {
       h4: ({ children }) => (
-        <h6 className="text-xl text-center">{children}</h6>
+        <h6 className="text-3xl text-center">{children}</h6>
       ),
       blockquote: ({ children }) => (
         <blockquote className="italic sm:px-12 xl:px-16">{children}</blockquote>
