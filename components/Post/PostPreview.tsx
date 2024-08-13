@@ -33,7 +33,7 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
         <div className={`p-4 px-6 shadow overflow-hidden ${bgClass} cursor-pointer w-full rounded-lg border border-black`}>
             <Link href={`${path}/posts/${post.slug}`} className="w-full block">
                 <div className="flex flex-col md:flex-row">
-                    <div className={`relative w-full h-56 md:w-1/2 md:h-auto rounded-lg overflow-hidden object-cover`}>
+                    <div className={`relative w-full h-64 md:w-1/2 md:h-auto rounded-lg overflow-hidden object-cover`}>
                         {post.coverImage && <NextImage image={post.coverImage} priority fit={'contain'} />}
                     </div>
                     <div className="md:w-1/2 md:pl-4 flex flex-col justify-center">
