@@ -86,7 +86,7 @@ export default function Page() {
                         {!resourceState.resources || resourceState.resources.length === 0
                             ? <p className="text-body flex w-full justify-center h-[50vh]">No resources found.</p>
                             :
-                            <div className="grid gap-3">
+                            <div className="grid gap-6">
                                 {resourceState.resources.map(resource => (
                                     <ResourceListItem key={resource._id} resource={resource} />
                                 ))}

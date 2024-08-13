@@ -78,33 +78,34 @@ export const ResourceListItem: React.FC<ResourcePreviewProps> = ({ resource }) =
         <div className="w-full overflow-hidden flex items-center justify-between p-3 md:p-4 border border-gray-300 rounded-xl shadow ">
             <div className="flex flex-row justify-between items-center h-full">
                 <div className="text-left flex-grow w-full space-y-1">
-                    <div>
-                        <div className="flex space-x-1">
+                    <div className="pb-3">
+                        <div className="flex flex-wrap">
                             {resource.datePublished && (
-                                <div className="flex items-center">
-                                    <p className="text-base lg:text-xl text-gray-600 font-garamond pr-1">Published</p>
+                                <div className="flex items-center pr-1">
+                                    <p className="text-lg text-gray-600 font-garamond pr-1">Published</p>
                                     <DateComponent dateString={resource.datePublished} />
-                                </div>)}
+                                </div>
+                            )}
                             {resource.publisher && (
-                                <p className="text-base lg:text-xl text-gray-600 font-garamond truncate-lines-smaller">{`by ${resource.publisher}`}</p>
+                                <p className="text-lg text-gray-600 font-garamond pr-1">{`by ${resource.publisher.trim()}.`}</p>
+                            )}
+                            {resource.author && (
+                                <p className="text-lg text-gray-600 font-garamond">{`Written by ${resource.author.trim()}.`}</p>
                             )}
                         </div>
-                        {resource.author && (
-                            <p className="text-base lg:text-xl text-gray-600 font-garamond">{`Written by ${resource.author}`} </p>
-                        )}
                     </div>
-                    <div>
-                        <h2 className="text-xl lg:text-2xl truncate font-garamond">{resource.title}</h2>
+                    <div className="pb-2">
+                        <h2 className="text-2xl lg:text-3xl font-garamond">{resource.title}</h2>
                     </div>
                     <p className="text-gray-600 body-text font-garamond truncate-lines">{resource.description}</p>
                     {resource.url && (
-                        <div className="flex items-center space-x-1 mt-2">
+                        <div className="flex items-center space-x-1 pt-3">
                             <FaLink className="w-4 h-4 text-blue-500" />
                             <a
                                 href={resource.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-blue-500 hover:underline text-base lg:text-xl font-garamond"
+                                className="text-blue-500 hover:underline text-lg leading-6 lg:text-xl font-garamond"
                             >
                                 {resource.urlDisplayName || resource.url}
                             </a>

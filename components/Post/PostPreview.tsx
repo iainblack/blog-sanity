@@ -43,18 +43,18 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
                                 {post.author?.name && (
                                     <div className="flex items-center">
                                         <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                        <div className="text-gray-600 text-base lg:text-xl font-garamond">
+                                        <div className="text-gray-600 text-lg font-garamond">
                                             {post.author.name}
                                         </div>
                                     </div>
                                 )}
                             </div>
                             <div>
-                                <h2 className="text-2xl lg:text-4xl truncate-lines-smaller font-garamond">{post.title}</h2>
-                                {post.subtitle && <h3 className="text-xl lg:text-3xl truncate font-garamond">{post.subtitle}</h3>}
+                                <h2 className="text-2xl truncate-lines-smaller font-garamond">{post.title}</h2>
+                                {post.subtitle && <h3 className="text-xl truncate font-garamond">{post.subtitle}</h3>}
                             </div>
                             <div className='truncate-lines text-gray-600'>
-                                <PortableText className="body-text hyphens-auto break-words text-justify custom-portable-text" value={post.content} />
+                                <PortableText className="text-xl font-garamond hyphens-auto break-words text-justify custom-portable-text" value={post.content} />
                             </div>
                             <div>
                                 <span className={`font-garamond ${readMoreClass} pt-6 text-base lg:text-lg`}><b>Read More</b></span>
@@ -93,17 +93,17 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
                         {post.author?.name && (
                             <div className="flex items-center">
                                 <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                <div className="text-gray-600 font-garamond text-base lg:text-xl">
+                                <div className="text-gray-600 font-garamond text-lg">
                                     {post.author.name}
                                 </div>
                             </div>
                         )}
                     </div>
                     <div>
-                        <h2 className="text-lg lg:text-2xl truncate-lines-smaller font-garamond">{post.title}</h2>
-                        {post.subtitle && <h3 className="text-base lg:text-xl truncate font-garamond">{post.subtitle}</h3>}
+                        <h2 className="text-2xl truncate-lines-smaller font-garamond">{post.title}</h2>
+                        {post.subtitle && <h3 className="text-xl truncate font-garamond">{post.subtitle}</h3>}
                     </div>
-                    <p className="text-gray-600 text-base lg:text-lg font-garamond truncate-lines-smaller">{post.excerpt}</p>
+                    <p className="text-gray-600 text-xl font-garamond truncate-lines-smaller">{post.excerpt}</p>
                 </div>
             </Link>
         </div>
@@ -125,21 +125,23 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post, backgroundColor 
     return (
         <div className={`w-full overflow-hidden ${bgClass} flex items-center justify-between p-3 md:p-4 border border-black lg:border-gray-300 rounded-xl shadow transition-colors cursor-pointer hover:border-black`}>
             <Link href={`${path}/posts/${post.slug}`} className='w-full h-full flex flex-col justify-between'>
-                <div className="flex flex-row justify-between items-center h-full">
-                    <div className="w-auto">
+                <div className="flex flex-col h-full md:flex-row md:justify-between md:items-center ">
+                    <div className="w-auto pb-3 md:pb-0 md:min-w-[200px]">
                         <div className="text-left truncate">
                             <DateComponent icon dateString={post.date} />
                             {post.author?.name && (
                                 <div className="flex items-center">
                                     <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                    <p className="text-gray-600 text-base lg:text-xl">{post.author.name}</p>
+                                    <div className="text-gray-600 font-garamond text-lg">
+                                        {post.author.name}
+                                    </div>
                                 </div>
                             )}
                         </div>
                     </div>
-                    <div className="text-left ml-10 flex-grow">
-                        <h2 className="text-lg lg:text-2xl truncate-lines-smaller font-garamond">{post.title}</h2>
-                        <p className="text-gray-600 text-base lg:text-lg font-garamond truncate-lines">{post.excerpt}</p>
+                    <div className="text-left md:ml-10 flex-grow space-y-3">
+                        <h2 className="text-xl md:text-2xl truncate-lines-smaller font-garamond">{post.title}</h2>
+                        <p className="text-gray-600 text-base md:text-lg font-garamond truncate-lines">{post.excerpt}</p>
                     </div>
                     <div>
                         <ChevronRightIcon className="w-8 h-8 hidden md:block" />

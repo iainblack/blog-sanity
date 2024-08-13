@@ -122,14 +122,14 @@ export const PostPreviewListSkeleton = () => {
     return (
         <div className="flex flex-col w-full p-3">
             <div className="grid gap-3 px-3">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, index) => (
+                {[...Array(10)].map((_, index) => (
                     <div
                         key={index}
                         className="w-full overflow-hidden animate-pulse flex items-center justify-between p-3 md:p-4 border border-gray-300 rounded-xl shadow"
                     >
                         <div className='w-full h-full flex flex-col justify-between'>
-                            <div className="flex flex-row justify-between items-center h-full">
-                                <div className="w-auto">
+                            <div className="flex flex-col h-full md:flex-row md:justify-between md:items-center">
+                                <div className="w-auto pb-3 md:pb-0 md:min-w-[200px]">
                                     <div className="text-left truncate">
                                         <div className="h-4 bg-gray-300 rounded w-24 mb-2"></div>
                                         <div className="flex items-center">
@@ -138,9 +138,9 @@ export const PostPreviewListSkeleton = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="text-left ml-10 flex-grow">
+                                <div className="text-left md:ml-10 flex-grow space-y-3">
                                     <div className="h-6 bg-gray-300 rounded w-48 mb-2"></div>
-                                    <div className="h-4 bg-gray-300 rounded w-96"></div>
+                                    <div className="h-4 bg-gray-300 rounded w-48"></div>
                                 </div>
                                 <div>
                                     <div className="w-8 h-8 bg-gray-300 rounded-full hidden md:block"></div>
@@ -153,5 +153,6 @@ export const PostPreviewListSkeleton = () => {
         </div>
     );
 };
+
 
 

@@ -47,9 +47,9 @@ export default function MorePosts({ previous, next, }: { previous?: Post, next?:
                     className={`rounded-r-xl shadow-lg bg-contrast-bg h-14 border ${next ? 'border-black hover:bg-primary hover:text-white hover:shadow-inner' : 'border-gray-400 cursor-not-allowed'} `} onClick={goNext}>
                     <div className="flex justify-between items-center space-x-2 pr-2">
                         <div className="min-w-20">
-                            <div className={`text-sm lg:text-base ${next ? '' : 'text-gray-400'}`}>Next</div>
+                            <div className={`text-sm lg:text-base ${next ? '' : 'text-gray-400 font-walbaum'}`}>Next</div>
                         </div>
-                        <IoIosArrowRoundForward className={`h-6 w-6 ${next ? '' : 'text-gray-400'}`} />
+                        <IoIosArrowRoundForward className={`h-6 w-6 ${next ? '' : 'text-gray-400 font-walbaum'}`} />
                     </div>
                 </button>
             </div >

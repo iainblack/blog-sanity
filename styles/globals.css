@@ -28,11 +28,11 @@ body {
 }
 
 .body-text {
-    @apply  text-base lg:text-2xl font-garamond;
+    @apply  text-xl leading-6 lg:text-2xl font-garamond;
 }
 
 .body-text-styled {
-    @apply text-base lg:text-2xl font-walbaum;
+    @apply text-xl leading-6 lg:text-2xl font-walbaum;
 }
 
 .body-text-satista {
@@ -43,12 +43,8 @@ body {
     @apply text-4xl lg:text-5xl whitespace-pre-wrap font-walbaum;
 }
 
-.post-header-text {
-    @apply text-xl lg:text-4xl whitespace-pre-wrap font-garamond;
-}
-
 .subheader-text {
-    @apply text-2xl lg:text-3xl leading-normal whitespace-pre-wrap font-garamond lg:leading-relaxed;
+    @apply text-3xl leading-normal whitespace-pre-wrap font-garamond lg:leading-relaxed;
 
 }
 
