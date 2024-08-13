@@ -40,7 +40,7 @@ export default function Page() {
     const [modalState, setModalState] = useState<ModalState>({
         isOpen: false,
     });
-    const limit = 20;
+    const limit = 25;
 
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
