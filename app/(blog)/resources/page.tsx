@@ -49,7 +49,7 @@ export default function Page() {
             setLoading(true);
             setShowSkeleton(true);
             const offset = page * limit;
-            const response = await getResources(trimPlural(activeTab), searchVal, limit, offset);
+            const response = await getResources(activeTab, searchVal, limit, offset);
             setResourceState({
                 resources: response.resources,
                 totalResources: response.totalResources,
@@ -84,7 +84,7 @@ export default function Page() {
                 {!showSkeleton &&
                     <div className="w-full">
                         {!resourceState.resources || resourceState.resources.length === 0
-                            ? <p className="text-body flex w-full justify-center h-[50vh]">No resources found.</p>
+                            ? <p className="body-text flex w-full justify-center h-[50vh] font-garamond">Nothing Yet Available</p>
                             :
                             <div className="grid gap-6">
                                 {resourceState.resources.map(resource => (

@@ -5,7 +5,9 @@
 import { definePlugin, type DocumentDefinition } from "sanity";
 import { type StructureResolver } from "sanity/structure";
 import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
-import { BlockContentIcon, ImageIcon } from "@sanity/icons";
+import { BlockContentIcon, DocumentTextIcon, ImageIcon } from "@sanity/icons";
+import { pages, resourceTypes } from "@/components/utils";
+import { FaCubes } from "react-icons/fa6";
 
 export const singletonPlugin = definePlugin((types: string[]) => {
   return {
@@ -60,15 +62,63 @@ export const pageStructure = (
         const id = listItem.getId();
         return (
           id !== "galleryImage" &&
+          id !== "post" &&
           id !== "contentPanel" &&
           !typeDefArray.find((singleton) => singleton.name === id)
         );
       }
     );
 
+    // Create a list of posts grouped by page with ordering capability
+    const posts = pages
+      .filter(page => page.contentType === 'post')
+      .map(page =>
+        orderableDocumentListDeskItem({
+          id: page.slug,
+          type: 'post',
+          title: page.name,
+          icon: DocumentTextIcon,
+          S,
+          context,
+          filter: `_type == "post" && pageId == "${page.name}"`
+        })
+      );
+
+    const resources = resourceTypes.map(resourceType =>
+      S.listItem()
+        .title(resourceType)
+        .child(
+          S.documentList()
+            .title(`${resourceType} Resources`)
+            .filter('_type == "resource" && type == $type')
+            .params({ type: resourceType })
+        )
+        .icon(FaCubes)
+    );
+
     return S.list()
       .title("Content")
       .items([
+        S.listItem()
+          .title('Posts')
+          .icon(DocumentTextIcon)
+          .child(
+            S.list()
+              .title('Posts')
+              .items([
+                ...posts
+              ])
+          ),
+        S.listItem()
+          .title('Resources')
+          .icon(FaCubes)
+          .child(
+            S.list()
+              .title('Resource Types')
+              .items([
+                ...resources,
+              ])
+          ),
         orderableDocumentListDeskItem({
           type: 'galleryImage',
           title: 'Photo Gallery Images',
@@ -83,7 +133,7 @@ export const pageStructure = (
           S,
           context
         }),
-        ...defaultListItems,
+        S.documentTypeListItem('author').title('Authors'),
         S.divider(),
         ...singletonItems,
       ]);

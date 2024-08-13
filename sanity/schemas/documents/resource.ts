@@ -13,7 +13,7 @@ export default defineType({
       type: "string",
       description: "The type of resource, for filtering and display purposes.",
       options: {
-        list: ["Book", "Website", "Other"]
+        list: ["Books", "Websites", "Other"]
       },
       validation: (rule) => rule.required().error("Resource type is required."),
     }),
@@ -27,32 +27,32 @@ export default defineType({
       name: "author",
       title: "Author",
       type: "string",
-      hidden: ({ parent }) => parent?.type !== "Book",
+      hidden: ({ parent }) => parent?.type !== "Books",
     }),
     defineField({
       name: "publisher",
       title: "Publisher",
       type: "string",
-      hidden: ({ parent }) => parent?.type !== "Book",
+      hidden: ({ parent }) => parent?.type !== "Books",
     }),
     defineField({
       name: "datePublished",
       title: "Date Published",
       type: "datetime",
-      hidden: ({ parent }) => parent?.type !== "Book",
+      hidden: ({ parent }) => parent?.type !== "Books",
     }),
     defineField({
       name: "url",
       title: "URL",
       type: "url",
-      hidden: ({ parent }) => parent?.type === "Book",
+      hidden: ({ parent }) => parent?.type === "Books",
     }),
     defineField({
       name: "urlDisplayName",
       title: "URL Display Name",
       type: "string",
       description: "The text to display for the URL link.",
-      hidden: ({ parent }) => parent?.type === "Book",
+      hidden: ({ parent }) => parent?.type === "Books",
     }),
     defineField({
       name: "description",

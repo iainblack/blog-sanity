@@ -3,6 +3,7 @@ import NextImage from "../NextImage";
 import DateComponent from "../DateComponent";
 import { FaCubes, FaLink } from "react-icons/fa6";
 import { IoBookOutline } from "react-icons/io5";
+import { stegaClean } from "@sanity/client/stega";
 
 interface ResourcePreviewProps {
     resource: Resource;
@@ -14,12 +15,12 @@ export const ResourceImagePreview: React.FC<ResourcePreviewProps> = ({ resource,
         <div className="p-3 overflow-hidden transition-colors w-full rounded-lg border border-transparent shadow hover:shadow-xl hover:border-black">
             <div className="w-full flex flex-col h-full cursor-pointer" onClick={() => onClick && onClick(resource)}>
                 <div className="relative w-full h-52 rounded-lg overflow-hidden object-cover">
-                    {resource.type === "Book" && resource && resource.coverImage && (
+                    {resource.type === "Books" && resource && resource.coverImage && (
                         <div className="absolute top-2 left-2 p-2 rounded-full bg-transparent border border-gray-500">
                             <IoBookOutline className="w-5 h-5 text-gray-500" />
                         </div>
                     )}
-                    {resource.type === "Website" && resource && resource.coverImage && (
+                    {resource.type === "Websites" && resource && resource.coverImage && (
                         <div className="absolute top-2 left-2 p-2 rounded-full bg-transparent border border-gray-500">
                             <FaLink className="w-5 h-5 text-gray-500" />
                         </div>
@@ -33,8 +34,8 @@ export const ResourceImagePreview: React.FC<ResourcePreviewProps> = ({ resource,
                         <NextImage image={resource.coverImage} priority={false} />
                     ) : (
                         <div className="flex items-center justify-center bg-gray-300 h-full rounded-lg">
-                            {resource.type === "Book" && <IoBookOutline className="w-12 h-12" />}
-                            {resource.type === "Website" && <FaLink className="w-12 h-12" />}
+                            {resource.type === "Books" && <IoBookOutline className="w-12 h-12" />}
+                            {resource.type === "Websites" && <FaLink className="w-12 h-12" />}
                             {resource.type === "Other" && <FaCubes className="w-12 h-12" />}
                         </div>
                     )}
@@ -78,24 +79,24 @@ export const ResourceListItem: React.FC<ResourcePreviewProps> = ({ resource }) =
         <div className="w-full overflow-hidden flex items-center justify-between p-3 md:p-4 border border-gray-300 rounded-xl shadow ">
             <div className="flex flex-row justify-between items-center h-full">
                 <div className="text-left flex-grow w-full space-y-1">
+                    <div className="pb-2">
+                        <h2 className="text-2xl lg:text-3xl font-garamond">{resource.title}</h2>
+                    </div>
                     <div className="pb-3">
-                        <div className="flex flex-wrap">
+                        <div className="flex flex-wrap align-middle">
                             {resource.datePublished && (
-                                <div className="flex items-center pr-1">
-                                    <p className="text-lg text-gray-600 font-garamond pr-1">Published</p>
-                                    <DateComponent dateString={resource.datePublished} />
+                                <div className="flex items-center align-middle pr-1">
+                                    <p className="body-text text-gray-600 font-garamond pr-1">Published</p>
+                                    <DateComponent dateString={resource.datePublished} fontSize="body-text" />
                                 </div>
                             )}
                             {resource.publisher && (
-                                <p className="text-lg text-gray-600 font-garamond pr-1">{`by ${resource.publisher.trim()}.`}</p>
+                                <p className="body-text text-gray-600 font-garamond pr-1">{`by ${stegaClean(resource?.publisher).trim()}.`}</p>
                             )}
                             {resource.author && (
-                                <p className="text-lg text-gray-600 font-garamond">{`Written by ${resource.author.trim()}.`}</p>
+                                <p className="body-text text-gray-600 font-garamond">{`Written by ${stegaClean(resource?.author).trim()}.`}</p>
                             )}
                         </div>
-                    </div>
-                    <div className="pb-2">
-                        <h2 className="text-2xl lg:text-3xl font-garamond">{resource.title}</h2>
                     </div>
                     <p className="text-gray-600 body-text font-garamond truncate-lines">{resource.description}</p>
                     {resource.url && (

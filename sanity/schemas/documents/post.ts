@@ -4,6 +4,7 @@ import { defineField, defineType } from "sanity";
 
 import authorType from "./author";
 import { pages } from "@/components/utils";
+import { orderRankField } from "@sanity/orderable-document-list";
 
 export default defineType({
   name: "post",
@@ -21,6 +22,7 @@ export default defineType({
       },
       validation: (rule) => rule.required().error("Page is required."),
     }),
+    orderRankField({ type: 'post', newItemPosition: 'after' }),
     defineField({
       name: "title",
       title: "Title",

@@ -97,6 +97,11 @@ body {
     list-style: disc;
     padding-left: 1.5em;
     margin-bottom: 0;
+    margin-top: 0;
+}
+
+.custom-portable-text p {
+    margin-bottom: 1em;
 }
 
 .custom-portable-text ol {

@@ -15,7 +15,7 @@ export interface SettingsQueryResponse {
 export interface Resource {
   _id: string;
   title: string;
-  type: "Book" | "Website" | "Other";
+  type: "Books" | "Websites" | "Other";
   description: string;
   coverImage?: (Image & { alt?: string });
   author?: string;

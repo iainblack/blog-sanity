@@ -26,7 +26,7 @@ export const getContentPanelsByPage = (pageId: string) => {
 export const getResources = async (type: string, search: string, limit: number, offset: number) => {
   const searchFilter = search ? `&& title match $search` : '';
   const typeFilter = type ? `&& type == $type` : '';
-  const query = groq`*[_type == "resource" ${typeFilter} ${searchFilter}] | order(title asc) [${offset}...${offset + limit}] {
+  const query = groq`*[_type == "resource" ${typeFilter} ${searchFilter}] | order(lower(title) asc) [${offset}...${offset + limit}] {
     ${resourceFields}
   }`;
 
@@ -47,7 +47,7 @@ export const getResources = async (type: string, search: string, limit: number, 
 
 
 export const getPostsByPage = async (pageId: string, order: string = 'desc', offset: number = 0, limit: number = 10) => {
-  const query = groq`*[_type == "post" && pageId == $pageId] | order(date ${order}, _updatedAt ${order})[${offset}...${offset + limit}] {
+  const query = groq`*[_type == "post" && pageId == $pageId] | order(orderRank ${order}, date ${order}, _updatedAt ${order})[${offset}...${offset + limit}] {
     ${postFields}
   }`;
 
