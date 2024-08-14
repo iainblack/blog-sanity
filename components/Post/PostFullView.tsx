@@ -29,7 +29,7 @@ export default function PostFullView({ posts, backRoute, backgroundColor }: Post
     return (
         <div className="container mx-auto py-5">
             <BackButton route={backRoute} title="All Posts" />
-            <article className={`mx-auto lg:max-w-5xl p-5 md:p-8 ${bgClass ? `rounded-xl shadow-xl ${bgClass}` : ''}`}>
+            <article className={`mx-auto lg:max-w-5xl p-5 md:p-8 border border-black ${bgClass ? `rounded-xl shadow-xl ${bgClass}` : ''}`}>
                 <PostHeader post={posts.currentPost} />
                 {posts.currentPost.content?.length
                     ? (<PortableText className="body-text hyphens-auto break-words text-justify custom-portable-text whitespace-pre-line" value={posts.currentPost.content} />)

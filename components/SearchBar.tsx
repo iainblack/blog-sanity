@@ -54,14 +54,15 @@ export default function SearchBar({ setSearch, onSubmit, loading, value, type, p
                     onKeyDown={handleKeyDown}
                 />
             </div>
-            {error && <p className="text-red-500 text-sm ml-2 absolute -bottom-6">{error}</p>}
-            {buttonText && <button
-                className="two-tone-button whitespace-nowrap h-12 w-52"
-                type="button"
-                onClick={onSubmit}
-            >
-                {loading ? <LoadingSpinner size={16} /> : <div className='font-garamond'>{buttonText}</div>}
-            </button>}
+            {error && <p className="text-red-500 text-base ml-2 absolute -bottom-6">{error}</p>}
+            {buttonText &&
+                <button
+                    className="two-tone-button whitespace-nowrap h-12 w-52"
+                    type="button"
+                    onClick={onSubmit}
+                >
+                    {loading ? <LoadingSpinner size={16} /> : <div className='text-xl font-garamond'>{buttonText}</div>}
+                </button>}
         </div >
     );
 }

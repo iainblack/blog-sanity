@@ -76,7 +76,7 @@ export const ResourceImagePreview: React.FC<ResourcePreviewProps> = ({ resource,
 
 export const ResourceListItem: React.FC<ResourcePreviewProps> = ({ resource }) => {
     return (
-        <div className="w-full overflow-hidden flex items-center justify-between p-3 md:p-4 border border-gray-300 rounded-xl shadow ">
+        <div className="w-full overflow-hidden flex items-center justify-between p-3 md:p-4 border border-black rounded-xl shadow ">
             <div className="flex flex-row justify-between items-center h-full">
                 <div className="text-left flex-grow w-full space-y-1">
                     <div className="pb-2">
