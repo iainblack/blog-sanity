@@ -38,8 +38,8 @@ export default function ExpandablePanel({
 
             {shouldDisplayImage && image && image?.asset &&
                 <div className='w-full flex flex-col items-center justify-center'>
-                    <div className='relative w-full h-[60vh]'>
-                        <NextImage image={image} priority fit='contain' />
+                    <div className='relative w-full h-[60vh] sm:w-2/3 md:1/2 xl:w-1/3 aspect-[3/4] rounded-xl overflow-hidden'>
+                        <NextImage image={image} priority />
                     </div>
                     {image?.caption && <p className="text-gray-600 text-center font-garamond">{image.caption}</p>}
                 </div>
