@@ -93,7 +93,7 @@ export default function MessageForm() {
                 <div className="flex flex-wrap -mx-3 mb-2">
                     <div className="w-full md:w-1/2 px-3 mb-2 md:mb-0">
                         <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-first-name">
-                            First Name
+                            Your First Name
                         </label>
                         <input
                             id='contact-first-name' type="text" value={firstName.value} onChange={(e) => setFormState({ ...formState, firstName: { value: e.target.value } })}
@@ -103,7 +103,7 @@ export default function MessageForm() {
                     </div>
                     <div className="w-full md:w-1/2 px-3 mb-2 md:mb-0">
                         <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-last-name">
-                            Last Name
+                            Your Last Name
                         </label>
                         <input
                             id='contact-last-name' type="text" value={lastName.value} onChange={(e) => setFormState({ ...formState, lastName: { value: e.target.value } })}
@@ -125,7 +125,7 @@ export default function MessageForm() {
                     </div>
                     <div className="w-full px-3 mb-2">
                         <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-password">
-                            Email
+                            Your Email
                         </label>
                         <input
                             type='text' value={email.value} onChange={(e) => setFormState({ ...formState, email: { value: e.target.value } })}
