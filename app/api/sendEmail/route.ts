@@ -16,7 +16,7 @@ export async function POST(req: NextRequest, res: any) {
         const fromEmail = process.env.NEXT_PUBLIC_VERIFIED_SENDER ?? '';
 
         var content = {
-            to: process.env.NEXT_PUBLIC_VERIFIED_SENDER,
+            to: process.env.NEXT_PUBLIC_CLIENT_EMAIL_ADDRESS,
             from: fromEmail,
             subject: subject,
             text: message,
