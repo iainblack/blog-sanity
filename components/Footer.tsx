@@ -18,6 +18,14 @@ export default async function Footer() {
                     </div>
                 </div>
             </div>
+            <div className="flex flex-col ml-5 mb-5">
+                <div className="text-lg text-text-contrast flex text-center font-garamond leading-tight font-light">
+                    Website designed and created by{" "}
+                    <Link href="https://iainblack.dev/" target="_blank">
+                        <p className="text-contrast-bg pl-1 hover:text-primary">Iain Black</p>
+                    </Link>{" "}
+                </div>
+            </div>
         </footer >
     );
 }
