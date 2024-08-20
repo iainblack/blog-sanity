@@ -86,8 +86,8 @@ export const ResourceListItem: React.FC<ResourcePreviewProps> = ({ resource }) =
                         <div className="flex flex-wrap align-middle">
                             {resource.datePublished && (
                                 <div className="flex items-center align-middle pr-1">
-                                    <p className="body-text text-gray-600 font-garamond pr-1">Published</p>
-                                    <DateComponent dateString={resource.datePublished} fontSize="body-text" />
+                                    <p className="body-text text-gray-600 font-garamond pr-1">Published in </p>
+                                    <p className="body-text text-gray-600 font-garamond">{resource.datePublished}</p>
                                 </div>
                             )}
                             {resource.publisher && (

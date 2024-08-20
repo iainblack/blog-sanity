@@ -42,7 +42,7 @@ export default function PostHeader({ post: post }: { post: Post }) {
             }
             {<div className="pb-5 md:pb-8 space-y-3 lg:space-y-6">
                 <h5 className="text-2xl lg:text-3xl whitespace-pre-wrap font-garamond text-center">{post.title}</h5>
-                {post.subtitle && <h6 className="text-xl lg:text-2xl font-garamond text-center text-text-primary"> {post.subtitle}</h6>}
+                {post.subtitle && <h6 className="text-xl lg:text-3xl font-garamond text-center text-text-primary"> {post.subtitle}</h6>}
             </div>}
         </>
 

@@ -34,12 +34,35 @@ export default defineType({
       title: "Publisher",
       type: "string",
       hidden: ({ parent }) => parent?.type !== "Books",
+      validation: (Rule) => Rule.custom((publisher, context) => {
+        const datePublished = context.document?.datePublished;
+        if ((publisher && !datePublished) || (!publisher && datePublished)) {
+          return "Both Publisher and Year Published must be populated.";
+        }
+        return true;
+      }),
     }),
     defineField({
       name: "datePublished",
-      title: "Date Published",
-      type: "datetime",
+      title: "Year Published",
+      type: "string",
       hidden: ({ parent }) => parent?.type !== "Books",
+      validation: (Rule) => Rule.regex(/^\d{4}$/, {
+        name: "year", // Error message is "Does not match year pattern"
+        invert: false, // Boolean to allow any value that does NOT match pattern
+      }).error("Please enter a valid year (e.g., 2023)").custom((datePublished, context) => {
+        const publisher = context.document?.publisher;
+        if ((datePublished && !publisher) || (!datePublished && publisher)) {
+          return "Both Publisher and Year Published must be populated.";
+        }
+        return true;
+      }),
+      options: {
+        list: Array.from({ length: 251 }, (_, i) => {
+          const year = new Date().getFullYear() - i;
+          return { title: year.toString(), value: year.toString() };
+        }),
+      },
     }),
     defineField({
       name: "url",
