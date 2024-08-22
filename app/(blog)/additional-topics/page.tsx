@@ -47,6 +47,10 @@ export default function Page() {
     return () => clearTimeout(timeoutId);
   }, [order, page]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
+
   return (
     <div className="container mx-auto lg:px-16">
       <div className="flex flex-col items-center space-y-6 my-6 lg:space-y-0 lg:flex-row md:justify-between lg:my-12">

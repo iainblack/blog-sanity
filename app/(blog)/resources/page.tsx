@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Intro } from "@/components/PageIntro";
-import { Tab, trimPlural } from "@/components/utils";
+import { Tab } from "@/components/utils";
 import SearchBar from "@/components/SearchBar";
 import { getResources } from "../actions";
 import { Resource } from "@/sanity/lib/queries";
@@ -57,13 +57,17 @@ export default function Page() {
             setLoading(false);
             timeoutId = setTimeout(() => {
                 setShowSkeleton(false);
-            }, 500); // Ensure skeleton displays for at least 500 ms
+            }, 500);
         };
 
         fetchResources();
 
         return () => clearTimeout(timeoutId);
     }, [page, searchVal, activeTab]);
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [page]);
 
     return (
         <div className="container mx-auto lg:px-16">
