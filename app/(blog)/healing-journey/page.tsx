@@ -49,9 +49,7 @@ export default function Page() {
         totalPosts: response.totalPosts,
       });
       setLoading(false);
-      timeoutId = setTimeout(() => {
-        setShowSkeleton(false);
-      }, 500); // Ensure skeleton displays for at least 500 ms
+      setShowSkeleton(false);
     };
 
     fetchPosts();
