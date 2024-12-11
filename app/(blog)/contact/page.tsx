@@ -2,7 +2,7 @@ import MessageForm from "@/components/MessageForm";
 
 
 export default function Page() {
-    const subtitle1 = `If you have a question or comment, I invite you to send it to me via this email link. I will do my best to respond promptly to each good faith email message I receive.`;
+    const subtitle1 = `If you have a question or comment, I invite you to send it to me via this email link. I will do my best to respond promptly to each good-faith email message I receive.`;
     const subtitle2 = `If you would like to receive an email alert when I post each new blog post, I invite you to sign up below. Be assured, I will not share your contact information with anyone, ever.`;
     return (
         <div className="container mx-auto lg:flex lg:flex-row lg:justify-between lg:px-16">
