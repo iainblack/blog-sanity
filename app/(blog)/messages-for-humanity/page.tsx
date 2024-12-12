@@ -27,8 +27,6 @@ export default function Page() {
   const limit = 10;
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-
     const fetchPosts = async () => {
       setLoading(true);
       setShowSkeleton(true);
@@ -38,14 +36,10 @@ export default function Page() {
         totalPosts: response.totalPosts,
       });
       setLoading(false);
-      timeoutId = setTimeout(() => {
-        setShowSkeleton(false);
-      }, 500);
+      setShowSkeleton(false);
     };
 
     fetchPosts();
-
-    return () => clearTimeout(timeoutId);
   }, [order, page]);
 
   const noResultsMessage = "These messages will be made available at a later time when they are in sync with the sharing of Lou's healing story.";
