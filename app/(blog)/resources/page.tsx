@@ -88,7 +88,7 @@ export default function Page() {
                 {!showSkeleton &&
                     <div className="w-full">
                         {!resourceState.resources || resourceState.resources.length === 0
-                            ? <p className="body-text flex w-full justify-center h-[50vh] font-garamond">Nothing Yet Available</p>
+                            ? <p className="body-text flex w-full justify-center h-[50vh] font-garamond mt-8">Nothing Yet Available</p>
                             :
                             <div className="grid gap-6">
                                 {resourceState.resources.map(resource => (

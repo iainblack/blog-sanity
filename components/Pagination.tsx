@@ -14,6 +14,8 @@ export default function Pagination({ totalPages, active, setActive }: { totalPag
         setActive(active - 1);
     };
 
+    if (totalPages === 0) return null;
+
     return (
         <div className="flex items-center gap-4 p-6 pb-8">
             <button
