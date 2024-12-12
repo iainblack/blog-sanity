@@ -43,8 +43,6 @@ export default function Page() {
     const limit = 10;
 
     useEffect(() => {
-        let timeoutId: NodeJS.Timeout;
-
         const fetchResources = async () => {
             setLoading(true);
             setShowSkeleton(true);
@@ -55,14 +53,10 @@ export default function Page() {
                 totalResources: response.totalResources,
             });
             setLoading(false);
-            timeoutId = setTimeout(() => {
-                setShowSkeleton(false);
-            }, 500);
+            setShowSkeleton(false);
         };
 
         fetchResources();
-
-        return () => clearTimeout(timeoutId);
     }, [page, searchVal, activeTab]);
 
     useEffect(() => {
