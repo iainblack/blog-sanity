@@ -28,14 +28,19 @@ export default function Page() {
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
-      setShowSkeleton(true);
+      const skeletonTimeout = setTimeout(() => {
+        setShowSkeleton(true);
+      }, 800);
+
       const response = await getPostsByPage("Additional Topics", order, page * limit, limit);
+
+      clearTimeout(skeletonTimeout);
+      setShowSkeleton(false);
       setPostState({
         visiblePosts: response.posts,
         totalPosts: response.totalPosts,
       });
       setLoading(false);
-      setShowSkeleton(false);
     };
 
     fetchPosts();

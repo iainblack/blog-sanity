@@ -31,7 +31,7 @@ export default function Page() {
     const [searchVal, setSearchVal] = useState("");
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [showSkeleton, setShowSkeleton] = useState(true);
+    const [showSkeleton, setShowSkeleton] = useState(false);
     const [resourceState, setResourceState] = useState<ResourceState>({
         resources: [],
         totalResources: 0,
@@ -45,15 +45,20 @@ export default function Page() {
     useEffect(() => {
         const fetchResources = async () => {
             setLoading(true);
-            setShowSkeleton(true);
+            const skeletonTimeout = setTimeout(() => {
+                setShowSkeleton(true);
+            }, 800);
+
             const offset = page * limit;
             const response = await getResources(activeTab, searchVal, limit, offset);
+
+            clearTimeout(skeletonTimeout);
+            setShowSkeleton(false);
             setResourceState({
                 resources: response.resources,
                 totalResources: response.totalResources,
             });
             setLoading(false);
-            setShowSkeleton(false);
         };
 
         fetchResources();

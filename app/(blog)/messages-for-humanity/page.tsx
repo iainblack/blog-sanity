@@ -20,7 +20,7 @@ export default function Page() {
     totalPosts: 0,
   });
   const [loading, setLoading] = useState(true);
-  const [showSkeleton, setShowSkeleton] = useState(true);
+  const [showSkeleton, setShowSkeleton] = useState(false);
   const [order, setOrder] = useState('asc');
   const [page, setPage] = useState(0);
   const [view, setView] = useState<"grid" | "list">("grid");
@@ -29,14 +29,19 @@ export default function Page() {
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
-      setShowSkeleton(true);
+      const skeletonTimeout = setTimeout(() => {
+        setShowSkeleton(true);
+      }, 800);
+
       const response = await getPostsByPage("Messages for Humanity", order, page * limit, limit);
+
+      clearTimeout(skeletonTimeout);
+      setShowSkeleton(false);
       setPostState({
         visiblePosts: response.posts,
         totalPosts: response.totalPosts,
       });
       setLoading(false);
-      setShowSkeleton(false);
     };
 
     fetchPosts();

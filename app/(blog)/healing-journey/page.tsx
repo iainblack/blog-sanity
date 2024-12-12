@@ -19,7 +19,7 @@ export default function Page() {
     totalPosts: 0,
   });
   const [loading, setLoading] = useState(true);
-  const [showSkeleton, setShowSkeleton] = useState(true);
+  const [showSkeleton, setShowSkeleton] = useState(false);
   const [order, setOrder] = useState('asc');
   const [page, setPage] = useState(0);
   const [view, setView] = useState<"grid" | "list">("grid");
@@ -38,23 +38,23 @@ export default function Page() {
   };
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-
     const fetchPosts = async () => {
       setLoading(true);
-      setShowSkeleton(true);
+      const skeletonTimeout = setTimeout(() => {
+        setShowSkeleton(true);
+      }, 800);
       const response = await getPostsByPage("Lou's Healing Journey", order, page * limit, limit);
+
+      clearTimeout(skeletonTimeout);
+      setShowSkeleton(false);
       setPostState({
         visiblePosts: response.posts,
         totalPosts: response.totalPosts,
       });
       setLoading(false);
-      setShowSkeleton(false);
     };
 
     fetchPosts();
-
-    return () => clearTimeout(timeoutId);
   }, [order, page]);
 
   useEffect(() => {
