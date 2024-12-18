@@ -24,7 +24,7 @@ interface ModalState {
 const tabs: Tab[] = [
     { name: 'Books', icon: <IoBookOutline /> },
     { name: 'Websites', icon: <FaLink /> },
-    { name: 'Other', icon: <FaCubes /> },
+    { name: 'Other Resources', icon: <FaCubes /> },
 ];
 
 export default function Page() {
