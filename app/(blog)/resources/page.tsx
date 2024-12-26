@@ -17,14 +17,10 @@ interface ResourceState {
     totalResources: number;
 }
 
-interface ModalState {
-    isOpen: boolean;
-    resource?: Resource;
-}
 const tabs: Tab[] = [
-    { name: 'Books', icon: <IoBookOutline /> },
-    { name: 'Websites', icon: <FaLink /> },
-    { name: 'Other Resources', icon: <FaCubes /> },
+    { name: 'Books', resourceType: 'Books', icon: <IoBookOutline /> },
+    { name: 'Websites', resourceType: 'Websites', icon: <FaLink /> },
+    { name: 'Other Resources', resourceType: 'Other', icon: <FaCubes /> },
 ];
 
 export default function Page() {
@@ -36,10 +32,7 @@ export default function Page() {
         resources: [],
         totalResources: 0,
     });
-    const [activeTab, setActiveTab] = useState(tabs[0].name);
-    const [modalState, setModalState] = useState<ModalState>({
-        isOpen: false,
-    });
+    const [activeTab, setActiveTab] = useState<Tab>(tabs[0]);
     const limit = 10;
 
     useEffect(() => {
@@ -47,10 +40,10 @@ export default function Page() {
             setLoading(true);
             const skeletonTimeout = setTimeout(() => {
                 setShowSkeleton(true);
-            }, 800);
+            }, 500);
 
             const offset = page * limit;
-            const response = await getResources(activeTab, searchVal, limit, offset);
+            const response = await getResources(activeTab.resourceType, searchVal, limit, offset);
 
             clearTimeout(skeletonTimeout);
             setShowSkeleton(false);
@@ -79,7 +72,7 @@ export default function Page() {
                     setSearch={setSearchVal}
                     value={searchVal}
                     onSubmit={() => setPage(0)}
-                    placeholder={`Search ${activeTab.toLowerCase()}...`}
+                    placeholder={`Search ${activeTab.name.toLowerCase()}...`}
                     searchIcon
                     loading={loading}
                 />
@@ -101,14 +94,6 @@ export default function Page() {
                     <Pagination totalPages={Math.ceil(resourceState.totalResources / limit)} active={page} setActive={setPage} />
                 </div>
             </div>
-            {
-                modalState.resource &&
-                <ResourceModal
-                    resource={modalState.resource}
-                    isOpen={modalState.isOpen}
-                    onClose={() => setModalState({ isOpen: false })}
-                />
-            }
         </div >
     );
 }

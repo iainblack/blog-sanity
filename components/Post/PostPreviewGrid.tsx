@@ -10,9 +10,14 @@ interface PostPreviewGridProps {
     noResultsMessage?: string;
     backgroundColor?: string;
     singleImage?: boolean;
+    loading: boolean;
 }
 
-export default function PostPreviewGrid({ posts, view, page, noResultsMessage, backgroundColor, singleImage }: PostPreviewGridProps) {
+export default function PostPreviewGrid({ posts, view, page, noResultsMessage, backgroundColor, singleImage, loading }: PostPreviewGridProps) {
+
+    if (loading) {
+        return null;
+    }
 
     if (!posts || posts.length === 0) {
         return (

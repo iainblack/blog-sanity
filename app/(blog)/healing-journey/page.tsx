@@ -47,7 +47,7 @@ export default function Page() {
       setLoading(true);
       const skeletonTimeout = setTimeout(() => {
         setShowSkeleton(true);
-      }, 900);
+      }, 500);
       const response = await getPostsByPage("Lou's Healing Journey", order, page * limit, limit);
 
       clearTimeout(skeletonTimeout);
@@ -76,7 +76,7 @@ export default function Page() {
         {getLoadingSkeleton(page, view)}
         {!showSkeleton && (
           <div className="w-full flex flex-col items-center">
-            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} backgroundColor="contrast" />
+            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} backgroundColor="contrast" loading={loading} />
             <Pagination totalPages={Math.ceil(postState.totalPosts / limit)} active={page} setActive={setPage} />
           </div>
         )}

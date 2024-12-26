@@ -1,6 +1,9 @@
+'use client';
+
 import Image from "next/image";
 
 import { urlForImage } from "@/sanity/lib/utils";
+import { useState } from "react";
 
 interface NextImageProps {
   image: any;
@@ -10,29 +13,31 @@ interface NextImageProps {
 }
 
 export default function NextImage(props: NextImageProps) {
+  const [isLoading, setIsLoading] = useState(true);
   const { image, priority, fit, onLoad } = props;
 
-  if (!image) {
-    return null;
-  }
-
-  const blurDataUrl = urlForImage(image)
-    ?.width(10)
-    .height(10)
-    .quality(30)
-    .url() as string;
+  const handleLoad = () => {
+    setIsLoading(false);
+    if (onLoad) {
+      onLoad();
+    }
+  };
 
   return (
-    <Image
-      className="h-full w-full"
-      fill
-      alt={image?.alt || ""}
-      blurDataURL={blurDataUrl}
-      src={urlForImage(image)?.url() as string}
-      sizes="50w"
-      priority={priority}
-      style={{ objectFit: fit || 'cover' }}
-      onLoad={onLoad}
-    />
+    <>
+      {isLoading && (
+        <div className="h-full w-full bg-gray-200 animate-pulse" />
+      )}
+      <Image
+        className="h-full w-full"
+        fill
+        alt={image?.alt || ""}
+        src={urlForImage(image)?.url() as string}
+        sizes="50w"
+        priority={priority}
+        style={{ objectFit: fit || 'cover' }}
+        onLoad={handleLoad}
+      />
+    </>
   );
 }

@@ -31,7 +31,7 @@ export default function Page() {
       setLoading(true);
       const skeletonTimeout = setTimeout(() => {
         setShowSkeleton(true);
-      }, 800);
+      }, 500);
 
       const response = await getPostsByPage("Messages for Humanity", order, page * limit, limit);
 
@@ -73,7 +73,7 @@ export default function Page() {
         {renderSkeleton()}
         {!showSkeleton && (
           <>
-            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} noResultsMessage={noResultsMessage} backgroundColor="pink" singleImage />
+            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} noResultsMessage={noResultsMessage} backgroundColor="pink" singleImage loading={loading} />
             <Pagination totalPages={Math.ceil(postState.totalPosts / limit)} active={page} setActive={setPage} />
           </>
         )}

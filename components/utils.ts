@@ -15,6 +15,7 @@ export const emailPreferenceOptions = pages.filter((page) => page.contentType ==
 
 export interface Tab {
   name: string;
+  resourceType: string;
   icon: React.ReactNode;
 }
 

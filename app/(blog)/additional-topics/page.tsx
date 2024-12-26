@@ -30,7 +30,7 @@ export default function Page() {
       setLoading(true);
       const skeletonTimeout = setTimeout(() => {
         setShowSkeleton(true);
-      }, 800);
+      }, 500);
 
       const response = await getPostsByPage("Additional Topics", order, page * limit, limit);
 
@@ -61,7 +61,7 @@ export default function Page() {
         {showSkeleton && page !== 0 && <PostPreviewGridSkeleton />}
         {!showSkeleton && (
           <div className="w-full flex flex-col items-center">
-            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} />
+            <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} loading={loading} />
             <Pagination totalPages={Math.ceil(postState.totalPosts / limit)} active={page} setActive={setPage} />
           </div>
         )}
