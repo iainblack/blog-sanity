@@ -75,27 +75,31 @@ const getEmailHtml = (post: any, email: string) => {
 };
 
 const sendEmails = async (post: any, subscribers: string[]) => {
-  const messages = subscribers.map(email => ({
+  const emails = subscribers.map(email => ({
     to: email,
     from: process.env.NEXT_PUBLIC_CLIENT_EMAIL_ADDRESS ?? 'no-reply@healingwithmiracles.com',
     subject: `New Post from Lou's Blog: ${post.pageId}`,
     html: getEmailHtml(post, email),
   }));
 
-  const sendResults = await Promise.all(
-    messages.map(async message => {
-      try {
-        await sgMail.send(message);
-        console.log(`Email sent to ${message.to}`);
-        return true;
-      } catch (error) {
-        console.error(`Failed to send email to ${message.to}`, error);
-        return false;
-      }
-    })
-  );
+  const errorMessages: string[] = [];
 
-  return sendResults.every(result => result);
+  console.log(`Sending emails to ${emails.map(email => email.to).join(', ')}`);
+  try {
+    await sgMail.send(emails);
+    emails.forEach(email => {
+      console.log(`Email sent to ${email.to}`);
+    });
+  } catch (error) {
+    console.error('Failed to send emails', error);
+    if (error instanceof Error) {
+      errorMessages.push(error.message);
+    } else {
+      errorMessages.push(String(error));
+    }
+  }
+
+  return errorMessages;
 };
 
 export async function POST(req: NextRequest) {
@@ -117,10 +121,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'No subscribers to notify' }, { status: 200 });
     }
 
-    const success = await sendEmails(post, subscribers);
+    const errorMessages = await sendEmails(post, subscribers);
 
-    if (!success) {
-      return NextResponse.json({ message: 'Failed to send emails' }, { status: 500 });
+    if (errorMessages.length > 0) {
+      return NextResponse.json({
+        message: `Failed to send emails to some subscribers: ${errorMessages.join(', ')}`,
+      });
     }
 
     return NextResponse.json({ message: 'Emails sent successfully' }, { status: 200 });
