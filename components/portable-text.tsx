@@ -33,7 +33,7 @@ export default function CustomPortableText({
     },
   };
 
-  value = normalizeText(value);
+  //value = normalizeText(value);
 
   return (
     <div className={[className].filter(Boolean).join(" ")}>

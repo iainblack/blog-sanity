@@ -77,7 +77,7 @@ const getEmailHtml = (post: any, email: string) => {
 const sendEmails = async (post: any, subscribers: string[]) => {
   const emails = subscribers.map(email => ({
     to: email,
-    from: process.env.NEXT_PUBLIC_CLIENT_EMAIL_ADDRESS ?? 'no-reply@healingwithmiracles.com',
+    from: process.env.NEXT_PUBLIC_VERIFIED_SENDER ?? 'no-reply@healingwithmiracles.com',
     subject: `New Post from Lou's Blog: ${post.pageId}`,
     html: getEmailHtml(post, email),
   }));
