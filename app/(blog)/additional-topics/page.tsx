@@ -56,7 +56,7 @@ export default function Page() {
         <Intro title={"Additional Topics"} />
         <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} view={view} setView={setView} />
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center min-h-[65vh]">
         {showSkeleton && page === 0 && <PostPreviewGridWithHeroSkeleton />}
         {showSkeleton && page !== 0 && <PostPreviewGridSkeleton />}
         {!showSkeleton && (

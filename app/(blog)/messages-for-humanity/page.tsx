@@ -69,7 +69,7 @@ export default function Page() {
         <Intro title={"Messages for Humanity"} />
         <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} view={view} setView={setView} />
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center min-h-[65vh]">
         {renderSkeleton()}
         {!showSkeleton && (
           <>

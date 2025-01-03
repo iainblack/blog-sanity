@@ -66,7 +66,7 @@ export default function Page() {
             <div className="flex flex-col items-center space-y-6 my-6 md:space-y-0 md:flex-row md:justify-between md:my-12">
                 <Intro title={"Lou's Recommended Resources"} />
             </div>
-            <div className="flex flex-col space-y-6 px-2 md:px-4 items-center sm:items-start lg:px-0">
+            <div className="flex flex-col space-y-6 px-2 md:px-4 items-center sm:items-start lg:px-0 min-h-[65vh]">
                 <Tabs activeTab={activeTab} setActiveTab={setActiveTab} tabs={tabs} />
                 <SearchBar
                     setSearch={setSearchVal}
@@ -77,7 +77,7 @@ export default function Page() {
                     loading={loading}
                 />
                 {showSkeleton && <ResourceListItemSkeleton />}
-                {!showSkeleton &&
+                {!showSkeleton && !loading &&
                     <div className="w-full">
                         {!resourceState.resources || resourceState.resources.length === 0
                             ? <p className="body-text text-gray-600 flex w-full justify-center h-[50vh] font-garamond mt-8">Nothing Yet Available</p>
