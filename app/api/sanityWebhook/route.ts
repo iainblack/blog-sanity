@@ -4,7 +4,7 @@ import { createClient } from '@sanity/client';
 import { db } from '@/components/Firebase/FirebaseConfig';
 import { pages } from '@/components/utils';
 
-const postmarkClient = new ServerClient(process.env.NEXT_PUBLIC_POSTMARK_API_KEY || '');
+const postmarkClient = new ServerClient(process.env.POSTMARK_API_KEY || '');
 
 // Initialize Sanity client
 const sanityClient = createClient({

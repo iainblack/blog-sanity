@@ -1,7 +1,7 @@
 import { ServerClient } from 'postmark';
 import { NextRequest, NextResponse } from 'next/server';
 
-const postmarkClient = new ServerClient(process.env.NEXT_PUBLIC_POSTMARK_API_KEY || '');
+const postmarkClient = new ServerClient(process.env.POSTMARK_API_KEY || '');
 
 const parseBody = async (req: NextRequest) => {
     const raw = await req.arrayBuffer();
