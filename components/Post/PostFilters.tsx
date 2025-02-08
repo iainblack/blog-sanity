@@ -1,3 +1,5 @@
+'use client';
+
 import { UlistIcon, ThLargeIcon, SortIcon } from "@sanity/icons";
 import Dropdown from "../Dropdown";
 

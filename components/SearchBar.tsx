@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
 import LoadingSpinner from "./LoadingSpinner";
 import { SearchIcon } from "@sanity/icons";
 
 interface SearchBarProps {
-    setSearch: (search: string) => void;
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onSubmit: () => void;
     value: string;
     placeholder?: string;
@@ -14,31 +13,11 @@ interface SearchBarProps {
     searchIcon?: boolean;
 }
 
-export default function SearchBar({ setSearch, onSubmit, loading, value, type, placeholder, error, buttonText, searchIcon }: SearchBarProps) {
-    const [searchTerm, setSearchTerm] = useState(value);
-
-    useEffect(() => {
-        const handler = setTimeout(() => {
-            setSearch(searchTerm);
-        }, 300);
-
-        return () => {
-            clearTimeout(handler);
-        };
-    }, [searchTerm, setSearch]);
-
-    useEffect(() => {
-        setSearchTerm(value);
-    }, [value]);
-
+export default function SearchBar({ handleChange, onSubmit, loading, value, type, placeholder, error, buttonText, searchIcon }: SearchBarProps) {
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             onSubmit();
         }
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(e.target.value);
     };
 
     return (
@@ -49,7 +28,7 @@ export default function SearchBar({ setSearch, onSubmit, loading, value, type, p
                     className={`w-full h-11 body-text ${searchIcon ? 'pl-4' : ''} focus:outline-none focus:bg-white`}
                     type={type || "text"}
                     placeholder={placeholder || "Search"}
-                    value={searchTerm}
+                    value={value}
                     onChange={handleChange}
                     onKeyDown={handleKeyDown}
                 />

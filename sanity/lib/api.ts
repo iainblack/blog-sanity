@@ -21,10 +21,6 @@ export const projectId = assertValue(
   "Missing environment variable: NEXT_PUBLIC_SANITY_PROJECT_ID",
 );
 
-// export const sendGridApiKey = assertValue(
-//   process.env.SENDGRID_API_KEY,
-//   "Missing environment variable: SENDGRID_API_KEY",
-// );
 
 /**
  * see https://www.sanity.io/docs/api-versioning for how versioning works

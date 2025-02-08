@@ -1,24 +1,26 @@
 'server only';
 
-import { db } from "./FirebaseConfig";
+import { db } from "../components/Firebase/FirebaseConfig";
 
-export const subscribeUser = async (email: string, preferences: { [key: string]: boolean }) => {
+export const addToSubscriberList = async (email: string, preferences: { [key: string]: boolean }) => {
   try {
     const subscribersRef = db.collection('subscribers');
+
     await subscribersRef.doc(email).set({
       email,
       preferences,
       subscribed: true,
     });
-    console.log('Successfully subscribed user:', email);
+
     return true;
+
   } catch (error) {
     console.error('Error subscribing user:', error);
     return false;
   };
 };
 
-export const updateUserPreferences = async (email: string, preferences?: { [key: string]: boolean }) => {
+export const updateSubscriberPreferences = async (email: string, preferences?: { [key: string]: boolean }) => {
   try {
     const subscribersRef = db.collection('subscribers');
     await subscribersRef.doc(email).update({
@@ -31,7 +33,7 @@ export const updateUserPreferences = async (email: string, preferences?: { [key:
   }
 }
 
-export const getUserPreferences = async (email: string) => {
+export const getSubscriberPreferences = async (email: string) => {
   try {
     const subscribersRef = db.collection('subscribers');
     const doc = await subscribersRef.doc(email).get();
@@ -46,10 +48,11 @@ export const getUserPreferences = async (email: string) => {
   }
 }
 
-export const unsubscribeUser = async (email: string) => {
+export const removeFromSubscriberList = async (email: string) => {
   try {
     const subscribersRef = db.collection('subscribers');
     await subscribersRef.doc(email).delete();
+
     return true;
   }
   catch (error) {
@@ -58,7 +61,7 @@ export const unsubscribeUser = async (email: string) => {
   }
 };
 
-export async function isEmailSubscribed(email: string) {
+export async function isOnSubscriberList(email: string) {
   try {
     const subscribersRef = db.collection('subscribers');
     const query = subscribersRef.where('email', '==', email);

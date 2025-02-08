@@ -90,7 +90,7 @@ export default function Page() {
       </div>
       <div className="flex flex-col items-center min-h-[65vh]">
         {getLoadingSkeleton(page, view)}
-        {!showSkeleton && (
+        {!showSkeleton && !loading && (
           <div className="w-full flex flex-col items-center">
             <PostPreviewGrid
               posts={postState.visiblePosts}

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
 import PostFilters from "@/components/Post/PostFilters";
 import { Intro } from "@/components/PageIntro";
-import { PostPreviewListSkeleton, PostPreviewGridWithHeroSkeleton, PostPreviewGridSkeleton } from "@/components/Post/LoadingSkeletons";
+import { PostPreviewListSkeleton, PostPreviewGridWithHeroSkeleton } from "@/components/Post/LoadingSkeletons";
 import PostPreviewGrid from "@/components/Post/PostPreviewGrid";
 
 interface PostState {
@@ -71,7 +71,7 @@ export default function Page() {
       </div>
       <div className="flex flex-col items-center min-h-[65vh]">
         {renderSkeleton()}
-        {!showSkeleton && (
+        {!showSkeleton && !loading && (
           <>
             <PostPreviewGrid posts={postState.visiblePosts} view={view} page={page} noResultsMessage={noResultsMessage} backgroundColor="pink" singleImage loading={loading} />
             <Pagination totalPages={Math.ceil(postState.totalPosts / limit)} active={page} setActive={setPage} />

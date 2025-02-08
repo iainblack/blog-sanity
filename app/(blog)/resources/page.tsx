@@ -69,7 +69,7 @@ export default function Page() {
             <div className="flex flex-col space-y-6 px-2 md:px-4 items-center sm:items-start lg:px-0 min-h-[65vh]">
                 <Tabs activeTab={activeTab} setActiveTab={setActiveTab} tabs={tabs} />
                 <SearchBar
-                    setSearch={setSearchVal}
+                    handleChange={(e) => setSearchVal(e.target.value)}
                     value={searchVal}
                     onSubmit={() => setPage(0)}
                     placeholder={`Search ${activeTab.name.toLowerCase()}...`}
@@ -78,21 +78,22 @@ export default function Page() {
                 />
                 {showSkeleton && <ResourceListItemSkeleton />}
                 {!showSkeleton && !loading &&
-                    <div className="w-full">
-                        {!resourceState.resources || resourceState.resources.length === 0
-                            ? <p className="body-text text-gray-600 flex w-full justify-center h-[50vh] font-garamond mt-8">Nothing Yet Available</p>
-                            :
-                            <div className="grid gap-6">
-                                {resourceState.resources.map(resource => (
-                                    <ResourceListItem key={resource._id} resource={resource} />
-                                ))}
-                            </div>
-                        }
-                    </div>
+                    <>
+                        <div className="w-full">
+                            {!resourceState.resources || resourceState.resources.length === 0
+                                ? <p className="body-text text-gray-600 flex w-full justify-center h-[50vh] font-garamond mt-8">Nothing Yet Available</p>
+                                :
+                                <div className="grid gap-6">
+                                    {resourceState.resources.map(resource => (
+                                        <ResourceListItem key={resource._id} resource={resource} />
+                                    ))}
+                                </div>}
+                        </div>
+                        <div className="w-full flex justify-center">
+                            <Pagination totalPages={Math.ceil(resourceState.totalResources / limit)} active={page} setActive={setPage} />
+                        </div>
+                    </>
                 }
-                <div className="w-full flex justify-center">
-                    <Pagination totalPages={Math.ceil(resourceState.totalResources / limit)} active={page} setActive={setPage} />
-                </div>
             </div>
         </div >
     );

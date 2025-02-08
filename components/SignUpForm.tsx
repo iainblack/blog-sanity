@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { BasicAlertState, emailPreferenceOptions } from "./utils";
 import Alert from "./Alert";
-import { isEmailSubscribedAction, subscribeUserAction } from "@/firebase/FirebaseActions";
+import { isEmailSubscribedAction, subscribeUserAction } from "@/app/api/actions";
 import SearchBar from "./SearchBar";
 import Modal from "./Modal";
 import PreferencesForm from "./PreferencesForm";
@@ -32,13 +32,15 @@ export default function SignUpForm() {
             setError("Email is required");
             return;
         }
-        else if (!email.includes("@")) {
+
+        if (!email.includes("@")) {
             setIsSubscribedLoading(false);
             setError("Invalid email address");
             return;
         }
 
         const emailExists = await isEmailSubscribedAction(email);
+
         if (emailExists) {
             setIsSubscribedLoading(false);
             setError("Email is already subscribed.");
@@ -69,7 +71,7 @@ export default function SignUpForm() {
         <div className="flex relative">
             <SearchBar
                 value={email}
-                setSearch={setEmail}
+                handleChange={(e) => setEmail(e.target.value)}
                 onSubmit={handleSignUp}
                 placeholder="Enter your email"
                 type="email"

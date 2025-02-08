@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
 import PreferencesForm from "./PreferencesForm";
-import { getEmailPreferencesAction, isEmailSubscribedAction, unsubscribeUserAction, updateUserPreferencesAction } from "@/firebase/FirebaseActions";
+import { getEmailPreferencesAction, isEmailSubscribedAction, unsubscribeUserAction, updateUserPreferencesAction } from "@/app/api/actions";
 import { BasicAlertState } from "./utils";
 
 interface PreferencesManagerProps {

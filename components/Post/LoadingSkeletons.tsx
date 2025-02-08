@@ -1,3 +1,5 @@
+'use client';
+
 export const PostPreviewGridWithHeroSkeleton = ({ singleImage }: { singleImage?: boolean }) => {
     return (
         <div className="pb-4 w-full">
