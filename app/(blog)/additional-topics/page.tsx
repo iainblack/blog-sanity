@@ -58,7 +58,9 @@ export default function Page() {
   const totalPages =
     postState.totalPosts > 10
       ? Math.ceil((postState.totalPosts - 10) / 9) + 1 // First page has 10, others have 9
-      : 1; // Handle cases with fewer than 10 posts
+      : postState.totalPosts > 0
+        ? 1
+        : 0;
 
   return (
     <div className="container mx-auto lg:px-16">
