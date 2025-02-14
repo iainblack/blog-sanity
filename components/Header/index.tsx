@@ -57,7 +57,7 @@ export default function Header() {
 
     return (
         <header className={`w-full header border-b border-black bg-default-bg  transition-transform duration-300 transform ${headerVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-            <nav className="p-6 md:p-8 flex items-center relative justify-between lg:px-20">
+            <nav className="p-6 md:p-8 lg:px-12 flex items-center relative justify-between">
                 {!isMenuOpen && (
                     <div className="hidden lg:flex justify-start items-center w-[50vw] lg:w-[33%]">
                         <HeaderLinks />
