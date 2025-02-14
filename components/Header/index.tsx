@@ -64,16 +64,14 @@ export default function Header() {
                     </div>
                 )}
                 <div className="w-[60%] sm:w-[55%] md:w-[45%] flex justify-start align-middle">
-                    <Link href="/" className="w-full">
-                        <div className="w-full relative text-center space-y-2">
-                            <h1 className="header-text">Lou Fleming</h1>
-                            <div className="flex space-x-3 justify-center align-middle">
-                                <h6 className="body-text-satista hidden sm:block text-text-secondary whitespace-nowrap">Journey to Healing</h6>
-                                <p className="body-text-satista hidden sm:block text-text-secondary whitespace-nowrap">&#10192;</p>
-                                <h6 className="body-text-satista hidden sm:block text-text-secondary whitespace-nowrap">Journey of Awakening</h6>
-                            </div>
+                    <div className="w-full relative text-center space-y-2">
+                        <h1 className="header-text">Lou Fleming</h1>
+                        <div className="flex space-x-3 justify-center align-middle">
+                            <h6 className="body-text-satista hidden sm:block text-text-secondary whitespace-nowrap">Journey to Healing</h6>
+                            <p className="body-text-satista hidden sm:block text-text-secondary whitespace-nowrap">&#10192;</p>
+                            <h6 className="body-text-satista hidden sm:block text-text-secondary whitespace-nowrap">Journey of Awakening</h6>
                         </div>
-                    </Link>
+                    </div>
                 </div>
                 <div className="lg:w-[33%] flex justify-end">
                     <Link href='/contact' className="hidden lg:block two-tone-button">
