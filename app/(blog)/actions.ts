@@ -19,6 +19,7 @@ export const getContentPanelsByPage = (pageId: string) => {
   return sanityFetch<ContentPanel[] | undefined>({
     query,
     params: { pageId },
+    pageId,
   });
 };
 
@@ -56,6 +57,7 @@ export const getPostsByPage = async (pageId: string, order: string = 'desc', off
   const posts = await sanityFetch<Post[] | undefined>({
     query,
     params: { pageId },
+    pageId,
   });
 
   const total = await sanityFetch<number>({
@@ -89,6 +91,7 @@ export const getGalleryImagesByPage = async (pageId: string) => {
   return sanityFetch<GalleryImage[]>({
     query,
     params: { pageId },
+    pageId,
   });
 }
 
@@ -100,6 +103,7 @@ export const getPostAndNeighbors = async (slug: string, pageId: string) => {
   const currentPost = await sanityFetch<Post>({
     query: currentPostQuery,
     params: { slug, pageId },
+    pageId,
   });
 
   if (!currentPost) return { currentPost: null, previousPost: null, nextPost: null };
@@ -112,8 +116,8 @@ export const getPostAndNeighbors = async (slug: string, pageId: string) => {
   }`;
 
   const [previousPost, nextPost] = await Promise.all([
-    sanityFetch<Post>({ query: previousPostQuery, params: { pageId, currentDate: currentPost._createdAt } }),
-    sanityFetch<Post>({ query: nextPostQuery, params: { pageId, currentDate: currentPost._createdAt } })
+    sanityFetch<Post>({ query: previousPostQuery, params: { pageId, currentDate: currentPost._createdAt }, pageId }),
+    sanityFetch<Post>({ query: nextPostQuery, params: { pageId, currentDate: currentPost._createdAt }, pageId })
   ]);
 
   return {

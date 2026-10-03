@@ -5,6 +5,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:all": "vitest run && playwright test",
     "presetup": "echo 'about to setup env variables, follow the guide here: https://github.com/vercel/next.js/tree/canary/examples/cms-sanity#using-the-sanity-cli'",
     "setup": "npx sanity@latest init --env .env.local",
     "postsetup": "echo 'create the read token by following the rest of the guide: https://github.com/vercel/next.js/tree/canary/examples/cms-sanity#creating-a-read-token'"
@@ -46,8 +51,15 @@
   },
   "devDependencies": {
     "@next/env": "latest",
+    "@playwright/test": "^1.63.0",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
     "@types/aos": "^3.0.7",
+    "@vitejs/plugin-react": "^4.7.0",
     "eslint": "^8.57.0",
-    "eslint-config-next": "latest"
+    "eslint-config-next": "latest",
+    "jsdom": "^25.0.1",
+    "vitest": "^2.1.9"
   }
 }
