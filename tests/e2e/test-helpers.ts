@@ -16,7 +16,8 @@ import {
  */
 export function mockSanityApi(page: Page) {
   // Mock the Sanity query endpoint
-  page.route(/\.sanity\.io\/.*\/query\/.*\/.*/, async (route) => {
+  // URL format: https://{projectId}.api.sanity.io/v{apiVersion}/data/query/{dataset}
+  page.route(/\.sanity\.io\/.*\/query\/.*/, async (route) => {
     const url = route.request().url();
     const request = route.request();
 
@@ -42,7 +43,15 @@ export function mockSanityApi(page: Page) {
             mockResponse = mockResources.length;
           }
         } else if (query.includes('_type == "post"')) {
-          mockResponse = mockPosts;
+          // Handle GROQ array slicing for pagination: [...][0...10] or [...][10...19]
+          const sliceMatch = query.match(/\[(\d+)\.\.\.(\d+)\]/);
+          if (sliceMatch) {
+            const start = parseInt(sliceMatch[1], 10);
+            const end = parseInt(sliceMatch[2], 10);
+            mockResponse = mockPosts.slice(start, end);
+          } else {
+            mockResponse = mockPosts;
+          }
         } else if (query.includes('_type == "resource"')) {
           mockResponse = mockResources;
         } else if (query.includes('_type == "contentPanel"')) {

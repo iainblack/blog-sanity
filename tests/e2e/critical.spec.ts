@@ -102,7 +102,8 @@ test.describe('API Routes', () => {
       const response = await page.request.post('/api/sanityWebhook', {
         data: { test: 'data' }
       });
-      expect([200, 401, 404, 500]).toContain(response.status());
+      // Returns 400 (missing _id), 404 (post not found), 200 (no subscribers or success), or 500 (error)
+      expect([200, 400, 401, 404, 500]).toContain(response.status());
     });
   });
 });
