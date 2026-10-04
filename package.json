@@ -2,9 +2,15 @@
   "private": true,
   "scripts": {
     "dev": "next",
+    "dev:local": "node scripts/dev-local.cjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:all": "vitest run && playwright test",
     "presetup": "echo 'about to setup env variables, follow the guide here: https://github.com/vercel/next.js/tree/canary/examples/cms-sanity#using-the-sanity-cli'",
     "setup": "npx sanity@latest init --env .env.local",
     "postsetup": "echo 'create the read token by following the rest of the guide: https://github.com/vercel/next.js/tree/canary/examples/cms-sanity#creating-a-read-token'"
@@ -26,7 +32,8 @@
     "date-fns": "^3.6.0",
     "firebase": "^10.12.0",
     "firebase-admin": "^12.1.0",
-    "next": "latest",
+    "groq-js": "^1.11.0",
+    "next": "^14.2.35",
     "next-sanity": "^9.0.20",
     "postcss": "^8.4.37",
     "postmark": "^4.0.5",
@@ -45,9 +52,16 @@
     "yet-another-react-lightbox": "^3.18.0"
   },
   "devDependencies": {
-    "@next/env": "latest",
+    "@next/env": "^14.2.35",
+    "@playwright/test": "^1.63.0",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
     "@types/aos": "^3.0.7",
+    "@vitejs/plugin-react": "^4.7.0",
     "eslint": "^8.57.0",
-    "eslint-config-next": "latest"
+    "eslint-config-next": "^14.2.35",
+    "jsdom": "^25.0.1",
+    "vitest": "^2.1.9"
   }
 }

@@ -67,9 +67,9 @@ export default function Page() {
                 <Intro title={"Lou's Recommended Resources"} />
             </div>
             <div className="flex flex-col space-y-6 px-2 md:px-4 items-center sm:items-start lg:px-0 min-h-[65vh]">
-                <Tabs activeTab={activeTab} setActiveTab={setActiveTab} tabs={tabs} />
+                <Tabs activeTab={activeTab} setActiveTab={(tab) => { setPage(0); setActiveTab(tab); }} tabs={tabs} />
                 <SearchBar
-                    handleChange={(e) => setSearchVal(e.target.value)}
+                    handleChange={(e) => { setPage(0); setSearchVal(e.target.value); }}
                     value={searchVal}
                     onSubmit={() => setPage(0)}
                     placeholder={`Search ${activeTab.name.toLowerCase()}...`}

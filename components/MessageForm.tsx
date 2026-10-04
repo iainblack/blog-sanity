@@ -57,32 +57,35 @@ export default function MessageForm() {
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
-        setLoading(true);
+        e.preventDefault();
         const { firstName, lastName, subject, message } = formState;
 
-        e.preventDefault();
-
-        if (!isValidForm({ formState, setFormState, setLoading })) {
+        if (!isValidForm({ formState, setFormState })) {
             return;
         }
 
-        const response = await fetch('/api/sendEmail', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ senderEmail: email.value, firstName: firstName.value, lastName: lastName.value, subject: subject.value, message: message.value }),
-        });
+        setLoading(true);
+        try {
+            const response = await fetch('/api/sendEmail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ senderEmail: email.value, firstName: firstName.value, lastName: lastName.value, subject: subject.value, message: message.value }),
+            });
 
-
-        if (response.ok) {
-            setAlertState({ show: true, message: 'Message sent successfully', type: 'success' });
-            clearForm();
-        } else {
+            if (response.ok) {
+                setAlertState({ show: true, message: 'Message sent successfully', type: 'success' });
+                clearForm();
+            } else {
+                setAlertState({ show: true, message: 'Message failed to send', type: 'error' });
+            }
+        } catch {
+            // Network failure: fetch rejects instead of returning a response
             setAlertState({ show: true, message: 'Message failed to send', type: 'error' });
+        } finally {
+            setLoading(false);
         }
-
-        setLoading(false);
     };
 
     const { firstName, lastName, email, subject, message } = formState;
@@ -114,21 +117,21 @@ export default function MessageForm() {
                 </div>
                 <div className="flex flex-wrap -mx-3 mb-2">
                     <div className="w-full px-3 mb-2">
-                        <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-password">
+                        <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-subject">
                             Subject
                         </label>
                         <input
-                            type='text' value={subject.value} onChange={(e) => setFormState({ ...formState, subject: { value: e.target.value } })}
+                            id='contact-subject' type='text' value={subject.value} onChange={(e) => setFormState({ ...formState, subject: { value: e.target.value } })}
                             className={`contact-form-input ${subject.error ? 'border-red-500' : ''}`}
                         />
                         {subject.error && <p className="text-red-500 text-xs italic">{subject.error}</p>}
                     </div>
                     <div className="w-full px-3 mb-2">
-                        <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-password">
+                        <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-email">
                             Your Email
                         </label>
                         <input
-                            type='text' value={email.value} onChange={(e) => setFormState({ ...formState, email: { value: e.target.value } })}
+                            id='contact-email' type='text' value={email.value} onChange={(e) => setFormState({ ...formState, email: { value: e.target.value } })}
                             className={`contact-form-input ${email.error ? 'border-red-500' : ''}`}
                         />
                         {email.error && <p className="text-red-500 text-xs italic">{email.error}</p>}
@@ -161,15 +164,21 @@ export default function MessageForm() {
 }
 
 
-const isValidForm = ({ formState, setFormState, setLoading }
-    : { formState: FormState, setFormState: (formState: FormState) => void, setLoading: (loading: boolean) => void }) => {
+const isValidForm = ({ formState, setFormState }
+    : { formState: FormState, setFormState: (formState: FormState) => void }) => {
     const { firstName, lastName, email, subject, message } = formState;
     let isValid = true;
-    let errors = { ...formState };
+    // Copy every field: the existing state objects (including the shared initial state) must never be mutated.
+    const errors: FormState = {
+        firstName: { value: firstName.value },
+        lastName: { value: lastName.value },
+        email: { value: email.value },
+        subject: { value: subject.value },
+        message: { value: message.value },
+    };
 
     if (firstName.value === '') {
         errors.firstName.error = 'First name is required';
-        console.log('First name is required')
         isValid = false;
     }
 
@@ -201,7 +210,6 @@ const isValidForm = ({ formState, setFormState, setLoading }
 
     if (!isValid) {
         setFormState(errors);
-        setLoading(false);
     }
 
     return isValid;
