@@ -2,7 +2,7 @@ import { ServerClient } from "postmark";
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@sanity/client';
 import { db } from '@/components/Firebase/FirebaseConfig';
-import { pages } from '@/components/utils';
+import { getPageLabel, pages } from '@/components/utils';
 
 const postmarkClient = new ServerClient(process.env.POSTMARK_API_KEY || '');
 
@@ -57,7 +57,7 @@ const getEmailHtml = (post: any, email: string) => {
       <h1 style="margin: 0; color: #65a765;">Lou Posted!</h1>
     </div>
     <div style="padding: 20px;">
-      <h3 style="color: #333;">A new post has been created in ${post.pageId}:</h3>
+      <h3 style="color: #333;">A new post has been created in ${getPageLabel(post.pageId)}:</h3>
       <h2 style="color: #333;">${post.title}</h2>
       ${post.excerpt ? `<p>${post.excerpt}</p>` : ''}
       <a href="${postUrl}" style="display: inline-block; background-color: #65a765; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; margin-top: 10px;">Read the full post</a>
@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
     const emails = subscribers.map(email => ({
       To: email,
       From: process.env.NEXT_PUBLIC_VERIFIED_SENDER ?? '',
-      Subject: `New Post from Lou's Blog: ${post.pageId}`,
+      Subject: `New Post from Lou's Blog: ${getPageLabel(post.pageId)}`,
       HtmlBody: getEmailHtml(post, email),
       MessageStream: 'broadcast',
     }));

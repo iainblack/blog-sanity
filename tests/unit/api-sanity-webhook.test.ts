@@ -72,6 +72,37 @@ describe('POST /api/sanityWebhook', () => {
     }
   });
 
+  describe('for the renamed "Metaphysical Spiritual Teachings" section (stored key "Additional Topics")', () => {
+    const RENAMED = { ...POST_DOC, pageId: 'Additional Topics' };
+
+    beforeEach(() => sanityFetch.mockResolvedValue(RENAMED));
+
+    it('still finds subscribers by the unchanged stored preference key', async () => {
+      await post({ _id: 'p1' });
+      expect(where).toHaveBeenCalledWith('preferences.Additional Topics', '==', true);
+    });
+
+    it('emails every matching subscriber with a working link to /additional-topics', async () => {
+      const res = await post({ _id: 'p1' });
+      expect(res.status).toBe(200);
+      const batch = sendEmailBatch.mock.calls[0][0];
+      expect(batch.map((m: any) => m.To)).toEqual(['a@example.com', 'b@example.com']);
+      for (const mail of batch) {
+        expect(mail.HtmlBody).toContain('http://localhost:3000/additional-topics/posts/new-post');
+      }
+    });
+
+    it('shows the new section name, never the old one, in the subject and body', async () => {
+      await post({ _id: 'p1' });
+      for (const mail of sendEmailBatch.mock.calls[0][0]) {
+        expect(mail.Subject).toBe("New Post from Lou's Blog: Metaphysical Spiritual Teachings");
+        expect(mail.HtmlBody).toContain('A new post has been created in Metaphysical Spiritual Teachings:');
+        expect(mail.Subject).not.toContain('Additional Topics');
+        expect(mail.HtmlBody).not.toContain('Additional Topics');
+      }
+    });
+  });
+
   it('omits the excerpt paragraph when the post has none', async () => {
     sanityFetch.mockResolvedValue({ ...POST_DOC, excerpt: null });
     await post({ _id: 'p1' });
