@@ -1,13 +1,17 @@
 import { stegaClean } from '@sanity/client/stega'
 
-export const pages: { name: string; slug: string, contentType?: string }[] = [
+// `name` is the stable key (Sanity `pageId`, Firebase subscriber preferences); `label` is what visitors see.
+export const pages: { name: string; label?: string; slug: string, contentType?: string }[] = [
   { name: "Home", slug: "", contentType: "contentPanel" },
   { name: "Lou's Healing Journey", slug: "healing-journey", contentType: "post" },
-  { name: "Additional Topics", slug: "additional-topics", contentType: "post" },
+  { name: "Additional Topics", label: "Metaphysical Spiritual Teachings", slug: "additional-topics", contentType: "post" },
   { name: "Messages for Humanity", slug: "messages-for-humanity", contentType: "post" },
   { name: "Resources", slug: "resources", contentType: "resource" },
   { name: "Photos", slug: "photos", contentType: "gallery" },
 ];
+
+export const getPageLabel = (name: string): string =>
+  pages.find((page) => page.name === name)?.label ?? name;
 
 export const resourceTypes = ["Books", "Websites", "Other"];
 

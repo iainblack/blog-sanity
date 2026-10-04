@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { getPageLabel } from "./utils";
 
 interface PreferencesFormProps {
     preferences: { [key: string]: boolean };
@@ -41,7 +42,7 @@ export default function PreferencesForm(props: PreferencesFormProps) {
                             name={option}
                             checked={isChecked}
                             onChange={handleCheckboxChange} />
-                        <span>{option}</span>
+                        <span>{getPageLabel(option)}</span>
                     </label>
                 ))}
             </div>

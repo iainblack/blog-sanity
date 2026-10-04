@@ -9,7 +9,7 @@ const routes = [
   { path: '/', title: /Lou's Blog \(Mock\)/ },
   { path: '/healing-journey', heading: "Lou's Healing Journey", title: /Lou's Blog \(Mock\)/ },
   { path: '/messages-for-humanity', heading: 'Messages for Humanity' },
-  { path: '/additional-topics', heading: 'Additional Topics' },
+  { path: '/additional-topics', heading: 'Metaphysical Spiritual Teachings' },
   { path: '/resources', heading: "Lou's Recommended Resources" },
   { path: '/photos' },
   { path: '/contact', heading: 'Contact Lou' },
@@ -56,7 +56,7 @@ test.describe('Header navigation', () => {
 
     for (const [name, url] of [
       ["Lou's Healing Journey", '/healing-journey'],
-      ['Additional Topics', '/additional-topics'],
+      ['Metaphysical Spiritual Teachings', '/additional-topics'],
       ['Messages for Humanity', '/messages-for-humanity'],
     ] as const) {
       await header.getByRole('button', { name: 'Blogs' }).hover();
@@ -67,7 +67,7 @@ test.describe('Header navigation', () => {
 
   test('Blogs menu is hidden until hovered', async ({ page }) => {
     await page.goto('/');
-    const item = page.locator('header').getByRole('link', { name: 'Additional Topics' });
+    const item = page.locator('header').getByRole('link', { name: 'Metaphysical Spiritual Teachings' });
     await expect(item).toHaveCount(0);
     await page.locator('header').getByRole('button', { name: 'Blogs' }).hover();
     await expect(item).toBeVisible();

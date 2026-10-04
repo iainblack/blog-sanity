@@ -22,7 +22,7 @@ app/
 │   ├── page.tsx         # Homepage
 │   ├── healing-journey/ # Blog section 1
 │   ├── messages-for-humanity/ # Blog section 2
-│   ├── additional-topics/ # Blog section 3
+│   ├── additional-topics/ # Blog section 3 ("Metaphysical Spiritual Teachings"; stable key/pageId stays "Additional Topics")
 │   ├── resources/       # Resource library
 │   ├── photos/         # Photo gallery
 │   └── contact/        # Contact form

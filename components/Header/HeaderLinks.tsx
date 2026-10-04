@@ -31,7 +31,7 @@ export default function HeaderLinks() {
                             </li>
                             <li className="py-1 whitespace-nowrap" onClick={handleMouseLeave}>
                                 <Link href="/additional-topics">
-                                    <div className="body-text-styled hover:text-primary">Additional Topics</div>
+                                    <div className="body-text-styled hover:text-primary">Metaphysical Spiritual Teachings</div>
                                 </Link>
                             </li>
                             <li className="py-1 whitespace-nowrap" onClick={handleMouseLeave}>

@@ -12,7 +12,7 @@ import { MOCK_LONG_TITLE } from '../../sanity/lib/mockData';
  */
 const sections = [
   { name: 'Healing Journey', path: '/healing-journey', heading: "Lou's Healing Journey", label: 'Healing Journey', pageSizes: (n: number) => split(n, 10, 9), emptyText: 'Nothing Yet Available' },
-  { name: 'Additional Topics', path: '/additional-topics', heading: 'Additional Topics', label: 'Topics', pageSizes: (n: number) => split(n, 10, 9), emptyText: 'Nothing Yet Available' },
+  { name: 'Additional Topics', path: '/additional-topics', heading: 'Metaphysical Spiritual Teachings', label: 'Topics', pageSizes: (n: number) => split(n, 10, 9), emptyText: 'Nothing Yet Available' },
   { name: 'Messages for Humanity', path: '/messages-for-humanity', heading: 'Messages for Humanity', label: 'Messages', pageSizes: (n: number) => split(n, 10, 10), emptyText: "These messages will be made available at a later time when they are in sync with the sharing of Lou's healing story." },
 ];
 

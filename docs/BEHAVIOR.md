@@ -16,7 +16,7 @@
 
 ### Post Listing (e.g., `/healing-journey`)
 
-**Pagination Behavior** (Healing Journey and Additional Topics):
+**Pagination Behavior** (Healing Journey and Metaphysical Spiritual Teachings):
 - First page shows 10 posts (hero + 9 grid)
 - Subsequent pages show 9 posts per page
 - **Messages for Humanity paginates differently**: a flat 10 per page, `totalPages = ceil(totalPosts / 10)`

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { emailPreferenceOptions, normalizeText } from '@/components/utils';
+import { emailPreferenceOptions, getPageLabel, normalizeText } from '@/components/utils';
 import { resolveOpenGraphImage, urlForImage } from '@/sanity/lib/utils';
 
 describe('normalizeText', () => {
@@ -58,5 +58,16 @@ describe('urlForImage / resolveOpenGraphImage (real implementations)', () => {
     expect(og.url).toContain('w=1200');
     expect(og.url).toContain('h=627');
     expect(og.url).toContain('fit=crop');
+  });
+});
+
+describe('getPageLabel', () => {
+  it('shows the new display name while the stored key stays unchanged', () => {
+    expect(getPageLabel('Additional Topics')).toBe('Metaphysical Spiritual Teachings');
+  });
+
+  it('falls back to the key for sections without a label', () => {
+    expect(getPageLabel('Messages for Humanity')).toBe('Messages for Humanity');
+    expect(getPageLabel('Unknown')).toBe('Unknown');
   });
 });

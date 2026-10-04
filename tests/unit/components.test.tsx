@@ -260,7 +260,7 @@ describe('SignUpForm (footer)', () => {
     fireEvent.change(input(), { target: { value: 'a@example.com' } });
     signUp();
     await vi.waitFor(() => expect(modalOpen()).toBe(true));
-    for (const section of ["Lou's Healing Journey", 'Additional Topics', 'Messages for Humanity']) {
+    for (const section of ["Lou's Healing Journey", 'Metaphysical Spiritual Teachings', 'Messages for Humanity']) {
       expect(screen.getByLabelText(section)).toBeChecked();
     }
     fireEvent.click(screen.getByRole('button', { name: /save/i }));

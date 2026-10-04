@@ -81,7 +81,7 @@ export default function Drawer({ isDrawerOpen, closeDrawer }: { isDrawerOpen: bo
                                         <li>
                                             <div className="p-2 w-full ms-3">
                                                 <Link href="/additional-topics" onClick={handleClose}>
-                                                    <span>Additional Topics</span>
+                                                    <span>Metaphysical Spiritual Teachings</span>
                                                 </Link>
                                             </div>
                                         </li>

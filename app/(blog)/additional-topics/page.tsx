@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
 import PostFilters from "@/components/Post/PostFilters";
 import { Intro } from "@/components/PageIntro";
+import { getPageLabel } from "@/components/utils";
 import { PostPreviewGridWithHeroSkeleton, PostPreviewGridSkeleton } from "@/components/Post/LoadingSkeletons";
 import PostPreviewGrid from "@/components/Post/PostPreviewGrid";
 
@@ -65,7 +66,7 @@ export default function Page() {
   return (
     <div className="container mx-auto lg:px-16">
       <div className="flex flex-col items-center space-y-6 my-6 lg:space-y-0 lg:flex-row md:justify-between lg:my-12">
-        <Intro title={"Additional Topics"} />
+        <Intro title={getPageLabel("Additional Topics")} />
         <PostFilters order={order} setOrder={setOrder} postCount={postState.visiblePosts?.length} loading={loading} view={view} setView={setView} />
       </div>
       <div className="flex flex-col items-center min-h-[65vh]">
