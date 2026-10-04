@@ -1,371 +1,208 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect } from './fixtures';
+import type { Page } from '@playwright/test';
 
 /**
- * Resources Page Tests
- * Comprehensive tests for tabs, search, and pagination behavior.
+ * Resources page: tabs, search, pagination, empty states.
+ * Default dataset (8 fixed resources):
+ *   Books:    Healthy Living Magazine, The Healing Journey Book
+ *   Websites: Mental Health America, National Wellness Institute, The Nutrition Source
+ *   Other:    Meditation Cushions Guide, Mindfulness Meditation App, Yoga for Beginners Guide
+ * (results are sorted case-insensitively by title). "many" has 25 per tab.
  */
+const items = (page: Page) => page.locator('main .grid > div h2');
+const tab = (page: Page, name: string) => page.getByRole('button', { name });
+const search = (page: Page) => page.getByPlaceholder(/^Search /);
+const pageIndicator = (page: Page) => page.getByText(/^Page \d+ of \d+$/);
+const nextButton = (page: Page) => page.getByRole('button', { name: 'Next page' });
+const prevButton = (page: Page) => page.getByRole('button', { name: 'Previous page' });
+const emptyMessage = (page: Page) => page.getByText('Nothing Yet Available');
+const isActive = async (page: Page, name: string) => /border-blue-600/.test((await tab(page, name).getAttribute('class')) ?? '');
 
-test.describe('Resources Page - Page Structure', () => {
-  test('page loads without errors', async ({ page }) => {
+const BOOKS = ['Healthy Living Magazine', 'The Healing Journey Book'];
+const WEBSITES = ['Mental Health America', 'National Wellness Institute', 'The Nutrition Source'];
+const OTHER = ['Meditation Cushions Guide', 'Mindfulness Meditation App', 'Yoga for Beginners Guide'];
+
+test.describe('Resources - default data', () => {
+  test('opens on Books, listing only books sorted by title, with one page', async ({ page }) => {
     await page.goto('/resources');
-    await page.waitForLoadState('domcontentloaded');
-    await expect(page.locator('body')).not.toContainText('Application Error');
+    await expect(page.getByRole('heading', { level: 1, name: "Lou's Recommended Resources" })).toBeVisible();
+    await expect(items(page)).toHaveText(BOOKS);
+    expect(await isActive(page, 'Books')).toBe(true);
+    expect(await isActive(page, 'Websites')).toBe(false);
+    await expect(search(page)).toHaveAttribute('placeholder', 'Search books...');
+    await expect(pageIndicator(page)).toHaveText('Page 1 of 1');
+    await expect(emptyMessage(page)).toHaveCount(0);
   });
 
-  test('has header and footer', async ({ page }) => {
+  test('each tab shows only its own resource type and highlights as active', async ({ page }) => {
     await page.goto('/resources');
-    await expect(page.locator('header')).toBeVisible();
-    await expect(page.locator('footer')).toBeVisible();
+    await expect(items(page)).toHaveText(BOOKS);
+
+    await tab(page, 'Websites').click();
+    await expect(items(page)).toHaveText(WEBSITES);
+    expect(await isActive(page, 'Websites')).toBe(true);
+    expect(await isActive(page, 'Books')).toBe(false);
+    await expect(search(page)).toHaveAttribute('placeholder', 'Search websites...');
+
+    await tab(page, 'Other Resources').click();
+    await expect(items(page)).toHaveText(OTHER);
+    expect(await isActive(page, 'Other Resources')).toBe(true);
+    expect(await isActive(page, 'Websites')).toBe(false);
+    await expect(search(page)).toHaveAttribute('placeholder', 'Search other resources...');
+
+    await tab(page, 'Books').click();
+    await expect(items(page)).toHaveText(BOOKS);
   });
 
-  test('has tabs for resource types', async ({ page }) => {
+  test('renders author, publisher, publication date and the link for a resource', async ({ page }) => {
     await page.goto('/resources');
-    await expect(page.locator('button:has-text("Books")')).toBeVisible();
-    await expect(page.locator('button:has-text("Websites")')).toBeVisible();
-    await expect(page.locator('button:has-text("Other")')).toBeVisible();
+    const book = page.locator('main .grid > div', { hasText: 'The Healing Journey Book' });
+    await expect(book.getByText('Published in')).toBeVisible();
+    await expect(book.getByText('2023-06-15')).toBeVisible();
+    await expect(book.getByText('by Wellness Press.')).toBeVisible();
+    await expect(book.getByText('Written by Dr. Jane Smith.')).toBeVisible();
+    await expect(book.getByText('A comprehensive guide to natural healing methods and practices.')).toBeVisible();
+    const link = book.getByRole('link', { name: 'Buy on Amazon' });
+    await expect(link).toHaveAttribute('href', 'https://example.com/healing-journey');
+    await expect(link).toHaveAttribute('target', '_blank');
+    await expect(link).toHaveAttribute('rel', /noopener/);
+
+    // A resource without author/publisher/date does not render those lines.
+    const magazine = page.locator('main .grid > div', { hasText: 'Healthy Living Magazine' });
+    await expect(magazine.getByText('Written by')).toHaveCount(0);
+    await expect(magazine.getByText('by Health Media Inc.')).toBeVisible();
   });
 
-  test('has search input', async ({ page }) => {
+  test('search filters within the active tab, ignoring case and partial words', async ({ page }) => {
     await page.goto('/resources');
-    const searchInput = page.locator('input[placeholder*="Search"]');
-    await expect(searchInput).toBeVisible();
+    await tab(page, 'Other Resources').click();
+    await expect(items(page)).toHaveText(OTHER);
+
+    await search(page).fill('MEDITATION');
+    await expect(items(page)).toHaveText(['Meditation Cushions Guide', 'Mindfulness Meditation App']);
+
+    await search(page).fill('yoga');
+    await expect(items(page)).toHaveText(['Yoga for Beginners Guide']);
+
+    // "Healing" exists, but only in Books: searching it in Other must find nothing.
+    await search(page).fill('healing');
+    await expect(emptyMessage(page)).toBeVisible();
+    await expect(items(page)).toHaveCount(0);
+    await expect(pageIndicator(page)).toHaveCount(0);
+
+    await search(page).clear();
+    await expect(items(page)).toHaveText(OTHER);
+    await expect(emptyMessage(page)).toHaveCount(0);
+  });
+
+  test('a search with no matches shows the empty state; switching tab with the term applies it there', async ({ page }) => {
+    await page.goto('/resources');
+    await search(page).fill('nutrition');
+    await expect(emptyMessage(page)).toBeVisible(); // Books has no "nutrition"
+
+    await tab(page, 'Websites').click();
+    await expect(items(page)).toHaveText(['The Nutrition Source']);
+    await expect(search(page)).toHaveValue('nutrition');
   });
 });
 
-test.describe('Resources Page - Tabs', () => {
-  test.beforeEach(async ({ page }) => {
+test.describe('Resources - empty dataset', () => {
+  test.use({ scenario: 'empty' });
+
+  test('every tab shows the empty state and no pagination', async ({ page }) => {
     await page.goto('/resources');
-    await page.waitForLoadState('domcontentloaded');
-    await page.waitForTimeout(1000);
-  });
-
-  test('Books tab is active by default', async ({ page }) => {
-    const booksTab = page.locator('button:has-text("Books")');
-    await expect(booksTab).toBeVisible();
-  });
-
-  test('clicking Websites tab switches content', async ({ page }) => {
-    const websitesTab = page.locator('button:has-text("Websites")');
-    await websitesTab.click({ force: true });
-    await page.waitForTimeout(500);
-
-    // Tab should still be visible (switched to)
-    await expect(websitesTab).toBeVisible();
-  });
-
-  test('clicking Other tab switches content', async ({ page }) => {
-    const otherTab = page.locator('button:has-text("Other")');
-    await otherTab.click({ force: true });
-    await page.waitForTimeout(500);
-
-    await expect(otherTab).toBeVisible();
-  });
-
-  test('clicking tab resets to page 0 when pagination exists', async ({ page }) => {
-    // Check if pagination exists
-    if (!await page.locator('text=/Page \\d+ of \\d+/').isVisible().catch(() => false)) {
-      expect(true).toBe(true);
-      return;
-    }
-
-    // First navigate to a different page if pagination exists
-    const nextButton = page.locator('.flex.items-center.gap-4 button').last();
-    if (await nextButton.isVisible().catch(() => false)) {
-      await nextButton.click({ force: true });
-      await page.waitForTimeout(500);
-    }
-
-    // Click a different tab
-    await page.locator('button:has-text("Websites")').click({ force: true });
-    await page.waitForTimeout(500);
-
-    // Should be back at page 0 (Page 1) or pagination cleared
-    const pageText = await page.locator('text=/Page 1 of \\d+/').isVisible().catch(() => false);
-    // Either Page 1 or no pagination - both are valid
-  });
-
-  test('tabs are mutually exclusive', async ({ page }) => {
-    // Click through all tabs
-    const tabs = ['Books', 'Websites', 'Other'];
-
-    for (const tabName of tabs) {
-      const tab = page.locator(`button:has-text("${tabName}")`);
-      await tab.click({ force: true });
-      await page.waitForTimeout(500);
-      // Verify tab is still visible
-      await expect(tab).toBeVisible();
-    }
-  });
-});
-
-test.describe('Resources Page - Search', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/resources');
-    await page.waitForLoadState('domcontentloaded');
-    await page.waitForTimeout(500);
-  });
-
-  test('search input accepts text', async ({ page }) => {
-    const searchInput = page.locator('input[placeholder*="Search"]');
-    await searchInput.fill('test search');
-    await expect(searchInput).toHaveValue('test search');
-  });
-
-  test('search placeholder shows current tab name', async ({ page }) => {
-    const searchInput = page.locator('input[placeholder*="Search"]');
-    const placeholder = await searchInput.getAttribute('placeholder');
-
-    // Should mention search and tab name
-    expect(placeholder?.toLowerCase()).toMatch(/search|books|websites|other/);
-  });
-
-  test('search filters results', async ({ page }) => {
-    const searchInput = page.locator('input[placeholder*="Search"]');
-
-    // Type in search
-    await searchInput.fill('nonexistentsearchterm12345');
-    await page.waitForTimeout(500); // Wait for debounce
-
-    // Should show empty state or no results
-    const emptyState = page.locator('text=Nothing Yet Available');
-    const hasEmpty = await emptyState.isVisible().catch(() => false);
-    // Either empty state shown, or results still loading, or search didn't filter
-    // This test just ensures no crash
-  });
-
-  test('clearing search restores results', async ({ page }) => {
-    const searchInput = page.locator('input[placeholder*="Search"]');
-
-    await searchInput.fill('test');
-    await page.waitForTimeout(500);
-
-    await searchInput.clear();
-    await page.waitForTimeout(500);
-
-    // Results should restore - verify no crash
-    await expect(page.locator('main')).toBeVisible();
-  });
-});
-
-test.describe('Resources Page - Pagination', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/resources');
-    await page.waitForLoadState('domcontentloaded');
-    await page.waitForTimeout(1000);
-  });
-
-  test('pagination shows correct format when visible', async ({ page }) => {
-    const pagination = page.locator('text=/Page \\d+ of \\d+/');
-    const isVisible = await pagination.isVisible().catch(() => false);
-
-    if (isVisible) {
-      await expect(pagination).toBeVisible();
-    } else {
-      // No pagination means single page - that's valid too
-      expect(true).toBe(true);
-    }
-  });
-
-  test('pagination shows Page 1 of X format when visible', async ({ page }) => {
-    const pagination = page.locator('text=/Page 1 of \\d+/');
-    const isVisible = await pagination.isVisible().catch(() => false);
-
-    if (isVisible) {
-      await expect(pagination).toBeVisible();
-    }
-  });
-
-  // Skipping - E2E mock setup for pagination is unreliable
-  test.skip('next button advances page when pagination exists', async ({ page }) => {
-    // Check if pagination exists
-    const pagination = page.locator('text=/Page \\d+ of \\d+/');
-    if (!await pagination.isVisible().catch(() => false)) {
-      // No pagination - test passes vacuously
-      expect(true).toBe(true);
-      return;
-    }
-
-    // Get the next button specifically in the pagination area
-    const nextButton = page.locator('.flex.items-center.gap-4 button').last();
-    const isVisible = await nextButton.isVisible().catch(() => false);
-
-    if (!isVisible) {
-      expect(true).toBe(true);
-      return;
-    }
-
-    // Get current page
-    const pageBefore = await page.locator('text=/Page (\\d+) of \\d+/').textContent().catch(() => 'Page 1 of 1');
-    const pageNumBefore = parseInt(pageBefore.match(/Page (\\d+)/)?.[1] || '1');
-
-    // Click next with force to avoid overlay issues
-    await nextButton.click({ force: true });
-    await page.waitForTimeout(500);
-
-    // Verify page changed
-    const pageAfter = await page.locator('text=/Page (\\d+) of \\d+/').textContent().catch(() => 'Page 2 of 2');
-    const pageNumAfter = parseInt(pageAfter.match(/Page (\\d+)/)?.[1] || '1');
-
-    expect(pageNumAfter).toBe(pageNumBefore + 1);
-  });
-
-  // Skipping - E2E mock setup for pagination is unreliable
-  test.skip('previous button goes to prior page when pagination exists', async ({ page }) => {
-    // Check if pagination exists
-    if (!await page.locator('text=/Page \\d+ of \\d+/').isVisible().catch(() => false)) {
-      expect(true).toBe(true);
-      return;
-    }
-
-    // First go to next page
-    const nextButton = page.locator('.flex.items-center.gap-4 button').last();
-    if (await nextButton.isVisible().catch(() => false)) {
-      await nextButton.click({ force: true });
-      await page.waitForTimeout(500);
-    }
-
-    // Now click previous
-    const prevButton = page.locator('.flex.items-center.gap-4 button').first();
-    if (!await prevButton.isVisible().catch(() => false)) {
-      expect(true).toBe(true);
-      return;
-    }
-
-    // Get current page
-    const pageBefore = await page.locator('text=/Page (\\d+) of \\d+/').textContent().catch(() => 'Page 1 of 1');
-    const pageNumBefore = parseInt(pageBefore.match(/Page (\\d+)/)?.[1] || '1');
-
-    // Click previous
-    await prevButton.click({ force: true });
-    await page.waitForTimeout(500);
-
-    // Verify page changed
-    const pageAfter = await page.locator('text=/Page (\\d+) of \\d+/').textContent().catch(() => 'Page 1 of 1');
-    const pageNumAfter = parseInt(pageAfter.match(/Page (\\d+)/)?.[1] || '1');
-
-    expect(pageNumAfter).toBe(pageNumBefore - 1);
-  });
-
-  test('next button disabled on last page when pagination exists', async ({ page }) => {
-    // Check if pagination exists
-    if (!await page.locator('text=/Page \\d+ of \\d+/').isVisible().catch(() => false)) {
-      expect(true).toBe(true);
-      return;
-    }
-
-    // Navigate to last page
-    let nextButton = page.locator('.flex.items-center.gap-4 button').last();
-    while (await nextButton.isVisible().catch(() => false)) {
-      const isDisabled = await nextButton.isDisabled().catch(() => true);
-      if (isDisabled) break;
-      await nextButton.click({ force: true });
-      await page.waitForTimeout(300);
-      nextButton = page.locator('.flex.items-center.gap-4 button').last();
-    }
-
-    // Now next should be disabled
-    nextButton = page.locator('.flex.items-center.gap-4 button').last();
-    if (await nextButton.isVisible().catch(() => false)) {
-      await expect(nextButton).toBeDisabled();
-    }
-  });
-
-  test('previous button disabled on first page when pagination exists', async ({ page }) => {
-    // Check if pagination exists
-    if (!await page.locator('text=/Page \\d+ of \\d+/').isVisible().catch(() => false)) {
-      expect(true).toBe(true);
-      return;
-    }
-
-    const prevButton = page.locator('.flex.items-center.gap-4 button').first();
-
-    // At page 1, previous should be disabled
-    const page1Indicator = await page.locator('text=/Page 1 of \\d+/').isVisible().catch(() => false);
-    if (page1Indicator && await prevButton.isVisible().catch(() => false)) {
-      await expect(prevButton).toBeDisabled();
+    for (const name of ['Books', 'Websites', 'Other Resources']) {
+      await tab(page, name).click();
+      await expect(emptyMessage(page)).toBeVisible();
+      await expect(items(page)).toHaveCount(0);
+      await expect(pageIndicator(page)).toHaveCount(0);
     }
   });
 });
 
-test.describe('Resources Page - Empty State', () => {
-  test('shows "Nothing Yet Available" when no resources', async ({ page }) => {
-    await page.goto('/resources');
-    await page.waitForLoadState('domcontentloaded');
-    await page.waitForTimeout(1000);
-
-    // Either resources or empty state should be visible
-    const emptyState = page.locator('text=Nothing Yet Available');
-    const isEmptyVisible = await emptyState.isVisible().catch(() => false);
-
-    // Test passes if empty state is shown OR if content is shown (we can't control Sanity data)
-    // This just verifies no crash
-    expect(true).toBe(true);
-  });
-});
-
-test.describe('Resources Page - Tab Switching with Search', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/resources');
-    await page.waitForLoadState('domcontentloaded');
-    await page.waitForTimeout(1000);
+test.describe('Resources - pagination boundaries', () => {
+  test.describe('single resource per tab', () => {
+    test.use({ scenario: 'single' });
+    test('one item, Page 1 of 1, both buttons disabled', async ({ page }) => {
+      await page.goto('/resources');
+      await expect(items(page)).toHaveCount(1);
+      await expect(pageIndicator(page)).toHaveText('Page 1 of 1');
+      await expect(prevButton(page)).toBeDisabled();
+      await expect(nextButton(page)).toBeDisabled();
+    });
   });
 
-  test('search persists across tab switches', async ({ page }) => {
-    const searchInput = page.locator('input[placeholder*="Search"]');
-    await searchInput.fill('test query');
-
-    // Switch tabs with force
-    await page.locator('button:has-text("Websites")').click({ force: true });
-    await page.waitForTimeout(500);
-
-    // Search input behavior depends on implementation
-    const searchValue = await searchInput.inputValue();
-    expect(searchValue === 'test query' || searchValue === '').toBe(true);
+  test.describe('exactly one full page (10 per tab)', () => {
+    test.use({ scenario: 'ten' });
+    test('Page 1 of 1', async ({ page }) => {
+      await page.goto('/resources');
+      await expect(items(page)).toHaveCount(10);
+      await expect(pageIndicator(page)).toHaveText('Page 1 of 1');
+      await expect(nextButton(page)).toBeDisabled();
+    });
   });
 
-  // Skipping - E2E mock setup for pagination is unreliable
-  test.skip('tab switch resets pagination when pagination exists', async ({ page }) => {
-    // Check if pagination exists
-    if (!await page.locator('text=/Page \\d+ of \\d+/').isVisible().catch(() => false)) {
-      expect(true).toBe(true);
-      return;
-    }
-
-    // Navigate to page 2
-    const nextButton = page.locator('.flex.items-center.gap-4 button').last();
-    if (await nextButton.isVisible().catch(() => false)) {
-      await nextButton.click({ force: true });
-      await page.waitForTimeout(500);
-    }
-
-    // Switch tab
-    await page.locator('button:has-text("Websites")').click({ force: true });
-    await page.waitForTimeout(500);
-
-    // Should be back at page 1 or pagination cleared
-    const pagination = page.locator('text=/Page \\d+ of \\d+/');
-    if (await pagination.isVisible().catch(() => false)) {
-      await expect(pagination).toContainText('Page 1 of');
-    }
-  });
-});
-
-test.describe('Resources Page - Loading States', () => {
-  test('shows loading state initially', async ({ page }) => {
-    await page.goto('/resources');
-    // Before domcontentloaded, might see skeleton
-    await page.waitForLoadState('domcontentloaded');
-    // After load, skeleton should disappear
-    await page.waitForTimeout(600); // Wait past skeleton delay (500ms)
+  test.describe('one more than a page (11 per tab)', () => {
+    test.use({ scenario: 'eleven' });
+    test('second page holds the single remaining resource', async ({ page }) => {
+      await page.goto('/resources');
+      await expect(items(page)).toHaveCount(10);
+      await expect(pageIndicator(page)).toHaveText('Page 1 of 2');
+      await nextButton(page).click();
+      await expect(pageIndicator(page)).toHaveText('Page 2 of 2');
+      await expect(items(page)).toHaveText(['Books Resource 11']);
+      await expect(nextButton(page)).toBeDisabled();
+    });
   });
 
-  test('content appears after loading', async ({ page }) => {
-    await page.goto('/resources');
-    await page.waitForLoadState('domcontentloaded');
-    await page.waitForTimeout(1000);
+  test.describe('many (25 per tab)', () => {
+    test.use({ scenario: 'many' });
 
-    // Should have either resources or empty state
-    const hasContent = await page.locator('main').isVisible();
-    expect(hasContent).toBe(true);
+    test('pages of 10/10/5 cover every resource once, in order; prev/next enable correctly', async ({ page }) => {
+      await page.goto('/resources');
+      const expected = Array.from({ length: 25 }, (_, n) => `Books Resource ${String(n + 1).padStart(2, '0')}`);
+      const seen: string[] = [];
+      const sizes = [10, 10, 5];
+
+      for (let i = 0; i < sizes.length; i++) {
+        await expect(pageIndicator(page)).toHaveText(`Page ${i + 1} of 3`);
+        await expect(items(page)).toHaveCount(sizes[i]);
+        await expect(items(page).first()).toHaveText(expected[seen.length]);
+        seen.push(...(await items(page).allTextContents()));
+        await expect(prevButton(page)).toBeEnabled({ enabled: i > 0 });
+        await expect(nextButton(page)).toBeEnabled({ enabled: i < sizes.length - 1 });
+        if (i < sizes.length - 1) await nextButton(page).click();
+      }
+      expect(seen).toEqual(expected);
+
+      await prevButton(page).click();
+      await expect(pageIndicator(page)).toHaveText('Page 2 of 3');
+    });
+
+    // Documented in BEHAVIOR.md ("Clicking tab resets to page 0"). The page does not reset
+    // `page` when the tab changes, so the new tab opens at an offset that may be empty.
+    test('switching tab returns to page 1', async ({ page }) => {
+      test.fail(true, 'BUG: Tab change does not reset pagination (app/(blog)/resources/page.tsx). Remove this line when fixed.');
+      await page.goto('/resources');
+      await nextButton(page).click();
+      await nextButton(page).click();
+      await expect(pageIndicator(page)).toHaveText('Page 3 of 3');
+
+      await tab(page, 'Websites').click();
+      await expect(pageIndicator(page)).toHaveText('Page 1 of 3');
+      await expect(items(page).first()).toHaveText('Websites Resource 01');
+    });
+
+    // Documented in BEHAVIOR.md ("Search resets to page 0"). Only pressing Enter resets the page.
+    test('typing a search while on a later page returns to page 1', async ({ page }) => {
+      test.fail(true, 'BUG: Typing in search does not reset pagination, only Enter does (resources/page.tsx). Remove this line when fixed.');
+      await page.goto('/resources');
+      await nextButton(page).click();
+      await expect(pageIndicator(page)).toHaveText('Page 2 of 3');
+
+      await search(page).fill('Resource 0'); // matches Books Resource 01-09
+      await expect(items(page).first()).toHaveText('Books Resource 01');
+      await expect(emptyMessage(page)).toHaveCount(0);
+    });
   });
 });

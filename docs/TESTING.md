@@ -1,164 +1,122 @@
 # Testing Guide
 
-## Test Philosophy
+## Golden rule: tests never touch production
 
-Tests should verify **behavior**, not implementation. A failing test may indicate:
-1. A bug in the code
-2. A change in expected behavior (requirements evolved)
-3. An incomplete test (doesn't match actual behavior)
+No test may read from, or write to, production Sanity, Firebase, or Postmark. This is
+enforced by the setup, not by discipline:
 
-When a test fails, investigate whether the test or the code needs updating.
+| Layer | How production is kept out |
+|-------|----------------------------|
+| E2E app server | Started by Playwright with `MOCK_DATA=force`: **every** Sanity query is answered from the in-memory dataset in `sanity/lib/mockData.ts`. |
+| E2E credentials | Every variable defined in any `.env*` file is overridden with a placeholder (`playwright.config.ts`). Next.js never overrides variables already in `process.env`, so real Sanity/Firebase/Postmark credentials are not loaded. Placeholder project IDs resolve to nothing. |
+| E2E server reuse | Own port (3100), `reuseExistingServer: false`. A dev server started with real credentials can never be picked up. |
+| E2E browser | The `page` fixture (`tests/e2e/fixtures.ts`) aborts known telemetry (Firebase Analytics, GTM, Vercel Speed Insights) and **fails the test** on any other non-local request. |
+| Email / webhooks | `/api/sendEmail` is intercepted in the browser in E2E; handlers are unit-tested with Postmark/Firebase/Sanity clients mocked. |
+| Unit tests | `tests/setup.ts` replaces `fetch` with a function that throws; `vitest.config.ts` supplies placeholder env. |
 
-## Test Infrastructure
+Verify at any time: `E2E_SERVER_LOGS=1 npm run test:e2e` prints the app server's log.
+It must contain no `sanity.io` / `apicdn` / `postmarkapp` / `firestore` lines.
 
-### Unit Tests (Vitest)
-- **Location**: `tests/unit/`
-- **Run**: `npm run test`
-- **Config**: `vitest.config.ts`
+## Running
 
-### E2E Tests (Playwright)
-- **Location**: `tests/e2e/`
-- **Run**: `npm run test:e2e`
-- **Config**: `playwright.config.ts`
-
-### Run All Tests
 ```bash
-npm run test:all
+npm run test        # unit + component tests (Vitest, ~2s)
+npm run test:e2e    # E2E (Playwright, starts its own isolated server on :3100)
+npm run test:all    # both
 ```
 
-## What to Test
+## Mock mode for manual development
 
-### Unit Tests
+`next dev` can serve fake data so you can click around without touching Sanity:
 
-#### Utility Functions
-Test pure functions with predictable outputs:
+- `http://localhost:3000/?mock=true` – enable (stored in a cookie)
+- `?mock=true&scenario=empty` – pick a dataset: `default` | `empty` | `single` | `ten` | `eleven` | `many`
+- `?mock=false` – disable
 
-```typescript
-// Example: resolveHref
-expect(resolveHref('post', 'my-slug')).toBe('/posts/my-slug');
-expect(resolveHref('post')).toBe(undefined); // no slug
-expect(resolveHref('unknown', 'slug')).toBe(undefined); // invalid type
-```
+Mock mode is ignored in production builds (`NODE_ENV=production`).
 
-#### Type Safety
-Verify TypeScript interfaces accept valid data structures.
+The mock layer evaluates the app's **real GROQ queries** (via `groq-js`) against fixture documents, so
+filtering, ordering, slicing, `match` and `count()` behave like Sanity. When you change a query in
+`app/(blog)/actions.ts`, the mock follows automatically. When you add a document type, add fixtures
+to `buildMockDataset` in `sanity/lib/mockData.ts`.
 
-#### Component Logic
-Test business logic functions independently of React components.
+| Scenario | Posts per section | Resources per tab | Panels / photos |
+|----------|-------------------|-------------------|-----------------|
+| `default` | 11 | fixed set of 8 (2 books, 3 websites, 3 other) | 2 / 3 |
+| `empty` | 0 | 0 | 0 / 0 |
+| `single` | 1 | 1 | 2 / 3 |
+| `ten` | 10 | 10 | 2 / 3 |
+| `eleven` | 11 | 11 | 2 / 3 |
+| `many` | 30 | 25 | 2 / 3 |
 
-### E2E Tests
+Fixture posts include deliberate edge cases: #3 has a very long title/subtitle/excerpt, #5 has no
+author/subtitle/excerpt, #7 has no body.
 
-#### Page Loading
-Verify pages load without crashes:
-```typescript
-test('should load without application errors', async ({ page }) => {
-  await page.goto('/healing-journey');
-  await expect(page.locator('body')).not.toContainText('Application Error');
-});
-```
+In E2E, choose a scenario with `test.use({ scenario: 'empty' })` (see `tests/e2e/fixtures.ts`).
 
-#### Empty States
-Verify empty states display correctly:
-```typescript
-test('shows empty state when no posts', async ({ page }) => {
-  // When there are no posts, the "Nothing Yet Available" message should appear
-  await expect(page.locator('text=Nothing Yet Available')).toBeVisible();
-});
-```
+## What is covered where
 
-#### Pagination
-Verify pagination works correctly:
-```typescript
-test('pagination shows correct page info', async ({ page }) => {
-  await page.goto('/healing-journey');
-  // Should show "Page 1 of X"
-  await expect(page.locator('text=/Page \\d+ of \\d+/')).toBeVisible();
-});
-```
+| Area | Unit/component (`tests/unit`) | E2E (`tests/e2e`) |
+|------|-------------------------------|-------------------|
+| Post listing: empty/1/10/11/30 posts, pagination, sort, view modes, long/missing fields, skeleton | `actions.test.ts` (queries), `components.test.tsx` (grid, filters), `pagination.test.tsx` | `blog-listing.spec.ts` (all 3 sections) |
+| Post page: content, Prev/Next, no body/author, 404 | `actions.test.ts` (neighbours) | `post-detail.spec.ts` |
+| Resources: tabs, search, pagination, empty | `actions.test.ts`, `components.test.tsx` (Tabs, SearchBar) | `resources.spec.ts` |
+| Contact form | `message-form.test.tsx` | `contact-form.spec.ts` |
+| Footer sign-up | `components.test.tsx` | – (needs Firebase/Postmark server actions) |
+| Routes, nav, homepage, photos, 404, draft API | `middleware.test.ts`, `api-draft.test.ts` | `site.spec.ts` |
+| API routes | `api-send-email`, `api-postmark-webhook`, `api-sanity-webhook` | – |
+| Mock/production safety | `fetch.test.ts`, `middleware.test.ts` | `fixtures.ts` guard |
 
-#### Form Validation
-Test error messages appear at correct times:
-```typescript
-test('shows validation errors for empty required fields', async ({ page }) => {
-  await page.goto('/contact');
-  await page.click('button[type="submit"]');
-  await expect(page.locator('text=First name is required')).toBeVisible();
-});
-```
+## Writing effective tests
 
-#### User Interactions
-Test sorting, filtering, view modes:
-```typescript
-test('can toggle between grid and list view', async ({ page }) => {
-  await page.goto('/healing-journey');
-  await page.click('[aria-label="list view"]');
-  // Verify list view is active
-});
-```
+A test is only worth having if it can fail when the behaviour breaks. Before committing one, flip
+the behaviour it covers (change a constant, invert a condition) and confirm it goes red.
 
-## Testing Edge Cases
+- **Assert exact outcomes**: `toHaveText('Page 2 of 3')`, `toHaveText([...titles])`, not `toBeVisible()` on `body` or `expect(true).toBe(true)`.
+- **No conditional assertions.** `if (await x.isVisible()) { expect(...) }` silently passes when the feature is missing. Control the data with a scenario instead, so the element must exist.
+- **No `waitForTimeout`.** Use web-first assertions (`expect(locator)...`), which retry. The only fixed waits are where time itself is the behaviour (use `page.clock`).
+- **Don't re-implement the code under test inside the test.** Import the real function/component.
+- **Select by role / label / text**, not Tailwind classes. If something has no accessible name, add one to the component (that is also an accessibility fix).
+- **Unknown status codes are not assertions.** `expect([200, 404, 500]).toContain(status)` can't fail. Assert the one correct status.
+- Use scenarios to hit boundaries: 0, 1, a full page (10), a full page + 1 (11), many (30).
 
-### Text Length Handling
-- Very long titles should truncate gracefully
-- Very long excerpts should truncate to 2-3 lines
-- Empty titles/excerpts should not cause crashes
+## Known bugs are tracked in the suite
 
-### Data Variations
-| Scenario | What to Verify |
-|----------|----------------|
-| 0 posts | Empty state shown |
-| 1 post | Hero view with no grid below |
-| 10 posts | First page fills exactly |
-| 11 posts | Pagination appears |
-| 100+ posts | Multiple pages work correctly |
+When a test documents behaviour the code doesn't yet have, it is marked so the suite stays green
+but cannot be forgotten:
 
-### Pagination Edge Cases
-| Scenario | Expected Behavior |
-|----------|-------------------|
-| Page 1 of 1 | Both prev/next disabled |
-| Page 1 of 5 | Prev disabled, next enabled |
-| Page 5 of 5 | Prev enabled, next disabled |
-| Page 3 of 5 | Both enabled |
+- E2E: `test.fail(true, 'BUG: …')` – the test is *expected* to fail; when someone fixes the bug it
+  starts "unexpectedly passing" and fails, prompting removal of the marker.
+- Unit: `it.fails(...)`, same semantics.
 
-### Form Error Messages
-| Invalid Input | Error Message |
-|--------------|---------------|
-| Empty first name | "First name is required" |
-| Empty last name | "Last name is required" |
-| Empty email | "Email is required" |
-| Email without @ | "Invalid email" |
-| Empty subject | "Subject is required" |
-| Empty message | "Message is required" |
-| Message < 10 chars | "Message must be at least 10 characters" |
+Search for `BUG:` / `it.fails` to list them. Current list:
 
-## Debugging Failed Tests
+| Where | Bug |
+|-------|-----|
+| `resources.spec.ts` | Switching tab keeps the old page index (BEHAVIOR.md says it resets to page 0). |
+| `resources.spec.ts` | Typing in search while on a later page keeps the page index → empty results. Only Enter resets it. |
+| `message-form.test.tsx`, `contact-form.spec.ts` | After a failed validation, a later successful send "clears" the form back to polluted initial state → all old errors reappear. |
+| `contact-form.spec.ts` | A network failure (rejected `fetch`) leaves the spinner on forever with no alert. |
+| `api-send-email.test.ts` | No server-side validation of required fields; HTML body doesn't escape user input. |
+| `api-postmark-webhook.test.ts` | BEHAVIOR.md says a webhook secret is required; none is checked. |
+| `api-sanity-webhook.test.ts` | Unauthenticated: anyone can trigger an email blast to subscribers. |
+| `components.test.tsx` | `DateComponent` shows the previous day for date-only values west of UTC. |
 
-### E2E Test Timeout
-If `waitForLoadState('networkidle')` times out:
-- The page may be waiting for external resources (Sanity, fonts)
-- Use `waitForLoadState('domcontentloaded')` instead
-- Check for infinite loading states
+## Debugging
 
-### Flaky Tests
-- Add `await page.waitForTimeout(100)` after actions
-- Ensure animations complete before assertions
-- Use `waitForSelector` instead of fixed timeouts
+- **E2E failing at navigation**: run `E2E_SERVER_LOGS=1 npx playwright test <file>` to see server errors.
+- **"browser attempted to reach a non-local host"**: the page requested an external URL. Either the app
+  gained a new third-party call (add it to `BLOCKED_TELEMETRY` only if it carries no site data) or a mock
+  fixture contains a real URL (use `MOCK_IMAGE_URL_PREFIX` for images).
+- **`getByRole('alert')` matches two elements**: Next's dev route announcer also has `role="alert"`; the
+  contact spec excludes `#__next-route-announcer__`.
+- **Server Action traffic can't be mocked with `page.route`** – it runs inside the Next server. Use scenarios.
 
-### Testing Without Data
-Some tests depend on Sanity having content. For CI:
-- Use mocked data in unit tests
-- E2E tests may need to be conditional based on content existence
+## Test maintenance
 
-## Test Maintenance
+1. **Before**: run `npm run test:all` for a baseline.
+2. **During**: add tests for new behaviour; add fixtures/scenarios if new data shapes are needed.
+3. **After**: everything green, and `git status` shows no `playwright-report/` or `test-results/` (they are git-ignored).
 
-When making changes:
-
-1. **Before**: Run existing tests to establish baseline
-2. **During**: Add tests for new behavior
-3. **After**: Verify all tests pass before committing
-
-If a test fails after your change:
-1. Determine if the test was testing correct behavior
-2. If behavior changed intentionally, update the test
-3. If behavior was broken, fix the code
-4. Never modify tests to make them pass without understanding why
+If a test fails after your change: decide whether the test described correct behaviour. If behaviour
+changed intentionally, update the test; if it broke, fix the code. Never edit a test just to turn it green.

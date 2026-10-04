@@ -1,98 +1,62 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
+import { emailPreferenceOptions, normalizeText } from '@/components/utils';
+import { resolveOpenGraphImage, urlForImage } from '@/sanity/lib/utils';
 
-// Test the resolveHref function logic directly without importing the module
-// that has environment variable dependencies
-describe('resolveHref logic', () => {
-  // Reimplement the function to test its logic
-  function resolveHref(documentType?: string, slug?: string): string | undefined {
-    switch (documentType) {
-      case 'post':
-        return slug ? `/posts/${slug}` : undefined;
-      default:
-        console.warn('Invalid document type:', documentType);
-        return undefined;
-    }
-  }
+describe('normalizeText', () => {
+  const block = (text: string) => ({ _type: 'block', children: [{ _type: 'span', text }] });
+  const textOf = (blocks: any[]) => blocks.map((b) => b.children.map((c: any) => c.text));
 
-  it('returns correct href for post type with slug', () => {
-    expect(resolveHref('post', 'my-blog-post')).toBe('/posts/my-blog-post');
+  it('returns [] for missing input', () => {
+    expect(normalizeText(undefined as any)).toEqual([]);
+    expect(normalizeText(null as any)).toEqual([]);
   });
 
-  it('returns undefined for post type without slug', () => {
-    expect(resolveHref('post')).toBe(undefined);
+  it('inserts a space after a period that is directly followed by a capital letter', () => {
+    expect(textOf(normalizeText([block('End.Start here. lowercase.next 3.5')]))).toEqual([['End. Start here. lowercase.next 3.5']]);
   });
 
-  it('returns undefined for unknown document types', () => {
-    expect(resolveHref('unknown', 'something')).toBe(undefined);
+  it('inserts a space after : ? ! when missing, and leaves existing spaces alone', () => {
+    expect(textOf(normalizeText([block('Why?Because!Yes:no and ok: fine')]))).toEqual([['Why? Because! Yes: no and ok: fine']]);
   });
 
-  it('logs warning for unknown document types', () => {
-    const consoleWarn = vi.spyOn(console, 'warn').mockImplementation(() => {});
-    resolveHref('invalid-type', 'slug');
-    expect(consoleWarn).toHaveBeenCalledWith('Invalid document type:', 'invalid-type');
-    consoleWarn.mockRestore();
+  it('leaves non-block nodes and non-span children untouched', () => {
+    const image = { _type: 'image', asset: { _ref: 'x' } };
+    const custom = { _type: 'block', children: [{ _type: 'inlineThing', text: 'a.B' }] };
+    expect(normalizeText([image, custom])).toEqual([image, custom]);
   });
 });
 
-// Test urlForImage logic
-describe('urlForImage logic', () => {
-  function urlForImage(source: any) {
-    // Ensure that source image contains a valid reference
-    if (!source?.asset?._ref) {
-      return undefined;
-    }
-    // Return a mock url builder
-    return {
-      auto: () => ({ fit: () => ({ url: () => 'https://example.com/image.jpg' }) }),
-      width: () => ({ height: () => ({ fit: () => ({ url: () => 'https://example.com/image.jpg' }) }) }),
-    };
-  }
-
-  it('returns undefined when source is null', () => {
-    expect(urlForImage(null)).toBe(undefined);
-  });
-
-  it('returns undefined when source is empty object', () => {
-    expect(urlForImage({})).toBe(undefined);
-  });
-
-  it('returns undefined when source has no asset ref', () => {
-    expect(urlForImage({ asset: {} })).toBe(undefined);
-    expect(urlForImage({ asset: { _ref: '' } })).toBe(undefined);
-  });
-
-  it('returns url builder for valid source', () => {
-    const source = {
-      asset: {
-        _ref: 'image-abc123-800x600-jpg',
-      },
-    };
-    const result = urlForImage(source);
-    expect(result).toBeDefined();
+describe('email preference options', () => {
+  it('are exactly the three blog sections (they are the Firestore preference keys)', () => {
+    expect(emailPreferenceOptions).toEqual(["Lou's Healing Journey", 'Additional Topics', 'Messages for Humanity']);
   });
 });
 
-// Test resolveOpenGraphImage logic
-describe('resolveOpenGraphImage logic', () => {
-  function resolveOpenGraphImage(image: any, width = 1200, height = 627) {
-    if (!image) return;
-    // Mock the url generation
-    const url = 'https://example.com/og-image.jpg';
-    if (!url) return;
-    return { url, alt: image?.alt as string, width, height };
-  }
+describe('urlForImage / resolveOpenGraphImage (real implementations)', () => {
+  const image = { asset: { _ref: 'image-abc123def456abc123def456abc123def456abc1-800x600-jpg' }, alt: 'Alt text' };
 
-  it('returns undefined when image is null', () => {
-    expect(resolveOpenGraphImage(null)).toBe(undefined);
+  it('undefined without an asset reference', () => {
+    expect(urlForImage(null)).toBeUndefined();
+    expect(urlForImage({})).toBeUndefined();
+    expect(urlForImage({ asset: {} })).toBeUndefined();
+    expect(urlForImage({ asset: { _ref: '' } })).toBeUndefined();
   });
 
-  it('returns object with url and metadata when image is valid', () => {
-    const result = resolveOpenGraphImage({ alt: 'Test alt' });
-    expect(result).toEqual({
-      url: 'https://example.com/og-image.jpg',
-      alt: 'Test alt',
-      width: 1200,
-      height: 627,
-    });
+  it('builds a CDN url for the configured project/dataset', () => {
+    const url = urlForImage(image)!.url();
+    expect(url).toMatch(/^https:\/\/cdn\.sanity\.io\/images\/unitplaceholder\/unit\/abc123def456abc123def456abc123def456abc1-800x600\.jpg/);
+  });
+
+  it('resolveOpenGraphImage: undefined for no/invalid image', () => {
+    expect(resolveOpenGraphImage(null)).toBeUndefined();
+    expect(resolveOpenGraphImage({})).toBeUndefined();
+  });
+
+  it('resolveOpenGraphImage: 1200x627 cropped url with alt', () => {
+    const og = resolveOpenGraphImage(image)!;
+    expect(og).toMatchObject({ alt: 'Alt text', width: 1200, height: 627 });
+    expect(og.url).toContain('w=1200');
+    expect(og.url).toContain('h=627');
+    expect(og.url).toContain('fit=crop');
   });
 });

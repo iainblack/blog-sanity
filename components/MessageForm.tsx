@@ -114,21 +114,21 @@ export default function MessageForm() {
                 </div>
                 <div className="flex flex-wrap -mx-3 mb-2">
                     <div className="w-full px-3 mb-2">
-                        <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-password">
+                        <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-subject">
                             Subject
                         </label>
                         <input
-                            type='text' value={subject.value} onChange={(e) => setFormState({ ...formState, subject: { value: e.target.value } })}
+                            id='contact-subject' type='text' value={subject.value} onChange={(e) => setFormState({ ...formState, subject: { value: e.target.value } })}
                             className={`contact-form-input ${subject.error ? 'border-red-500' : ''}`}
                         />
                         {subject.error && <p className="text-red-500 text-xs italic">{subject.error}</p>}
                     </div>
                     <div className="w-full px-3 mb-2">
-                        <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-password">
+                        <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="contact-email">
                             Your Email
                         </label>
                         <input
-                            type='text' value={email.value} onChange={(e) => setFormState({ ...formState, email: { value: e.target.value } })}
+                            id='contact-email' type='text' value={email.value} onChange={(e) => setFormState({ ...formState, email: { value: e.target.value } })}
                             className={`contact-form-input ${email.error ? 'border-red-500' : ''}`}
                         />
                         {email.error && <p className="text-red-500 text-xs italic">{email.error}</p>}

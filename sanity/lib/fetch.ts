@@ -3,18 +3,28 @@ import { draftMode, cookies } from "next/headers";
 
 import { client } from "@/sanity/lib/client";
 import { token } from "@/sanity/lib/token";
-import { getMockData } from "./mockData";
+import { parseMockScenario, type MockScenario } from "./mockData";
 
 /**
- * Check if mock data mode is enabled via cookie
+ * Resolve the active mock scenario, or null when real Sanity data should be used.
+ *
+ * - `MOCK_DATA=force` (used by the Playwright test server): always mock. The
+ *   cookie, if present, only selects the scenario. Real Sanity is unreachable.
+ * - Otherwise mock mode is a dev-only convenience, switched on by the
+ *   `mock_data=true` cookie (set by middleware via `?mock=true`). It is ignored
+ *   in production builds so a visitor can't swap the live site's content.
  */
-async function isMockMode(): Promise<boolean> {
+async function getMockScenario(): Promise<MockScenario | null> {
+  const forced = process.env.MOCK_DATA === "force";
+  if (!forced && process.env.NODE_ENV === "production") return null;
+
   try {
     const cookieStore = await cookies();
-    return cookieStore.get("mock_data")?.value === "true";
+    if (!forced && cookieStore.get("mock_data")?.value !== "true") return null;
+    return parseMockScenario(cookieStore.get("mock_scenario")?.value);
   } catch {
-    // cookies() throws when called outside a request context (e.g., during generateStaticParams)
-    return false;
+    // cookies() throws outside a request context (e.g. generateStaticParams)
+    return forced ? "default" : null;
   }
 }
 
@@ -36,32 +46,25 @@ async function isDraftMode(): Promise<boolean> {
  * and will also fetch from the CDN.
  * When using the "previewDrafts" perspective then the data is fetched from the live API and isn't cached, it will also fetch draft content that isn't published yet.
  *
- * To enable mock mode for development/testing, add a cookie:
- *   document.cookie = "mock_data=true; path=/"
- * To disable:
- *   document.cookie = "mock_data=false; path=/"
- * Or use ?mock=true in URL (handled by middleware).
+ * Mock mode (dev only): visit any page with ?mock=true (optionally
+ * &scenario=empty|single|ten|eleven|many) and ?mock=false to turn it off.
+ * See getMockScenario above.
  */
 export async function sanityFetch<QueryResponse>({
   query,
   params = {},
   perspective,
   stega,
-  pageId,
 }: {
   query: string;
   params?: QueryParams;
   perspective?: Omit<ClientPerspective, "raw">;
   stega?: boolean;
-  pageId?: string;
 }): Promise<QueryResponse> {
-  // Check for mock mode
-  const mockMode = await isMockMode();
-
-  // Use mock data if enabled
-  if (mockMode) {
-    const mockData = getMockData(query, pageId);
-    return mockData as QueryResponse;
+  const mockScenario = await getMockScenario();
+  if (mockScenario) {
+    const { runMockQuery } = await import("./mockData");
+    return runMockQuery<QueryResponse>(query, params, mockScenario);
   }
 
   // Resolve perspective

@@ -1,199 +1,140 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect } from './fixtures';
+import type { Page, Route } from '@playwright/test';
 
 /**
- * Contact Form Tests
- * Tests form fields, validation errors, and basic submission.
+ * Contact form (/contact). `/api/sendEmail` is ALWAYS intercepted in the browser so no
+ * email can ever be sent; tests assert on the exact request the form makes.
  */
+const VALID = {
+  firstName: 'Ada',
+  lastName: 'Lovelace',
+  subject: 'Hello',
+  email: 'ada@example.com',
+  message: 'This message is long enough.',
+};
 
-test.describe('Contact Form - Field Presence', () => {
+const field = {
+  firstName: (p: Page) => p.locator('#contact-first-name'),
+  lastName: (p: Page) => p.locator('#contact-last-name'),
+  subject: (p: Page) => p.locator('#contact-subject'),
+  email: (p: Page) => p.locator('#contact-email'),
+  message: (p: Page) => p.locator('#contact-message'),
+};
+const submit = (p: Page) => p.getByRole('button', { name: 'Submit' });
+// Excludes Next's route announcer, which also has role="alert".
+const alertBox = (p: Page) => p.locator('[role="alert"]:not(#__next-route-announcer__)');
+const fieldErrors = (p: Page) => p.locator('form p.text-red-500');
+
+const ERRORS = {
+  firstName: 'First name is required',
+  lastName: 'Last name is required',
+  subject: 'Subject is required',
+  email: 'Email is required',
+  message: 'Message is required',
+};
+
+async function fill(page: Page, values: Partial<typeof VALID>) {
+  for (const [key, value] of Object.entries(values)) {
+    await field[key as keyof typeof field](page).fill(value);
+  }
+}
+
+/** Intercept the API, record request bodies, and respond with `status`. */
+async function mockSendEmail(page: Page, status = 200, handler?: (route: Route) => Promise<void>) {
+  const requests: unknown[] = [];
+  await page.route('**/api/sendEmail', async (route) => {
+    requests.push(route.request().postDataJSON());
+    if (handler) return handler(route);
+    await route.fulfill({ status, contentType: 'application/json', body: JSON.stringify({}) });
+  });
+  return requests;
+}
+
+test.describe('Contact form', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/contact');
-    await page.waitForLoadState('domcontentloaded');
+    await expect(page.getByRole('heading', { level: 1, name: 'Contact Lou' })).toBeVisible();
   });
 
-  test('has first name input', async ({ page }) => {
-    await expect(page.locator('#contact-first-name')).toBeVisible();
-  });
+  // Field-by-field validation rules, boundaries and error clearing are covered in tests/unit/message-form.test.tsx.
+  test.describe('validation', () => {
+    test('empty submit shows every required-field error, each field flagged, and sends nothing', async ({ page }) => {
+      const requests = await mockSendEmail(page);
+      await submit(page).click();
 
-  test('has last name input', async ({ page }) => {
-    await expect(page.locator('#contact-last-name')).toBeVisible();
-  });
-
-  test('has message textarea', async ({ page }) => {
-    await expect(page.locator('#contact-message')).toBeVisible();
-  });
-
-  test('has submit button', async ({ page }) => {
-    await expect(page.locator('button:has-text("Submit")')).toBeVisible();
-  });
-
-  test('inputs accept text input', async ({ page }) => {
-    await page.fill('#contact-first-name', 'John');
-    await page.fill('#contact-last-name', 'Doe');
-    await page.fill('#contact-message', 'This is a test message that is long enough.');
-
-    await expect(page.locator('#contact-first-name')).toHaveValue('John');
-    await expect(page.locator('#contact-last-name')).toHaveValue('Doe');
-    await expect(page.locator('#contact-message')).toHaveValue('This is a test message that is long enough.');
-  });
-});
-
-test.describe('Contact Form - Validation', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/contact');
-    await page.waitForLoadState('domcontentloaded');
-  });
-
-  test('shows errors when submitting empty form', async ({ page }) => {
-    await page.click('button:has-text("Submit")');
-    await page.waitForTimeout(300);
-
-    const errorCount = await page.locator('p.text-red-500').count();
-    expect(errorCount).toBeGreaterThan(0);
-  });
-
-  test('shows error for empty first name', async ({ page }) => {
-    await page.fill('#contact-last-name', 'Doe');
-    await page.fill('#contact-message', 'This is a test message.');
-    await page.click('button:has-text("Submit")');
-    await page.waitForTimeout(300);
-
-    const errorText = page.locator('text=First name is required');
-    await expect(errorText).toBeVisible();
-  });
-
-  test('shows error for empty last name', async ({ page }) => {
-    await page.fill('#contact-first-name', 'John');
-    await page.fill('#contact-message', 'This is a test message.');
-    await page.click('button:has-text("Submit")');
-    await page.waitForTimeout(300);
-
-    const errorText = page.locator('text=Last name is required');
-    await expect(errorText).toBeVisible();
-  });
-
-  test('shows error for empty message', async ({ page }) => {
-    await page.fill('#contact-first-name', 'John');
-    await page.fill('#contact-last-name', 'Doe');
-    await page.click('button:has-text("Submit")');
-    await page.waitForTimeout(300);
-
-    const errorText = page.locator('text=Message is required');
-    await expect(errorText).toBeVisible();
-  });
-
-  test('shows error for short message', async ({ page }) => {
-    await page.fill('#contact-first-name', 'John');
-    await page.fill('#contact-last-name', 'Doe');
-    await page.fill('#contact-message', 'Short');
-    await page.click('button:has-text("Submit")');
-    await page.waitForTimeout(300);
-
-    const errorText = page.locator('text=Message must be at least 10 characters');
-    await expect(errorText).toBeVisible();
-  });
-
-  test('valid form does not show field errors', async ({ page }) => {
-    // Fill all fields properly
-    await page.fill('#contact-first-name', 'John');
-    await page.fill('#contact-last-name', 'Doe');
-    await page.fill('#contact-message', 'This is a valid test message with enough characters.');
-
-    await page.click('button:has-text("Submit")');
-    await page.waitForTimeout(500);
-
-    // Should not show the "required" type errors
-    // (might still show other errors if email/subject are also required)
-    const requiredErrors = page.locator('text=First name is required,Last name is required,Message is required');
-  });
-});
-
-test.describe('Contact Form - Error Styling', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/contact');
-    await page.waitForLoadState('domcontentloaded');
-  });
-
-  test('error messages appear in red', async ({ page }) => {
-    await page.click('button:has-text("Submit")');
-    await page.waitForTimeout(300);
-
-    const redErrors = page.locator('p.text-red-500');
-    const count = await redErrors.count();
-    expect(count).toBeGreaterThan(0);
-  });
-
-  test('invalid field has error styling', async ({ page }) => {
-    await page.click('button:has-text("Submit")');
-    await page.waitForTimeout(300);
-
-    const firstNameInput = page.locator('#contact-first-name');
-    const classes = await firstNameInput.getAttribute('class');
-    expect(classes).toMatch(/border-red/);
-  });
-});
-
-test.describe('Contact Form - Page Structure', () => {
-  test('page loads without errors', async ({ page }) => {
-    await page.goto('/contact');
-    await page.waitForLoadState('domcontentloaded');
-    await expect(page.locator('body')).not.toContainText('Application Error');
-  });
-
-  test('has Contact heading', async ({ page }) => {
-    await page.goto('/contact');
-    const heading = page.locator('h1:has-text("Contact")');
-    await expect(heading).toBeVisible();
-  });
-
-  test('has header and footer', async ({ page }) => {
-    await page.goto('/contact');
-    await expect(page.locator('header')).toBeVisible();
-    await expect(page.locator('footer')).toBeVisible();
-  });
-
-  test('has descriptive text', async ({ page }) => {
-    await page.goto('/contact');
-    const description = page.locator('text=I will do my best to respond');
-    await expect(description).toBeVisible();
-  });
-});
-
-test.describe('Contact Form - Submission', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/contact');
-    await page.waitForLoadState('domcontentloaded');
-  });
-
-  test('submit button shows loading state during submission', async ({ page }) => {
-    // Fill form
-    await page.fill('#contact-first-name', 'John');
-    await page.fill('#contact-last-name', 'Doe');
-    await page.fill('#contact-message', 'This is a test message.');
-
-    // Mock API to delay response
-    await page.route('**/api/sendEmail', async (route) => {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({}) });
+      await expect(fieldErrors(page)).toHaveText(Object.values(ERRORS));
+      for (const key of Object.keys(field) as (keyof typeof field)[]) {
+        await expect(field[key](page)).toHaveClass(/border-red-500/);
+      }
+      expect(requests).toHaveLength(0);
     });
 
-    await page.click('button:has-text("Submit")');
-    await page.waitForTimeout(100);
-
-    // Button should be disabled or show loading during submission
-    const button = page.locator('button:has-text("Submit")');
-    // Just verify no crash - loading state may vary
   });
 
-  test('form submission completes without crash', async ({ page }) => {
-    await page.fill('#contact-first-name', 'John');
-    await page.fill('#contact-last-name', 'Doe');
-    await page.fill('#contact-message', 'This is a test message.');
+  test.describe('submission', () => {
+    test('valid form posts exactly the entered values, shows success and clears the form', async ({ page }) => {
+      const requests = await mockSendEmail(page);
+      await fill(page, VALID);
+      await submit(page).click();
 
-    await page.click('button:has-text("Submit")');
-    await page.waitForTimeout(1000);
+      await expect(alertBox(page)).toHaveText(/Message sent successfully/);
+      expect(requests).toEqual([
+        { senderEmail: VALID.email, firstName: VALID.firstName, lastName: VALID.lastName, subject: VALID.subject, message: VALID.message },
+      ]);
+      for (const key of Object.keys(field) as (keyof typeof field)[]) {
+        await expect(field[key](page)).toHaveValue('');
+      }
+      await expect(fieldErrors(page)).toHaveCount(0);
+    });
 
-    // Should complete without page crash
-    await expect(page.locator('main')).toBeVisible();
+    test('after a failed validation, a corrected submit succeeds and leaves a clean, error-free form', async ({ page }) => {
+      test.fail(true, 'BUG: validation mutates the shared initial form state, so the cleared form re-shows old errors (components/MessageForm.tsx). Remove this line when fixed.');
+      await mockSendEmail(page);
+      await submit(page).click(); // trigger all five errors
+      await expect(fieldErrors(page)).toHaveCount(5);
+
+      await fill(page, VALID);
+      await submit(page).click();
+      await expect(alertBox(page)).toHaveText(/Message sent successfully/);
+      await expect(field.firstName(page)).toHaveValue('');
+      await expect(fieldErrors(page)).toHaveCount(0); // the cleared form must not show stale errors
+    });
+
+    test('server error shows a failure alert and keeps what the user typed', async ({ page }) => {
+      await mockSendEmail(page, 500);
+      await fill(page, VALID);
+      await submit(page).click();
+
+      await expect(alertBox(page)).toHaveText(/Message failed to send/);
+      await expect(field.message(page)).toHaveValue(VALID.message);
+      await expect(field.email(page)).toHaveValue(VALID.email);
+    });
+
+    test('shows a spinner (and no "Submit" label) while the request is in flight', async ({ page }) => {
+      let release!: () => void;
+      const gate = new Promise<void>((resolve) => (release = resolve));
+      await mockSendEmail(page, 200, async (route) => {
+        await gate;
+        await route.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
+      });
+      await fill(page, VALID);
+      await submit(page).click();
+
+      await expect(page.getByRole('button', { name: 'Submit' })).toHaveCount(0);
+      await expect(page.locator('form button svg, form button .animate-spin').first()).toBeVisible();
+      release();
+      await expect(alertBox(page)).toHaveText(/Message sent successfully/);
+      await expect(submit(page)).toBeVisible();
+    });
+
+    test('a network failure surfaces an error and re-enables the form', async ({ page }) => {
+      test.fail(true, 'BUG: fetch() rejection is unhandled, so the spinner never stops and no alert shows (components/MessageForm.tsx). Remove this line when fixed.');
+      await page.route('**/api/sendEmail', (route) => route.abort('connectionrefused'));
+      await fill(page, VALID);
+      await submit(page).click();
+
+      await expect(alertBox(page)).toHaveText(/failed to send/i);
+      await expect(submit(page)).toBeVisible();
+    });
   });
 });

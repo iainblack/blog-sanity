@@ -22,6 +22,7 @@ export default function Pagination({ totalPages, active, setActive }: { totalPag
                 className={`p-2 rounded-full border border-text-primary ${active === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary bg-contrast-bg'}`}
                 onClick={prev}
                 disabled={active === 0}
+                aria-label="Previous page"
             >
                 <ArrowLeftIcon className="h-5 w-5 text-text-primary" />
             </button>
@@ -32,6 +33,7 @@ export default function Pagination({ totalPages, active, setActive }: { totalPag
                 className={`p-2 rounded-full border border-text-primary  ${active + 1 === totalPages || active == totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary bg-contrast-bg'}`}
                 onClick={next}
                 disabled={active + 1 === totalPages || active === totalPages}
+                aria-label="Next page"
             >
                 <ArrowRightIcon className="h-5 w-5 text-text-primary" />
             </button>

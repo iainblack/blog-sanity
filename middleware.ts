@@ -2,32 +2,33 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 /**
- * Middleware to handle mock data mode
+ * Middleware to handle mock data mode (development only, see sanity/lib/fetch.ts)
  *
  * Usage:
- *   - Add ?mock=true to any URL to enable mock data
- *   - The cookie is set so subsequent requests don't need the param
- *   - To disable mock mode: visit any page with ?mock=false
+ *   - ?mock=true                       enable mock data (persisted in a cookie)
+ *   - ?mock=true&scenario=empty        pick a data scenario:
+ *                                      default | empty | single | ten | eleven | many
+ *   - ?mock=false                      disable mock data again
  */
 export function middleware(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const mockParam = searchParams.get("mock");
+  const scenarioParam = searchParams.get("scenario");
 
   if (mockParam === "true") {
-    // Enable mock data
     const response = NextResponse.next();
-    response.cookies.set("mock_data", "true", {
-      path: "/",
-      maxAge: 60 * 60 * 24 * 365, // 1 year
-      sameSite: "lax",
-    });
+    const options = { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" as const };
+    response.cookies.set("mock_data", "true", options);
+    if (scenarioParam) {
+      response.cookies.set("mock_scenario", scenarioParam, options);
+    }
     return response;
   }
 
   if (mockParam === "false") {
-    // Disable mock data
     const response = NextResponse.next();
     response.cookies.delete("mock_data");
+    response.cookies.delete("mock_scenario");
     return response;
   }
 
@@ -42,7 +43,7 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - public folder
-     * - api routes (except our own)
+     * - api routes
      */
     "/((?!_next/static|_next/image|favicon.ico|public|api/).*)",
   ],
