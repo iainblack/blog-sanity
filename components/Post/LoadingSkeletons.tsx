@@ -131,7 +131,7 @@ export const PostPreviewListSkeleton = () => {
                     >
                         <div className='w-full h-full flex flex-col justify-between'>
                             <div className="flex flex-col h-full md:flex-row md:justify-between md:items-center">
-                                <div className="w-auto pb-3 md:pb-0 md:min-w-[200px]">
+                                <div className="w-full pb-3 md:pb-0 md:w-64 md:shrink-0">
                                     <div className="text-left truncate">
                                         <div className="h-4 bg-gray-300 rounded w-24 mb-2"></div>
                                         <div className="flex items-center">

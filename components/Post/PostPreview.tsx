@@ -38,12 +38,12 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
                     </div>
                     <div className="md:w-1/2 md:pl-4 flex flex-col justify-center">
                         <div className="py-4 md:py-0 space-y-3 lg:space-y-6">
-                            <div className="text-left pb-3 w-full md:w-auto md:pb-0 md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
+                            <div className="text-left pb-3 w-full md:w-auto md:pb-0 md:flex md:flex-col break-words">
                                 <DateComponent icon dateString={post.date} />
                                 {post.author?.name && (
-                                    <div className="flex items-center">
-                                        <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                        <div className="text-gray-600 text-lg font-garamond">
+                                    <div className="flex items-start">
+                                        <UserIcon className="text-gray-600 mr-1 w-5 h-5 shrink-0 mt-0.5" />
+                                        <div className="text-gray-600 text-lg font-garamond min-w-0">
                                             {post.author.name}
                                         </div>
                                     </div>
@@ -51,7 +51,7 @@ export const HeroImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
                             </div>
                             <div>
                                 <h2 className="text-2xl truncate-lines-smaller font-garamond">{post.title}</h2>
-                                {post.subtitle && <h3 className="text-xl truncate font-garamond">{post.subtitle}</h3>}
+                                {post.subtitle && <h3 className="text-xl truncate-lines-smaller font-garamond">{post.subtitle}</h3>}
                             </div>
                             <div className='truncate-lines text-gray-600'>
                                 <PortableText className="text-xl font-garamond hyphens-auto break-words text-justify custom-portable-text" value={post.content} />
@@ -88,12 +88,12 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
                     {post.coverImage && <NextImage image={post.coverImage} fit='contain' />}
                 </div>
                 <div className={`py-2 space-y-2`}>
-                    <div className="text-left w-full md:w-auto md:flex md:flex-col truncate min-w-[25%] lg:min-w-[20%]">
+                    <div className="text-left w-full md:w-auto md:flex md:flex-col break-words">
                         <DateComponent icon dateString={post.date} />
                         {post.author?.name && (
-                            <div className="flex items-center">
-                                <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                <div className="text-gray-600 font-garamond text-lg">
+                            <div className="flex items-start">
+                                <UserIcon className="text-gray-600 mr-1 w-5 h-5 shrink-0 mt-0.5" />
+                                <div className="text-gray-600 font-garamond text-lg min-w-0">
                                     {post.author.name}
                                 </div>
                             </div>
@@ -101,7 +101,7 @@ export const PostImagePreview: React.FC<PostPreviewProps> = ({ post, backgroundC
                     </div>
                     <div>
                         <h2 className="text-2xl truncate-lines-smaller font-garamond">{post.title}</h2>
-                        {post.subtitle && <h3 className="text-xl truncate font-garamond">{post.subtitle}</h3>}
+                        {post.subtitle && <h3 className="text-xl truncate-lines-smaller font-garamond">{post.subtitle}</h3>}
                     </div>
                     <p className="text-gray-600 text-xl font-garamond truncate-lines-smaller">{post.excerpt}</p>
                 </div>
@@ -126,13 +126,13 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post, backgroundColor 
         <div className={`w-full overflow-hidden ${bgClass} flex items-center justify-between p-3 md:p-4 border border-black rounded-xl shadow transition-colors cursor-pointer`}>
             <Link href={`${path}/posts/${post.slug}`} className='w-full h-full flex flex-col justify-between'>
                 <div className="flex flex-col h-full md:flex-row md:justify-between md:items-center ">
-                    <div className="w-auto pb-3 md:pb-0 md:min-w-[200px]">
-                        <div className="text-left truncate">
+                    <div className="w-full pb-3 md:pb-0 md:w-64 md:shrink-0">
+                        <div className="text-left break-words">
                             <DateComponent icon dateString={post.date} />
                             {post.author?.name && (
-                                <div className="flex items-center">
-                                    <UserIcon className="text-gray-600 mr-1 w-5 h-5" />
-                                    <div className="text-gray-600 font-garamond text-lg">
+                                <div className="flex items-start">
+                                    <UserIcon className="text-gray-600 mr-1 w-5 h-5 shrink-0 mt-0.5" />
+                                    <div className="text-gray-600 font-garamond text-lg min-w-0">
                                         {post.author.name}
                                     </div>
                                 </div>

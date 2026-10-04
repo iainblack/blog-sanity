@@ -63,12 +63,14 @@ const textBlock = (key: string, text: string) => ({
 });
 
 export const MOCK_AUTHOR_NAME = "Lou Fleming";
+/** Used by post 3 to verify long author names wrap instead of being clipped on cards. */
+export const MOCK_LONG_AUTHOR_NAME = "Dr. Louisa Marguerite Fleming-Whitaker-Montgomery III";
 export const MOCK_LONG_TITLE =
   "A Post With A Very Long Title That Tests How The UI Handles Very Long Titles In The Post Preview Grid Layout";
 
 /**
  * Post `i` (1-based) in a section. A few indexes are deliberately awkward:
- *   3 -> very long title/subtitle/excerpt
+ *   3 -> very long title/subtitle/excerpt and a very long author name
  *   5 -> no author, subtitle or excerpt
  *   7 -> no body content
  */
@@ -92,6 +94,7 @@ function makePost(section: (typeof MOCK_SECTIONS)[number], i: number): Doc {
   };
 
   if (i === 3) {
+    base.author = { _type: "reference", _ref: "author-long" };
     base.title = `${MOCK_LONG_TITLE} (${section.label})`;
     base.subtitle = "Subtitle also very long to test truncation behavior in the UI, repeated until it is far too long";
     base.excerpt =
@@ -151,6 +154,7 @@ export function buildMockDataset(scenario: MockScenario): Doc[] {
       footer: [],
     },
     { _id: "author-lou", _type: "author", name: MOCK_AUTHOR_NAME },
+    { _id: "author-long", _type: "author", name: MOCK_LONG_AUTHOR_NAME },
   ];
 
   for (const section of MOCK_SECTIONS) {
