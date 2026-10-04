@@ -2,11 +2,11 @@
 
 ## Overview
 
-This is a Next.js blog application (App Router, installed version 14.2.5) with Sanity CMS as the content backend. The application features multiple blog sections, resource management, and a contact form.
+This is a Next.js blog application (App Router, installed version 14.2.35) with Sanity CMS as the content backend. The application features multiple blog sections, resource management, and a contact form.
 
 ## Tech Stack
 
-- **Framework**: Next.js 14.2.5 (App Router; `package.json` says `"next": "latest"` but the lockfile pins 14.2.5)
+- **Framework**: Next.js 14.2.35 (App Router; `package.json` pins `^14.2.35`, the last 14.x release)
 - **Runtime**: Node.js 24.x (set in the Vercel project settings)
 - **CMS**: Sanity v3
 - **Styling**: Tailwind CSS

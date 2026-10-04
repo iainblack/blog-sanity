@@ -1,6 +1,6 @@
 # Blog-Sanity
 
-Personal blog application with Sanity CMS backend. Built with Next.js App Router (currently 14.2.5).
+Personal blog application with Sanity CMS backend. Built with Next.js App Router (currently 14.2.35).
 
 ## Key Documentation
 
@@ -10,7 +10,7 @@ Personal blog application with Sanity CMS backend. Built with Next.js App Router
 
 ## Quick Facts
 
-- **Framework**: Next.js App Router. **Installed/locked version is 14.2.5** (package.json says `"next": "latest"`, so a fresh `npm install` without the lockfile jumps major versions; the code uses Next 14 APIs: sync `params`, sync `draftMode()`)
+- **Framework**: Next.js App Router. **Installed version is 14.2.35**, the last 14.x release (package.json pins `^14.2.35`; the code uses Next 14 APIs: sync `params`, sync `draftMode()`)
 - **CMS**: Sanity v3
 - **Styling**: Tailwind CSS
 - **Deployment**: Vercel. **Node.js 24.x** is set in the Vercel project settings (Node 20 was discontinued and failed builds); develop on Node 24 too (`nvm use 24`)
@@ -43,7 +43,7 @@ npm run dev     # Development server
 
 ### Known Issues
 
-1. **Next.js 14→15 Breaking Changes** (only relevant when upgrading; the app currently runs 14.2.5): Several patterns change:
+1. **Next.js 14→15 Breaking Changes** (only relevant when upgrading; the app currently runs 14.2.35): Several patterns change:
    - `params` in dynamic routes is now a `Promise<{slug}>` - must await
    - `draftMode()` returns a Promise - must await before calling methods
    - `experimental.taint` option removed (use `server-only` instead)

@@ -33,7 +33,7 @@
     "firebase": "^10.12.0",
     "firebase-admin": "^12.1.0",
     "groq-js": "^1.11.0",
-    "next": "latest",
+    "next": "^14.2.35",
     "next-sanity": "^9.0.20",
     "postcss": "^8.4.37",
     "postmark": "^4.0.5",
@@ -52,7 +52,7 @@
     "yet-another-react-lightbox": "^3.18.0"
   },
   "devDependencies": {
-    "@next/env": "latest",
+    "@next/env": "^14.2.35",
     "@playwright/test": "^1.63.0",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^7.0.1",
@@ -60,7 +60,7 @@
     "@types/aos": "^3.0.7",
     "@vitejs/plugin-react": "^4.7.0",
     "eslint": "^8.57.0",
-    "eslint-config-next": "latest",
+    "eslint-config-next": "^14.2.35",
     "jsdom": "^25.0.1",
     "vitest": "^2.1.9"
   }

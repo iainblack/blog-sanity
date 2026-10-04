@@ -44,7 +44,7 @@
 ### Individual Post Page (e.g., `/healing-journey/posts/[slug]`)
 
 **Params Handling**:
-- `params` is a plain object (`{ slug }`) on the installed Next.js 14.2.5; it becomes a Promise on Next 15
+- `params` is a plain object (`{ slug }`) on the installed Next.js 14.2.35; it becomes a Promise on Next 15
 - `generateStaticParams` fetches all post slugs at build time
 
 **404 Handling**:
