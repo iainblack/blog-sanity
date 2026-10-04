@@ -76,7 +76,7 @@ export const pageStructure = (
         orderableDocumentListDeskItem({
           id: page.slug,
           type: 'post',
-          title: page.name,
+          title: page.label ?? page.name,
           icon: DocumentTextIcon,
           S,
           context,
