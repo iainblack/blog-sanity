@@ -1,5 +1,6 @@
 import { ServerClient } from 'postmark';
 import { NextRequest, NextResponse } from 'next/server';
+import { isSandbox } from '@/utils/sandbox';
 
 const postmarkClient = new ServerClient(process.env.POSTMARK_API_KEY || '');
 
@@ -35,6 +36,11 @@ export async function POST(req: NextRequest, res: any) {
         message.length < 10
     ) {
         return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
+    }
+
+    if (isSandbox) {
+        console.log('[sandbox] contact form email not sent:', { senderEmail, subject });
+        return NextResponse.json({ message: 'Email sent successfully' }, { status: 200 });
     }
 
     try {

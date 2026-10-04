@@ -1,8 +1,13 @@
 import { ServerClient } from 'postmark';
+import { isSandbox, sandboxSuppressed } from './sandbox';
 
 const postmarkClient = new ServerClient(process.env.POSTMARK_API_KEY || '');
 
 export const addToSuppressionList = async (email: string): Promise<boolean> => {
+    if (isSandbox) {
+        sandboxSuppressed.add(email);
+        return true;
+    }
     try {
         await postmarkClient.createSuppressions('broadcast', {
             Suppressions: [
@@ -17,6 +22,10 @@ export const addToSuppressionList = async (email: string): Promise<boolean> => {
 };
 
 export const removeFromSuppressionList = async (email: string): Promise<boolean> => {
+    if (isSandbox) {
+        sandboxSuppressed.delete(email);
+        return true;
+    }
     try {
         await postmarkClient.deleteSuppressions('broadcast', {
             Suppressions: [
@@ -31,6 +40,9 @@ export const removeFromSuppressionList = async (email: string): Promise<boolean>
 };
 
 export const isOnSuppressionList = async (email: string): Promise<boolean> => {
+    if (isSandbox) {
+        return sandboxSuppressed.has(email);
+    }
     try {
         const response = await postmarkClient.getSuppressions('broadcast', {
             emailAddress: email

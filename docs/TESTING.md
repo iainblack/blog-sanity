@@ -8,7 +8,7 @@ enforced by the setup, not by discipline:
 | Layer | How production is kept out |
 |-------|----------------------------|
 | E2E app server | Started by Playwright with `MOCK_DATA=force`: **every** Sanity query is answered from the in-memory dataset in `sanity/lib/mockData.ts`. |
-| E2E credentials | Every variable defined in any `.env*` file is overridden with a placeholder (`playwright.config.ts`). Next.js never overrides variables already in `process.env`, so real Sanity/Firebase/Postmark credentials are not loaded. Placeholder project IDs resolve to nothing. |
+| E2E credentials | Every variable defined in any `.env*` file is overridden with a placeholder (`scripts/sandbox-env.cjs`, shared with `dev:local`). Next.js never overrides variables already in `process.env`, so real Sanity/Firebase/Postmark credentials are not loaded. Placeholder project IDs resolve to nothing. |
 | E2E server reuse | Own port (3100), `reuseExistingServer: false`. A dev server started with real credentials can never be picked up. |
 | E2E browser | The `page` fixture (`tests/e2e/fixtures.ts`) aborts known telemetry (Firebase Analytics, GTM, Vercel Speed Insights) and **fails the test** on any other non-local request. |
 | Email / webhooks | `/api/sendEmail` is intercepted in the browser in E2E; handlers are unit-tested with Postmark/Firebase/Sanity clients mocked. |
@@ -24,6 +24,19 @@ npm run test        # unit + component tests (Vitest, ~2s)
 npm run test:e2e    # E2E (Playwright, starts its own isolated server on :3100)
 npm run test:all    # both
 ```
+
+## Local development without production (`npm run dev:local`)
+
+`npm run dev:local` starts the dev server on :3000 in the same sandbox the E2E server uses
+(`scripts/sandbox-env.cjs`): all Sanity data is mock data, every `.env*` credential is replaced by
+a placeholder, Firebase Analytics is not loaded, and the contact form and footer subscribe /
+unsubscribe / preferences work against in-memory fakes (`utils/sandbox.ts`) that reset when the
+server restarts. Pick a dataset with `?scenario=empty` etc. (see below).
+
+`.env.local` itself now contains only sandbox placeholders plus `MOCK_DATA="force"`, so plain
+`npm run dev` is sandboxed too. If you restore real credentials (`vercel env pull .env.local`),
+plain `npm run dev` talks to **production**: Sanity unless `?mock=true`, and the forms and
+subscriber actions always write to production. Use `npm run dev:local` in that case.
 
 ## Mock mode for manual development
 
@@ -62,10 +75,10 @@ In E2E, choose a scenario with `test.use({ scenario: 'empty' })` (see `tests/e2e
 | Post page: content, Prev/Next, no body/author, 404 | `actions.test.ts` (neighbours) | `post-detail.spec.ts` |
 | Resources: tabs, search, pagination, empty | `actions.test.ts`, `components.test.tsx` (Tabs, SearchBar) | `resources.spec.ts` |
 | Contact form | `message-form.test.tsx` | `contact-form.spec.ts` |
-| Footer sign-up | `components.test.tsx` | – (needs Firebase/Postmark server actions) |
+| Footer sign-up | `components.test.tsx`, `sandbox.test.ts` (in-memory fakes) | – (server actions can't be mocked in the browser) |
 | Routes, nav, homepage, photos, 404, draft API | `middleware.test.ts`, `api-draft.test.ts` | `site.spec.ts` |
 | API routes | `api-send-email`, `api-postmark-webhook`, `api-sanity-webhook` | – |
-| Mock/production safety | `fetch.test.ts`, `middleware.test.ts` | `fixtures.ts` guard |
+| Mock/production safety | `fetch.test.ts`, `middleware.test.ts`, `sandbox.test.ts` | `fixtures.ts` guard |
 
 ## Writing effective tests
 

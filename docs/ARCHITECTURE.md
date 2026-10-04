@@ -2,11 +2,12 @@
 
 ## Overview
 
-This is a Next.js 15 blog application with Sanity CMS as the content backend. The application features multiple blog sections, resource management, and a contact form.
+This is a Next.js blog application (App Router, installed version 14.2.5) with Sanity CMS as the content backend. The application features multiple blog sections, resource management, and a contact form.
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 14.2.5 (App Router; `package.json` says `"next": "latest"` but the lockfile pins 14.2.5)
+- **Runtime**: Node.js 24.x (set in the Vercel project settings)
 - **CMS**: Sanity v3
 - **Styling**: Tailwind CSS
 - **Database**: Firebase (Admin SDK for server-side)
@@ -32,6 +33,7 @@ app/
 │   ├── sendEmail/      # Contact form email
 │   ├── postmarkWebhook/
 │   └── sanityWebhook/
+│   (app/api/actions.ts: subscribe/unsubscribe/preferences Server Actions)
 components/
 ├── Post/               # Post display components
 ├── Resource/           # Resource display components
@@ -42,7 +44,11 @@ components/
 ├── MessageForm.tsx     # Contact form
 sanity/
 ├── schemas/            # Sanity content schemas
-├── lib/                # Sanity utilities
+├── lib/                # Sanity utilities (fetch.ts, mockData.ts)
+utils/                  # FirebaseUtils, PostmarkUtils, sandbox.ts (in-memory fakes)
+scripts/                # sandbox-env.cjs, dev-local.cjs
+tests/                  # unit/ (Vitest), e2e/ (Playwright)
+middleware.ts           # ?mock=true cookie handling (dev only)
 ```
 
 ## Key Patterns
@@ -70,17 +76,13 @@ const data = await sanityFetch({
 
 ### Dynamic Routes
 
-In Next.js 15, `params` is a Promise that must be awaited:
-
-```typescript
-export default async function PostPage({ params }: Props) {
-  const { slug } = await params;
-}
-```
+The app runs Next.js 14, so `params` is a plain object (`{ params: { slug } }`). Next 15 makes it a
+Promise that must be awaited; see CLAUDE.md "Known Issues" before upgrading.
 
 ## Content Types
 
 - **Post**: Blog posts with title, content, author, dates, cover image
+- **Author**: Post authors
 - **ContentPanel**: Homepage expandable content sections
 - **Resource**: Books, websites, other recommended resources
 - **GalleryImage**: Photo gallery images
@@ -95,4 +97,8 @@ export default async function PostPage({ params }: Props) {
 | `NEXT_PUBLIC_SANITY_API_VERSION` | Sanity API version |
 | `SANITY_API_READ_TOKEN` | Read token for draft content |
 | `POSTMARK_API_KEY` | Email API key |
-| `FIREBASE_*` | Firebase configuration |
+| `NEXT_PUBLIC_VERIFIED_SENDER` | Contact-form recipient and sender address |
+| `FIREBASE_*` / `NEXT_PUBLIC_FIREBASE_*` | Firebase configuration |
+| `MOCK_DATA` | `force` = sandbox: mock Sanity data, in-memory Firebase/Postmark, no Firebase Analytics. Set by `dev:local`, Playwright, and the sandbox `.env.local` |
+
+Local `.env.local` contains placeholders only (see `scripts/sandbox-env.cjs`); real values live in Vercel.

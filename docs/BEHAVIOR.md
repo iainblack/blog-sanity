@@ -44,7 +44,7 @@
 ### Individual Post Page (e.g., `/healing-journey/posts/[slug]`)
 
 **Params Handling**:
-- `params.slug` is a Promise in Next.js 15 (must await)
+- `params` is a plain object (`{ slug }`) on the installed Next.js 14.2.5; it becomes a Promise on Next 15
 - `generateStaticParams` fetches all post slugs at build time
 
 **404 Handling**:
@@ -166,9 +166,13 @@
 - New email -> preferences modal (all three blog sections pre-selected); Save subscribes and shows
   "Successfully subscribed." or "Failed to subscribe. Please try again."
 
-## Mock Data Mode (development only)
+## Mock Data Mode and Sandbox (development only)
 
-See [TESTING.md](TESTING.md). `?mock=true[&scenario=...]` serves fixture data; ignored in production builds.
+See [TESTING.md](TESTING.md). Ignored in production builds unless `MOCK_DATA=force` is set.
+- `?mock=true[&scenario=...]` serves fixture data (Sanity reads only).
+- `MOCK_DATA=force` (`npm run dev:local`, the E2E server, and the sandbox `.env.local`) is the full sandbox:
+  all Sanity queries are mocked, `/api/sendEmail` returns success without sending, footer
+  subscribe/unsubscribe/preferences use in-memory fakes (reset on restart), and Firebase Analytics is not loaded.
 
 ## Error States
 

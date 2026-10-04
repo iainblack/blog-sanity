@@ -62,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </section>
         <SpeedInsights />
-        <FirebaseAnalytics />
+        {process.env.MOCK_DATA !== "force" && <FirebaseAnalytics />}
       </body>
     </html>
   );
