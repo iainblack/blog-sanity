@@ -59,7 +59,7 @@ export default function PreferencesManager({ setShowUnsubscribed, setAlertState,
 
     const handleSubmit = async () => {
         setUpdatePreferencesLoading(true);
-        const success = await updateUserPreferencesAction(inputValue, preferences);
+        const success = await updateUserPreferencesAction(emailParam ?? inputValue, preferences);
         if (success) {
             setAlertState({ show: true, message: 'Preferences updated successfully.', type: 'success' });
         } else {
