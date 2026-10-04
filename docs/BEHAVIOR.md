@@ -58,14 +58,14 @@
 - Other Resources
 
 ### Tabs
-- Clicking tab resets to page 0 (**not implemented**: the page index is kept - tracked by a `test.fail` in `resources.spec.ts`)
+- Clicking tab resets to page 0
 - Active tab highlighted
 - Labels: "Books", "Websites", "Other Resources"
 
 ### Search
 - Case-insensitive partial match on title, scoped to the active tab
 - Fires on every keystroke (**not debounced**, despite earlier docs)
-- Search resets to page 0 (**only when Enter is pressed**; typing alone keeps the page index - tracked by a `test.fail`)
+- Search resets to page 0
 
 ### Pagination
 - 10 resources per page
@@ -96,7 +96,7 @@
 - Shows loading spinner during submission (replaces the "Submit" label)
 - Success: "Message sent successfully" alert, form cleared
 - Failure: "Message failed to send" error alert; typed values are kept
-- A network error (rejected fetch) is not handled: spinner stays on (tracked bug)
+- A network error (rejected fetch) shows the same failure alert and stops the spinner
 
 ### Alert Component
 - Auto-dismisses after 5 seconds, or via its close icon
@@ -144,8 +144,9 @@
 
 ### `/api/sendEmail`
 - POST: Sends email via Postmark to the site owner (`NEXT_PUBLIC_VERIFIED_SENDER`), Reply-To = visitor
-- Intended to require: senderEmail, firstName, lastName, subject, message (**not validated server-side today**)
-- Returns 200 on success, 500 on any failure (including a malformed body)
+- Requires (validated server-side, same rules as the form): senderEmail (contains `@`), firstName, lastName, subject, message (>= 10 chars); otherwise 400
+- User input is HTML-escaped in the email's HTML body
+- Returns 200 on success, 400 for a malformed/invalid body, 500 if Postmark fails
 
 ### `/api/postmarkWebhook`
 - POST: Handles Postmark `SubscriptionChange` events; an unsubscribe removes the address from Firestore

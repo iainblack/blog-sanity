@@ -208,10 +208,8 @@ describe('DateComponent', () => {
     expect(time.textContent).toMatch(/March\s+5, 2024/);
   });
 
-  // new Date('YYYY-MM-DD') is UTC midnight but format() uses the local zone, so in any zone west
-  // of UTC a date-only value shows as the previous day (and server/browser can disagree -> hydration
-  // mismatches). Sanity `datetime` fields normally carry a time, which hides it for most posts.
-  it.fails('shows the same calendar day for a date-only value in a timezone behind UTC', () => {
+  // A date-only value is a calendar day: it must not shift in timezones behind UTC.
+  it('shows the same calendar day for a date-only value in a timezone behind UTC', () => {
     const original = process.env.TZ;
     process.env.TZ = 'America/Los_Angeles';
     try {

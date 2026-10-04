@@ -93,14 +93,8 @@ Search for `BUG:` / `it.fails` to list them. Current list:
 
 | Where | Bug |
 |-------|-----|
-| `resources.spec.ts` | Switching tab keeps the old page index (BEHAVIOR.md says it resets to page 0). |
-| `resources.spec.ts` | Typing in search while on a later page keeps the page index → empty results. Only Enter resets it. |
-| `message-form.test.tsx`, `contact-form.spec.ts` | After a failed validation, a later successful send "clears" the form back to polluted initial state → all old errors reappear. |
-| `contact-form.spec.ts` | A network failure (rejected `fetch`) leaves the spinner on forever with no alert. |
-| `api-send-email.test.ts` | No server-side validation of required fields; HTML body doesn't escape user input. |
 | `api-postmark-webhook.test.ts` | BEHAVIOR.md says a webhook secret is required; none is checked. |
 | `api-sanity-webhook.test.ts` | Unauthenticated: anyone can trigger an email blast to subscribers. |
-| `components.test.tsx` | `DateComponent` shows the previous day for date-only values west of UTC. |
 
 ## Debugging
 

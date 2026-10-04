@@ -88,7 +88,6 @@ test.describe('Contact form', () => {
     });
 
     test('after a failed validation, a corrected submit succeeds and leaves a clean, error-free form', async ({ page }) => {
-      test.fail(true, 'BUG: validation mutates the shared initial form state, so the cleared form re-shows old errors (components/MessageForm.tsx). Remove this line when fixed.');
       await mockSendEmail(page);
       await submit(page).click(); // trigger all five errors
       await expect(fieldErrors(page)).toHaveCount(5);
@@ -128,7 +127,6 @@ test.describe('Contact form', () => {
     });
 
     test('a network failure surfaces an error and re-enables the form', async ({ page }) => {
-      test.fail(true, 'BUG: fetch() rejection is unhandled, so the spinner never stops and no alert shows (components/MessageForm.tsx). Remove this line when fixed.');
       await page.route('**/api/sendEmail', (route) => route.abort('connectionrefused'));
       await fill(page, VALID);
       await submit(page).click();

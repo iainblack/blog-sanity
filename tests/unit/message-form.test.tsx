@@ -106,10 +106,7 @@ describe('MessageForm', () => {
     expect(errorTexts()).toEqual(ERRORS.filter((e) => e !== 'Subject is required'));
   });
 
-  // BUG: isValidForm mutates the field objects inside formState (and, on the first submit,
-  // the module-level initialFormState). clearForm() then resets to that polluted object, so
-  // errors from an earlier failed validation reappear on the "cleared" form after a success.
-  it.fails('a successful send after a failed validation leaves a clean form (no stale errors)', async () => {
+  it('a successful send after a failed validation leaves a clean form (no stale errors)', async () => {
     mockFetch(true);
     render(<MessageForm />);
     submit();
@@ -119,5 +116,14 @@ describe('MessageForm', () => {
     await screen.findByText('Message sent successfully');
     expect(errorTexts()).toEqual([]);
   });
-  // A rejected fetch (offline) is not handled either - tracked in tests/e2e/contact-form.spec.ts.
+
+  it('a network failure shows the error alert, stops the spinner and keeps the typed values', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => { throw new TypeError('Failed to fetch'); }));
+    render(<MessageForm />);
+    fillAll(VALID);
+    submit();
+    expect(await screen.findByText('Message failed to send')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Submit' })).toBeInTheDocument();
+    expect(screen.getByLabelText('Message', { exact: true })).toHaveValue(VALID.Message);
+  });
 });

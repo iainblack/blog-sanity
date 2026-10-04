@@ -9,10 +9,35 @@ const parseBody = async (req: NextRequest) => {
     return JSON.parse(text);
 }
 
+const escapeHtml = (value: string) =>
+    value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+
+const isNonEmptyString = (value: unknown): value is string => typeof value === 'string' && value !== '';
+
 export async function POST(req: NextRequest, res: any) {
+    let body: any;
     try {
-        const body = await parseBody(req);
-        const { senderEmail, firstName, lastName, subject, message } = body;
+        body = await parseBody(req);
+    } catch {
+        return NextResponse.json({ message: 'Invalid request body' }, { status: 400 });
+    }
+
+    // Same rules as the contact form; the endpoint is public so they must hold server-side too.
+    const { senderEmail, firstName, lastName, subject, message } = body ?? {};
+    if (
+        ![senderEmail, firstName, lastName, subject, message].every(isNonEmptyString) ||
+        !senderEmail.includes('@') ||
+        message.length < 10
+    ) {
+        return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
+    }
+
+    try {
 
         const content = {
             To: process.env.NEXT_PUBLIC_VERIFIED_SENDER ?? '',
@@ -40,8 +65,8 @@ function getEmailHtml({ firstName, lastName, message }: { firstName: string, las
                 <h1 style="margin: 0; color: #65a765;">New Message Received</h1>
             </div>
            <div style="padding: 20px;">
-                <p style="font-size: 16px;">New message from <strong>${firstName} ${lastName}</strong> was sent from your website:</p>
-                <p style="font-size: 16px;">${message}</p>
+                <p style="font-size: 16px;">New message from <strong>${escapeHtml(firstName)} ${escapeHtml(lastName)}</strong> was sent from your website:</p>
+                <p style="font-size: 16px;">${escapeHtml(message)}</p>
                 <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 20px 0;">
             </div>
         </div>

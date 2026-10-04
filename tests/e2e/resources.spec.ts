@@ -179,10 +179,7 @@ test.describe('Resources - pagination boundaries', () => {
       await expect(pageIndicator(page)).toHaveText('Page 2 of 3');
     });
 
-    // Documented in BEHAVIOR.md ("Clicking tab resets to page 0"). The page does not reset
-    // `page` when the tab changes, so the new tab opens at an offset that may be empty.
     test('switching tab returns to page 1', async ({ page }) => {
-      test.fail(true, 'BUG: Tab change does not reset pagination (app/(blog)/resources/page.tsx). Remove this line when fixed.');
       await page.goto('/resources');
       await nextButton(page).click();
       await nextButton(page).click();
@@ -193,9 +190,7 @@ test.describe('Resources - pagination boundaries', () => {
       await expect(items(page).first()).toHaveText('Websites Resource 01');
     });
 
-    // Documented in BEHAVIOR.md ("Search resets to page 0"). Only pressing Enter resets the page.
     test('typing a search while on a later page returns to page 1', async ({ page }) => {
-      test.fail(true, 'BUG: Typing in search does not reset pagination, only Enter does (resources/page.tsx). Remove this line when fixed.');
       await page.goto('/resources');
       await nextButton(page).click();
       await expect(pageIndicator(page)).toHaveText('Page 2 of 3');
