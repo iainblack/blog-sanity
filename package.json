@@ -16,12 +16,11 @@
     "postsetup": "echo 'create the read token by following the rest of the guide: https://github.com/vercel/next.js/tree/canary/examples/cms-sanity#creating-a-read-token'"
   },
   "dependencies": {
-    "@sanity/assist": "^3.0.3",
+    "@sanity/assist": "^4.4.8",
     "@sanity/icons": "^2.11.2",
     "@sanity/image-url": "^1.0.2",
     "@sanity/orderable-document-list": "^1.2.1",
     "@sanity/preview-url-secret": "^1.6.5",
-    "@sanity/vision": "^3.35.0",
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^20.11.30",
     "@types/react": "^18.3.3",
@@ -42,7 +41,7 @@
     "react-icons": "^5.2.1",
     "react-photo-album": "^2.3.1",
     "rxjs": "^7.8.1",
-    "sanity": "^3.42.1",
+    "sanity": "^4.22.1",
     "sanity-plugin-asset-source-unsplash": "^3.0.1",
     "server-only": "^0.0.1",
     "styled-components": "^6.1.8",
@@ -63,5 +62,10 @@
     "eslint-config-next": "^14.2.35",
     "jsdom": "^25.0.1",
     "vitest": "^2.1.9"
+  },
+  "overrides": {
+    "next-sanity": {
+      "sanity": "$sanity"
+    }
   }
 }

@@ -35,6 +35,15 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      testIgnore: /studio\.spec\.ts/,
+    },
+    {
+      // The Studio's large bundle compiles slowly in the dev server; running it after the site
+      // tests keeps that compile from starving their page loads.
+      name: 'studio',
+      use: { ...devices['Desktop Chrome'] },
+      testMatch: /studio\.spec\.ts/,
+      dependencies: ['chromium'],
     },
   ],
   webServer: {
